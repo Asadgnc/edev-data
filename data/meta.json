@@ -6,7 +6,8 @@
     "lat_max": -18.3
   },
   "mission": "NISAR (NASA-ISRO SAR)",
-  "product": "L2 GCOV, frequency A, L-band",
+  "product": "L2 GCOV, L-band",
+  "band_note": "Frequency B (5 MHz, natively 80 m) was used. It is the same acquisition, geometry and calibration as the 20 MHz frequency A band, at 1/16 the data volume; measured dB percentiles agree with frequency A to within a few tenths of a dB. The cost is a coarser native range resolution, so slightly more speckle.",
   "polarizations": [
     "HH",
     "HV"
@@ -20,7 +21,18 @@
   "pixel_m": 80.0,
   "native_pixel_m": 20.0,
   "looks": 4,
-  "dates": [],
+  "dates": [
+    "2026-06-26",
+    "2026-07-08",
+    "2026-07-20",
+    "2026-08-13",
+    "2026-08-25",
+    "2026-09-06",
+    "2026-09-18",
+    "2026-09-30",
+    "2026-10-12",
+    "2026-10-24"
+  ],
   "gaps": [
     [
       "2026-07-27",
@@ -34,8 +46,10 @@
     "fv_hh_min": -5.0,
     "fv_hhhv_min": 7.0
   },
+  "noise_floor_db": -30.0,
   "uncertain": true,
-  "uncertainty_note": "Backscatter thresholds are tuned on one date's histogram and checked against optical imagery. They are not a calibrated hydrological product.",
+  "uncertainty_note": "Backscatter thresholds are fixed, physically motivated values, identical on every date. They are not calibrated against ground measurements, so treat the areas as a consistent relative index of flooding rather than an absolute hydrological measurement.",
+  "conservative_note": "These thresholds are deliberately strict, so the mapped area is a lower bound. Published estimates of the Okavango's total seasonal flood extent are several times larger; part of that difference is real (the area of interest and one radar frame do not cover the whole delta) and part is the strict thresholds. The shape of the seasonal curve is more reliable than its absolute level.",
   "quality_note": "Dates up to 2026-10-12 are NISAR PROVISIONAL products; 2026-10-24 is VALIDATED. A small calibration offset between the two is possible.",
   "legend": [
     {

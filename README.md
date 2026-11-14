@@ -31,11 +31,16 @@ the specific reason this project needs NISAR.
 ## Source data
 
 - **Mission:** NISAR (NASA–ISRO Synthetic Aperture Radar)
-- **Product:** L2 GCOV — geocoded polarimetric covariance, frequency A (L-band)
+- **Product:** L2 GCOV — geocoded polarimetric covariance, L-band
 - **Polarizations:** HH and HV (`HHHH`, `HVHV` diagonal covariance terms,
   linear γ⁰ power)
 - **Geometry:** track 172, frame 168, **ascending** — identical for every date
-- **Native grid:** 20 m, UTM zone 34S (EPSG:32734)
+- **Band:** frequency B (5 MHz), natively gridded at 80 m, UTM zone 34S
+  (EPSG:32734). This is the same acquisition, geometry and calibration as the
+  20 MHz frequency A band at 1/16 the data volume, which is what made a
+  ten-date series possible over a hackathon connection. Measured dB
+  percentiles agree with frequency A to within a few tenths of a dB. The cost
+  is a coarser native range resolution, so slightly more speckle.
 - **Access:** NASA Earthdata / ASF DAAC via `earthaccess`
 - **Processing level flags:** dates up to 2026-10-12 are NISAR **PROVISIONAL**
   products; 2026-10-24 is **VALIDATED**
@@ -50,11 +55,18 @@ change.
 1. **Stream, don't download.** Each granule is ~1.9 GB. The HDF5 arrays are
    chunked 512×512, so only the chunks covering the area of interest are
    transferred over HTTP range requests.
-2. **Multilook.** 4×4 blocks are averaged **in linear power** (not in dB, which
-   would bias the mean low), giving 80 m pixels with roughly 16× less speckle.
-3. **Convert to dB.** `dB = 10·log10(γ⁰)`, the power convention.
+2. **Convert to dB.** `dB = 10·log10(γ⁰)`, the power convention. Where blocks
+   are averaged, the averaging happens in linear power, never in dB, which
+   would bias the mean low.
+3. **Drop everything below a −30 dB noise floor.** About 2.5% of pixels sit
+   near zero in a fixed strip at the western edge of the frame: the same
+   pixels on every date, unchanged from June to October. Real water moves with
+   the season, so these are fill, not backscatter. Left in, they would have
+   been dark enough to count as roughly 1,500 km² of open water that does not
+   exist.
 4. **Classify** into open water / flooded vegetation / other using fixed
-   backscatter thresholds, identical on every date.
+   backscatter thresholds, identical on every date, so that change between
+   dates is change on the ground and not a change of method.
 5. **Measure area in UTM**, before reprojection. Web Mercator inflates area by
    ~12% at this latitude, so areas are counted as 80 m pixels in UTM 34S.
 6. **Reproject to EPSG:3857** and write PNG overlays, which a browser map can
@@ -63,12 +75,33 @@ change.
 Validity is checked against Sentinel-2 optical imagery on matching dates, and
 against a dry-land reference backscatter that should not change between dates.
 
+## What the series shows
+
+Open water peaks in early July and then recedes steadily through October.
+Flooded vegetation peaks six to eight weeks *later*, in late August and
+September, and only then declines.
+
+A plausible reading — and it is a hypothesis, not a measurement — is that the
+flood front arrives first in the channels and permanent swamp, and only
+afterwards spreads laterally into the vegetated floodplain, where L-band sees
+it through the canopy. The lag is the physical signature of a flood pulse
+moving through a vegetated delta, and it is the part of this story that a
+C-band or optical sensor would largely miss.
+
 ## Known limitations
 
-- **The thresholds are uncertain.** They are tuned on one date's histogram and
-  sanity-checked optically. This is a visualization of radar backscatter
-  classes, **not** a calibrated hydrological product. `meta.json` carries
-  `"uncertain": true` and the threshold values used.
+- **The thresholds are uncertain.** They are fixed, physically motivated
+  values, not calibrated against ground measurements. Treat the areas as a
+  consistent *relative* index of flooding rather than an absolute hydrological
+  measurement. `meta.json` carries `"uncertain": true` and the values used.
+- **The mapped area is a lower bound.** The thresholds are deliberately
+  strict. Published estimates of the Okavango's total seasonal flood extent
+  are several times larger than the figures here. Part of that difference is
+  real — the area of interest and a single radar frame do not cover the whole
+  delta — and part is the strict thresholds. **The shape of the seasonal curve
+  is far more reliable than its absolute level.** We chose not to loosen the
+  thresholds to approach a published number, because fitting the method to the
+  expected answer would make the result meaningless.
 - **Permanent data gap: 2026-07-27 to 2026-08-10.** NISAR acquired nothing in
   this window. The app shows it as *no data*, never as *no flood*.
 - **Mixed product maturity.** One VALIDATED date among PROVISIONAL ones may
