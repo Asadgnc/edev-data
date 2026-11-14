@@ -90,5 +90,28 @@
   "db_stretch": [
     -25.0,
     0.0
-  ]
+  ],
+  "rgb": {
+    "file": "<date>/rgb.webp",
+    "channels": {
+      "red": "HH minus HV in dB",
+      "green": "HV in dB",
+      "blue": "inverted HH in dB (dark = blue)"
+    },
+    "stretch_db": {
+      "ratio": [
+        4.0,
+        10.0
+      ],
+      "hv": [
+        -24.0,
+        -11.0
+      ],
+      "hh_dark": [
+        -20.0,
+        -12.0
+      ]
+    },
+    "note": "A colour picture of the radar measurement, not a classification. Blue also covers smooth dry or wet flats, so it shows more area than the strict open-water class."
+  }
 }

@@ -282,6 +282,34 @@ def render_one(path: Path, clean: dict | None = None) -> dict:
     Image.fromarray(gray, "LA").convert("RGBA").save(
         out_dir / "hh.webp", quality=75, method=4)
 
+    # --- colour composite: the whole radar picture, before any decision ------
+    # class.png is our verdict; this is the evidence. Three numbers per pixel
+    # become three colours, with the same fixed stretch on every date:
+    #   red   = HH - HV (dB)  high where double bounce dominates: water
+    #                         standing under reeds and trees
+    #   green = HV            volume scattering: leaves and branches
+    #   blue  = dark HH       smooth surfaces that mirror the pulse away:
+    #                         open water, wet or bare flats
+    # Built from the despeckled data when available, so it is cleaner than
+    # hh.png, and it exists for all dates and has no missing tiles, unlike the
+    # live NASA browse layer.
+    if hv_db is not None:
+        src_hh, src_hv = ((to_db(clean[date][0]), to_db(clean[date][1]))
+                          if clean and date in clean else (hh_db, hv_db))
+        st = lambda a, lo, hi: np.clip((a - lo) / (hi - lo), 0, 1)
+        chans = [st(src_hh - src_hv, *C.RGB_STRETCH["ratio"]),
+                 st(src_hv, *C.RGB_STRETCH["hv"]),
+                 1 - st(src_hh, *C.RGB_STRETCH["hh_dark"])]
+        out_rgb = None
+        for i, ch in enumerate(chans):
+            ch = np.where(cls == NODATA, np.nan, ch).astype(np.float32)
+            w, _, _ = warp(ch, bbox, epsg, np.nan, Resampling.bilinear)
+            if out_rgb is None:
+                out_rgb = np.zeros((*w.shape, 4), np.uint8)
+                out_rgb[..., 3] = np.where(np.isfinite(w), 255, 0)
+            out_rgb[..., i] = (np.nan_to_num(w) * 255).astype(np.uint8)
+        Image.fromarray(out_rgb, "RGBA").save(out_dir / "rgb.webp", quality=60, method=4)
+
     b = bounds_latlon(dst_tf, size)
     b.update(date=date, granule=granule)
     (out_dir / "bounds.json").write_text(json.dumps(b, indent=2), encoding="utf-8")
@@ -412,6 +440,14 @@ def main() -> None:
                     "under the canopy; C-band largely cannot."},
         ],
         "db_stretch": list(C.DB_STRETCH),
+        "rgb": {
+            "file": "<date>/rgb.webp",
+            "channels": {"red": "HH minus HV in dB", "green": "HV in dB",
+                         "blue": "inverted HH in dB (dark = blue)"},
+            "stretch_db": C.RGB_STRETCH,
+            "note": "A colour picture of the radar measurement, not a "
+                    "classification. Blue also covers smooth dry or wet flats, "
+                    "so it shows more area than the strict open-water class."},
     }
     (C.OUT / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 

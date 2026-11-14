@@ -223,6 +223,24 @@ def main() -> None:
          "chart": "nisar",
          "note": "Our classification. Blue = open water, green = water under "
                  "vegetation, which only L-band radar sees."},
+        {"id": "nisar_rgb", "group": "NISAR radar (2026)",
+         "title": "Radar colour image (NISAR)",
+         "kind": "image", "times": dates,
+         "url": "{time}/rgb.webp", "bounds": "{time}/bounds.json",
+         "opacity": 1.0, "source": "nisar",
+         "legend": [
+             {"label": "Blue: dark, smooth surface (open water, wet flats)",
+              "color": [40, 40, 230, 255]},
+             {"label": "Red / orange: water standing under vegetation "
+                       "(double bounce)", "color": [220, 90, 30, 255]},
+             {"label": "Green: vegetation on dry ground",
+              "color": [40, 190, 40, 255]}],
+         "note": "Our colour picture of the NISAR measurement, cleaned of "
+                 "speckle, for all 10 dates. It is the evidence behind the "
+                 "flood classes, not a classification: blue also covers "
+                 "smooth flats, so it shows more area than the strict "
+                 "open-water class. Slide through the dates: blue shrinks "
+                 "and red grows as the flood moves into the vegetation."},
         {"id": "nisar_hh", "group": "NISAR radar (2026)",
          "title": "Raw radar image (HH)",
          "kind": "image", "times": dates,
@@ -237,8 +255,10 @@ def main() -> None:
          "url": gibs("NISAR_L2_Geocoded_Polarimetric_Covariance",
                      "GoogleMapsCompatible_Level13", "png"),
          "max_native_zoom": 13, "opacity": 1.0, "source": "gibs",
-         "note": "NASA's own colour rendering of the same NISAR product. "
-                 "Available from 2026-08-10, so not for our first three dates."},
+         "note": "NASA's own colour rendering of the same NISAR product, "
+                 "served live by NASA. Available from 2026-08-10, so not for "
+                 "our first three dates, and NASA's tile set has occasional "
+                 "empty tiles. Use 'Radar colour image' for the full series."},
         {"id": "gibs_dswx", "group": "NASA reference layers (live)",
          "title": "NASA surface water map (OPERA DSWx-HLS, optical)",
          "kind": "tiles", "times": dswx_days, "tile_order": "zyx",

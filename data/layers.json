@@ -59,6 +59,58 @@
    "note": "Our classification. Blue = open water, green = water under vegetation, which only L-band radar sees."
   },
   {
+   "id": "nisar_rgb",
+   "group": "NISAR radar (2026)",
+   "title": "Radar colour image (NISAR)",
+   "kind": "image",
+   "times": [
+    "2026-06-26",
+    "2026-07-08",
+    "2026-07-20",
+    "2026-08-13",
+    "2026-08-25",
+    "2026-09-06",
+    "2026-09-18",
+    "2026-09-30",
+    "2026-10-12",
+    "2026-10-24"
+   ],
+   "url": "{time}/rgb.webp",
+   "bounds": "{time}/bounds.json",
+   "opacity": 1.0,
+   "source": "nisar",
+   "legend": [
+    {
+     "label": "Blue: dark, smooth surface (open water, wet flats)",
+     "color": [
+      40,
+      40,
+      230,
+      255
+     ]
+    },
+    {
+     "label": "Red / orange: water standing under vegetation (double bounce)",
+     "color": [
+      220,
+      90,
+      30,
+      255
+     ]
+    },
+    {
+     "label": "Green: vegetation on dry ground",
+     "color": [
+      40,
+      190,
+      40,
+      255
+     ]
+    }
+   ],
+   "note": "Our colour picture of the NISAR measurement, cleaned of speckle, for all 10 dates. It is the evidence behind the flood classes, not a classification: blue also covers smooth flats, so it shows more area than the strict open-water class. Slide through the dates: blue shrinks and red grows as the flood moves into the vegetation."
+  },
+  {
    "id": "nisar_hh",
    "group": "NISAR radar (2026)",
    "title": "Raw radar image (HH)",
@@ -120,7 +172,7 @@
    "max_native_zoom": 13,
    "opacity": 1.0,
    "source": "gibs",
-   "note": "NASA's own colour rendering of the same NISAR product. Available from 2026-08-10, so not for our first three dates."
+   "note": "NASA's own colour rendering of the same NISAR product, served live by NASA. Available from 2026-08-10, so not for our first three dates, and NASA's tile set has occasional empty tiles. Use 'Radar colour image' for the full series."
   },
   {
    "id": "gibs_dswx",

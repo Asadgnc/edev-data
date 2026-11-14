@@ -158,6 +158,11 @@ THRESH = {
 # animation shows real brightness change and not a per-date rescaling.
 DB_STRETCH = (-25.0, 0.0)
 
+# Fixed dB stretches of the colour composite (rgb.webp), identical on every
+# date. Chosen from the measured percentiles of the series: HH 2-98% is about
+# -19..-6 dB, HV -23..-12 dB, HH-HV 3..8 dB.
+RGB_STRETCH = {"ratio": (4.0, 10.0), "hv": (-24.0, -11.0), "hh_dark": (-20.0, -12.0)}
+
 # RGBA colors for the class PNG. Non-flooded stays fully transparent so the
 # basemap shows through.
 COLORS = {
