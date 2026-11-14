@@ -19,8 +19,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / "cache"
 QA = ROOT / "qa"
-OUT = ROOT / "edev-data" / "data"
-GRANULE_CSV = ROOT / "granules_list.csv"
+
+# This pipeline runs from two layouts and must work in both:
+#   working folder    ROOT/pipeline/, data repo in ROOT/edev-data/
+#   published repo    ROOT/pipeline/ beside the ROOT/data/ it produced
+# Detect, don't assume - a clone of the published repo has no edev-data/.
+_IN_WORKING_FOLDER = (ROOT / "edev-data").is_dir()
+OUT = (ROOT / "edev-data" / "data") if _IN_WORKING_FOLDER else (ROOT / "data")
+GRANULE_CSV = next(
+    (p for p in (ROOT / "granules_list.csv", ROOT / "tools" / "granules_list.csv")
+     if p.exists()),
+    ROOT / "granules_list.csv",
+)
 
 
 def cache_dir(freq: str = "A"):
