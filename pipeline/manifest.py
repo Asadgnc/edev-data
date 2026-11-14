@@ -107,8 +107,8 @@ SOURCES = [
                    "(Quegan & Yu 2001), thresholded. See meta.json."},
     {"id": "gibs", "field": "nasa_data",
      "name": "NASA Global Imagery Browse Services (GIBS): NISAR GCOV browse "
-             "imagery, OPERA Dynamic Surface Water Extent (DSWx-HLS), MODIS "
-             "Aqua corrected reflectance",
+             "imagery, OPERA Dynamic Surface Water Extent (DSWx-HLS), VIIRS "
+             "NOAA-20 corrected reflectance",
      "provider": "NASA EOSDIS (OPERA products by NASA JPL)",
      "url": "https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/gibs-api",
      "license": "Open data; NASA asks for acknowledgement of GIBS",
@@ -310,12 +310,13 @@ def main() -> None:
                  "with CSS mix-blend-mode: multiply. Only days with a clear "
                  "view of at least 60% of the area are listed."},
         {"id": "gibs_truecolor", "group": "NASA reference layers (live)",
-         "title": "Satellite photo of the day (MODIS Aqua)",
+         "title": "Satellite photo of the day (VIIRS)",
          "kind": "tiles", "time_range": [dates[0], dates[-1]], "tile_order": "zyx",
-         "url": gibs("MODIS_Aqua_CorrectedReflectance_TrueColor",
+         "url": gibs("VIIRS_NOAA20_CorrectedReflectance_TrueColor",
                      "GoogleMapsCompatible_Level9", "jpg"),
          "max_native_zoom": 9, "opacity": 1.0, "source": "gibs",
-         "note": "What a camera sees that day, 250 m. Any day in the range "
+         "note": "What a camera sees that day (NOAA-20 VIIRS, 250 m; MODIS was "
+                 "tested and leaves black gaps between orbits here). Any day in the range "
                  "works; clouds hide the ground, radar does not care."},
         {"id": "landsat_history", "group": "History 1984-2025 (optical)",
          "title": "Open water per year (Landsat)",

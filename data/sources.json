@@ -14,7 +14,7 @@
   {
    "id": "gibs",
    "field": "nasa_data",
-   "name": "NASA Global Imagery Browse Services (GIBS): NISAR GCOV browse imagery, OPERA Dynamic Surface Water Extent (DSWx-HLS), MODIS Aqua corrected reflectance",
+   "name": "NASA Global Imagery Browse Services (GIBS): NISAR GCOV browse imagery, OPERA Dynamic Surface Water Extent (DSWx-HLS), VIIRS NOAA-20 corrected reflectance",
    "provider": "NASA EOSDIS (OPERA products by NASA JPL)",
    "url": "https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/gibs-api",
    "license": "Open data; NASA asks for acknowledgement of GIBS",

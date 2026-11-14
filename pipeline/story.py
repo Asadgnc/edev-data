@@ -225,10 +225,13 @@ def main() -> None:
     for y in years:
         r, causes, parts = raw[y], [], []
 
-        def add(key, lvl, value, sentence):
+        def add(key, lvl, value, sentence, state=None):
             c = CAUSES[key]
             causes.append({"id": key, "icon": c["icon"], "label": c["label"],
                            "level": lvl, "color": LEVEL_COLOR[lvl], "value": value,
+                           # what it was like, in the cause's own words; the
+                           # level/colour say which way it pushed the flood
+                           "state": state or LEVEL_WORD[lvl],
                            "text": sentence, "pos": c["pos"], "true_pos": c["true_pos"],
                            "hint": c["hint"]})
             parts.append(sentence)
@@ -245,7 +248,8 @@ def main() -> None:
             add("enso", lvl, f"ONI {e:+.1f}",
                 f"The rainy season came with {name} (index {e:+.1f})"
                 + ("; El Nino usually dries southern Africa." if e >= 0.5 else
-                   "; La Nina usually brings more rain here." if e <= -0.5 else "."))
+                   "; La Nina usually brings more rain here." if e <= -0.5 else "."),
+                state=name.split(" ", 1)[1] if name[0] == "a" else name)
         if r["headwater_rain"] is not None:
             n = pct(r["headwater_rain"], "headwater_rain")
             add("headwater_rain", level(r["headwater_rain"], *stats["headwater_rain"]),
@@ -268,7 +272,10 @@ def main() -> None:
             add("heat", lvl, f"{d:+.1f} C",
                 f"Flood-season days were {abs(d):.1f} C "
                 f"{'hotter' if d >= 0 else 'cooler'} than normal"
-                + (", so more water evaporated." if d >= 0.5 else "."))
+                + (", so more water evaporated." if d >= 0.5 else "."),
+                state=("much hotter" if d >= 1.5 else "hotter" if d >= 0.5 else
+                       "much cooler" if d <= -1.5 else "cooler" if d <= -0.5 else
+                       "normal temperature"))
 
         rec = {"causes": causes}
         h = hy.get(y)
@@ -328,6 +335,9 @@ def main() -> None:
                       "(pushes towards a large flood).",
         "normal_period": list(BASE),
         "levels": {str(k): {"word": v, "color": LEVEL_COLOR[k]} for k, v in LEVEL_WORD.items()},
+        "color_meaning": "Red = pushed towards a smaller flood, blue = towards "
+                         "a larger flood, grey = no push. Use each cause's "
+                         "'state' as its short label.",
         "sources": {
             "headwater_rain": "ERA5 reanalysis via Open-Meteo, mean of three "
                               "points in the Angolan highlands, November-April total",

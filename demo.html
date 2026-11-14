@@ -68,6 +68,7 @@
     <h3>Why was the water like this in <span id="syear"></span>?</h3>
     <label><input id="showCauses" type="checkbox" checked> Show causes on the map</label>
     <div id="chips" class="chips"></div>
+    <div class="note">Red pushed towards a smaller flood, blue towards a larger one.</div>
     <p id="why" class="note"></p>
     <p id="outcome"><b></b></p>
     <div id="mismatch" class="warn" hidden></div>
@@ -256,7 +257,7 @@ const rgba = (c) => `rgba(${c[0]},${c[1]},${c[2]},${(c[3] ?? 255) / 255})`;
     const rgb = (c) => `rgb(${c[0]},${c[1]},${c[2]})`;
     $("syear").textContent = year;
     $("chips").innerHTML = s.causes.map((c) =>
-        `<span style="background:${rgb(c.color)}">${c.icon} ${STORY.levels[c.level].word}</span>`).join("");
+        `<span style="background:${rgb(c.color)}" title="${c.label}: ${c.value}">${c.icon} ${c.state}</span>`).join("");
     $("why").textContent = s.why;
     $("outcome").firstChild.textContent = s.outcome;
     $("mismatch").hidden = !s.mismatch;
@@ -272,7 +273,7 @@ const rgba = (c) => `rgba(${c[0]},${c[1]},${c[2]},${(c[3] ?? 255) / 255})`;
         .addTo(causeLayer);
     for (const c of s.causes) {
       pin(c.pos, c.icon, rgb(c.color),
-          `<b>${c.label}</b>: ${c.value}, ${STORY.levels[c.level].word}<br>${c.text}<br><i>${c.hint}</i>`);
+          `<b>${c.label}</b>: ${c.state} (${c.value})<br>${c.text}<br><i>${c.hint}</i>`);
     }
     if (s.people_pos) pin(s.people_pos, "\u{1F465}", "#444", `<b>People</b><br>${s.people_text}`);
   }

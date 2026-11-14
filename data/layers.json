@@ -278,18 +278,18 @@
   {
    "id": "gibs_truecolor",
    "group": "NASA reference layers (live)",
-   "title": "Satellite photo of the day (MODIS Aqua)",
+   "title": "Satellite photo of the day (VIIRS)",
    "kind": "tiles",
    "time_range": [
     "2026-06-26",
     "2026-10-24"
    ],
    "tile_order": "zyx",
-   "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/{time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg",
+   "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/{time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg",
    "max_native_zoom": 9,
    "opacity": 1.0,
    "source": "gibs",
-   "note": "What a camera sees that day, 250 m. Any day in the range works; clouds hide the ground, radar does not care."
+   "note": "What a camera sees that day (NOAA-20 VIIRS, 250 m; MODIS was tested and leaves black gaps between orbits here). Any day in the range works; clouds hide the ground, radar does not care."
   },
   {
    "id": "landsat_history",
