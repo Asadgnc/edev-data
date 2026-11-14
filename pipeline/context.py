@@ -199,6 +199,10 @@ def main() -> None:
             "2026 value. Read each number from its own column; do not mix "
             "open water with flooded vegetation. If asked about the future, "
             "explain the forecast test result instead of predicting. "
+            "Never show field names or raw level numbers from this document "
+            "(write 'far below normal', not '-2'; write 'Landsat', not a key "
+            "name). Causes are associations, not proof: say 'went together "
+            "with', not 'was caused by'. "
             "Answer in the user's language, in plain words for non-experts, "
             "in at most 120 words. Plain sentences only: no tables, no "
             "headings, no citation marks or brackets."),
