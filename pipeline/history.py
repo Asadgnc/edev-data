@@ -280,6 +280,40 @@ RAIN_PTS = {"Huambo (Cubango source)": (-12.77, 15.74),
             "Cuito Cuanavale": (-15.16, 19.17)}
 
 
+def era5_monthly_rain(lat: float, lon: float) -> dict[str, float]:
+    """Monthly mean rainfall in mm/day at one point, 1983-11 onwards, from the
+    ERA5 reanalysis through the Open-Meteo archive API (no account needed).
+    Only complete months are returned."""
+    import time
+    import urllib.error
+    # 43 years of daily values is a heavy request for a free API, which answers
+    # 429 after a few of them. Keep each point on disk and wait out the limit.
+    cache = C.CACHE / f"era5_rain_{lat}_{lon}.json"
+    if cache.exists():
+        d = json.loads(cache.read_text())
+    else:
+        url = ("https://archive-api.open-meteo.com/v1/archive?"
+               f"latitude={lat}&longitude={lon}&start_date=1983-11-01"
+               "&end_date=2026-10-31&daily=precipitation_sum&timezone=GMT")
+        for attempt in range(6):
+            try:
+                d = get_json(url)["daily"]
+                break
+            except urllib.error.HTTPError as e:
+                if e.code != 429 or attempt == 5:
+                    raise
+                print("  ERA5 rate limit, waiting 65 s ...", flush=True)
+                time.sleep(65)
+        cache.parent.mkdir(exist_ok=True)
+        cache.write_text(json.dumps(d))
+    tot, n = collections.defaultdict(float), collections.Counter()
+    for t, v in zip(d["time"], d["precipitation_sum"]):
+        if v is not None:
+            tot[t[:7]] += v
+            n[t[:7]] += 1
+    return {m: tot[m] / n[m] for m in sorted(tot) if n[m] >= 27}
+
+
 def run_drivers():
     d = get_json("https://flood-api.open-meteo.com/v1/flood?latitude={}&longitude={}"
                  "&daily=river_discharge&start_date=1984-01-01&end_date=2026-11-13"
@@ -290,20 +324,15 @@ def run_drivers():
             m[t[:7]].append(q)
     discharge = [{"month": k, "m3s": round(sum(v) / len(v), 1)} for k, v in sorted(m.items())]
 
+    # Rainfall from ERA5, not NASA POWER. MEASURED: POWER's corrected MERRA-2
+    # precipitation has spikes over Angola (March 2020 reads 82 mm/day at
+    # Huambo, i.e. 2500 mm in one month; ERA5's wettest month in 43 years is
+    # 383 mm) and its 2026 season contradicts the river model. ERA5 is steady.
     rain = collections.defaultdict(list)
     for name, (la, lo) in RAIN_PTS.items():
-        for end in (2026, 2025):
-            try:
-                p = get_json("https://power.larc.nasa.gov/api/temporal/monthly/point?"
-                             f"parameters=PRECTOTCORR&community=AG&longitude={lo}"
-                             f"&latitude={la}&start=1984&end={end}&format=JSON")
-                break
-            except Exception as e:  # the monthly API lags the current year
-                print("POWER", name, end, "failed:", e)
-        for k, v in p["properties"]["parameter"]["PRECTOTCORR"].items():
-            if k[4:] != "13" and v is not None and v > -900:
-                rain[f"{k[:4]}-{k[4:]}"].append(v)
-        print("POWER", name, "ok through", end)
+        for month, mm_day in era5_monthly_rain(la, lo).items():
+            rain[month].append(mm_day)
+        print("ERA5", name, "ok")
     rainfall = [{"month": k, "mm_day": round(sum(v) / len(v), 2)}
                 for k, v in sorted(rain.items()) if len(v) == len(RAIN_PTS)]
 
@@ -316,7 +345,8 @@ def run_drivers():
                       "Trust timing and year-to-year ranking more than exact m3/s.",
             "monthly": discharge},
         "rainfall": {
-            "source": "NASA POWER (MERRA-2), PRECTOTCORR monthly mean",
+            "source": "ERA5 reanalysis (Copernicus Climate Change Service / ECMWF) "
+                      "via the Open-Meteo archive API, monthly mean",
             "points": {k: {"lat": v[0], "lon": v[1]} for k, v in RAIN_PTS.items()},
             "caveat": "Mean of three points in the Angolan headwaters, a proxy "
                       "for catchment rainfall, not a basin average.",

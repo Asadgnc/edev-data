@@ -51,6 +51,31 @@ def annual_drivers(drv: dict) -> dict:
     return out
 
 
+def story_table():
+    """Compact per-year causes, people and events from story.json."""
+    f = C.OUT / "story.json"
+    if not f.exists():
+        return None
+    st = json.loads(f.read_text(encoding="utf-8"))
+    lv = lambda r, k: next((c["level"] for c in r["causes"] if c["id"] == k), None)
+    return {
+        "what": "Level of each cause per year, -2 (pushes towards a small "
+                "flood) to +2 (towards a large flood), against the 1991-2020 "
+                "normal. people = residents within 5 km of that year's Landsat "
+                "open water (2020 population held fixed). Causes are "
+                "associations, not proof.",
+        "columns": ["year", "el_nino_la_nina", "headwater_rain", "river_inflow_model",
+                    "rain_over_delta", "heat", "people_near_water"],
+        "rows": [[int(y), lv(r, "enso"), lv(r, "headwater_rain"), lv(r, "inflow"),
+                  lv(r, "local_rain"), lv(r, "heat"), r.get("people_near_water")]
+                 for y, r in st["years"].items() if int(y) >= 1997],
+        "sentences_2026": st["years"]["2026"]["why"],
+        "documented_events": [{k: e[k] for k in ("year", "title", "text", "source")}
+                              for e in st["events"]],
+        "caveats": st["caveats"],
+    }
+
+
 def loyo(x: np.ndarray, y: np.ndarray):
     """Leave-one-year-out linear regression. Returns predictions and skill
     against the leave-one-out mean (climatology). skill <= 0 means useless."""
@@ -151,8 +176,9 @@ def main() -> None:
     findings["how_2026_compares"] = (
         f"By modelled peak monthly inflow, 2026 ({i26['peak_m3s']} m3/s) ranks "
         f"{i26['rank']} of {i26['of_years']} years ({i26['period'][0]}-"
-        f"{i26['period'][1]}): an average year, and clearly above the three "
-        "weak years before it.")
+        f"{i26['period'][1]}): an average year. Caution: this river model "
+        "is unreliable in some years; it shows 2025 as weak although Landsat "
+        "mapped a normal-sized flood that year.")
 
     ctx = {
         "instructions": (
@@ -248,6 +274,7 @@ def main() -> None:
                 r["month"][5:]: round(r["m3s"]) for r in drv["discharge"]["monthly"]
                 if r["month"].startswith("2026")}},
         "findings": findings,
+        "causes_and_people_by_year": story_table(),
         "data_quality": (load("quality.json").get("summary")
                          if (C.OUT / "quality.json").exists() else None),
         "forecast": {

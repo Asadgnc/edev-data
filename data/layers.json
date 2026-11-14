@@ -515,7 +515,7 @@
     }
    ],
    "unit": "mm/day",
-   "source": "power"
+   "source": "era5"
   }
  ],
  "must_show": [
@@ -528,5 +528,6 @@
   "label": "AI-generated answer based on this project's data files. It can be wrong: check the numbers against the charts."
  },
  "credits": "sources.json",
+ "story": "story.json",
  "quality": "quality.json"
 }

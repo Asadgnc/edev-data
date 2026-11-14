@@ -43,6 +43,16 @@
   .blend-multiply { mix-blend-mode: multiply; }
   /* A muted base map so blue/green classes stay readable on top of it. */
   .basemap { filter: grayscale(1) contrast(0.9) brightness(1.05); }
+  /* Cause markers: an emoji in a ring whose colour is the cause's level. */
+  .cause { display: flex; align-items: center; justify-content: center;
+           width: 34px; height: 34px; border-radius: 50%; background: #fff;
+           border: 4px solid #999; font-size: 18px; line-height: 1;
+           box-shadow: 0 1px 4px rgba(0,0,0,.4); box-sizing: border-box; }
+  .leaflet-tooltip.story { max-width: 260px; white-space: normal; }
+  #story p { margin: 4px 0; }
+  .event { border-left: 3px solid #888; padding-left: 6px; margin: 6px 0; font-size: 12px; }
+  .chips span { display: inline-block; margin: 2px 4px 2px 0; padding: 1px 6px;
+                border-radius: 10px; color: #fff; font-size: 12px; }
   @media (max-width: 700px) { body { grid-template-columns: 1fr; grid-template-rows: 45vh 55vh; }
                               #map { height: 55vh; order: 2; } }
 </style>
@@ -54,6 +64,17 @@
   <input id="slider" type="range" min="0" max="0" value="0">
   <div><span id="time"></span><span id="busy">loading…</span></div>
   <div id="flag" class="warn" hidden></div>
+  <div id="story" hidden>
+    <h3>Why was the water like this in <span id="syear"></span>?</h3>
+    <label><input id="showCauses" type="checkbox" checked> Show causes on the map</label>
+    <div id="chips" class="chips"></div>
+    <p id="why" class="note"></p>
+    <p id="outcome"><b></b></p>
+    <div id="mismatch" class="warn" hidden></div>
+    <h3>People</h3>
+    <p id="people" class="note"></p>
+    <div id="events"></div>
+  </div>
   <h3>Legend</h3>
   <div id="legend"></div>
   <div id="note" class="note"></div>
@@ -83,11 +104,34 @@ const rgba = (c) => `rgba(${c[0]},${c[1]},${c[2]},${(c[3] ?? 255) / 255})`;
   const abs = (u) => (u.startsWith("http") ? u : `${ROOT}/${u}`);
   const S = (await (await fetch(abs(M.credits))).json()).sources;
 
+  const STORY = M.story ? await (await fetch(abs(M.story))).json() : null;
+
   const a = M.aoi;
-  const map = L.map("map", { fadeAnimation: false })
-      .fitBounds([[a.lat_min, a.lon_min], [a.lat_max, a.lon_max]]);
+  const AOI = L.latLngBounds([[a.lat_min, a.lon_min], [a.lat_max, a.lon_max]]);
+  // zoomAnimation off: the clip below is recomputed per frame, and an animated
+  // zoom would show the data sliding outside the frame for a moment.
+  const map = L.map("map", { fadeAnimation: false, zoomAnimation: false })
+      .fitBounds(AOI.pad(0.12));
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       { attribution: "&copy; OpenStreetMap contributors", className: "basemap" }).addTo(map);
+
+  // ---- one look for every layer ---------------------------------------------
+  // All data layers live in one pane that is clipped to the study area. Outside
+  // it the same base map always continues, whichever layer is selected: a world
+  // wide NASA layer and a small overlay of ours end at the same frame.
+  const dataPane = map.createPane("data");
+  dataPane.style.zIndex = 350;
+  function clip() {
+    const p = map.latLngToLayerPoint(AOI.getNorthWest());
+    const q = map.latLngToLayerPoint(AOI.getSouthEast());
+    dataPane.style.clipPath =
+        `polygon(${p.x}px ${p.y}px, ${q.x}px ${p.y}px, ${q.x}px ${q.y}px, ${p.x}px ${q.y}px)`;
+  }
+  map.on("move zoom zoomend viewreset resize", clip);
+  clip();
+  L.rectangle(AOI, { color: "#222", weight: 1.5, fill: false, dashArray: "5 5",
+      interactive: false }).addTo(map);
+  const causeLayer = L.layerGroup().addTo(map);
 
   // ---- caches: every image and every bounds file is fetched exactly once ----
   const images = new Map();   // url -> Promise<url>, resolved when decoded
@@ -154,6 +198,7 @@ const rgba = (c) => `rgba(${c[0]},${c[1]},${c[2]},${(c[3] ?? 255) / 255})`;
 
     // The label follows the slider at once; the picture follows when ready.
     $("time").textContent = t ?? "(one image, no time)";
+    story(t ? t.slice(0, 4) : null);
     const flagged = (l.flag_times ?? []).includes(t);
     $("flag").hidden = !flagged;
     $("flag").textContent = flagged ? l.flag_label : "";
@@ -168,21 +213,25 @@ const rgba = (c) => `rgba(${c[0]},${c[1]},${c[2]},${(c[3] ?? 255) / 255})`;
         shown.setUrl(url);                       // same layer, new date: reuse the element
         shown.setBounds(b);
       } else {
-        const next = L.imageOverlay(url, b, { opacity: l.opacity }).addTo(map);
+        const next = L.imageOverlay(url, b, { opacity: l.opacity, pane: "data" }).addTo(map);
         if (shown) map.removeLayer(shown);
         shown = next;
       }
+      dataPane.style.mixBlendMode = l.blend ?? "normal";
       shownLayerId = l.id;
       done();
     } else {
       // Tiles come live from NASA: add the new layer UNDER the old one's place
       // invisibly, and swap only when its tiles have arrived (rule 2).
+      // bounds: only the tiles that touch the study area are requested at all.
       const next = L.tileLayer(urlOf(l, t), { maxNativeZoom: l.max_native_zoom,
-          opacity: 0, attribution: "NASA GIBS", keepBuffer: 4,
-          className: l.blend ? `blend-${l.blend}` : "" }).addTo(map);
+          opacity: 0, attribution: "NASA GIBS", keepBuffer: 2, pane: "data",
+          bounds: AOI }).addTo(map);
       const swap = () => {
         if (mine !== request) { map.removeLayer(next); return; }
         next.setOpacity(l.opacity);
+        // The pane is its own stacking context, so the blend goes on the pane.
+        dataPane.style.mixBlendMode = l.blend ?? "normal";
         if (shown) map.removeLayer(shown);
         shown = next;
         shownLayerId = l.id;
@@ -194,6 +243,40 @@ const rgba = (c) => `rgba(${c[0]},${c[1]},${c[2]},${(c[3] ?? 255) / 255})`;
       setTimeout(once, 6000);                    // never hang on a missing tile
     }
   }
+
+  // ---- the story of one year: causes on the map, text in the panel -----------
+  let storyYear;
+  function story(year) {
+    const s = STORY?.years?.[year];
+    if (year === storyYear && s) return;      // same year: nothing to redraw
+    storyYear = year;
+    causeLayer.clearLayers();
+    $("story").hidden = !s;
+    if (!s) return;
+    const rgb = (c) => `rgb(${c[0]},${c[1]},${c[2]})`;
+    $("syear").textContent = year;
+    $("chips").innerHTML = s.causes.map((c) =>
+        `<span style="background:${rgb(c.color)}">${c.icon} ${STORY.levels[c.level].word}</span>`).join("");
+    $("why").textContent = s.why;
+    $("outcome").firstChild.textContent = s.outcome;
+    $("mismatch").hidden = !s.mismatch;
+    $("mismatch").textContent = s.mismatch ?? "";
+    $("people").textContent = s.people_text ?? "No population figure for this year.";
+    $("events").innerHTML = (s.events ?? []).map((e) =>
+        `<div class="event"><b>${e.title}.</b> ${e.text} <a href="${e.url}" target="_blank" rel="noopener">${e.source}</a></div>`).join("");
+    if (!$("showCauses").checked) return;
+    const pin = (pos, icon, color, html) => L.marker(pos, { icon: L.divIcon({ className: "",
+        html: `<div class="cause" style="border-color:${color}">${icon}</div>`,
+        iconSize: [34, 34], iconAnchor: [17, 17] }) })
+        .bindTooltip(html, { className: "story", direction: "top", offset: [0, -14] })
+        .addTo(causeLayer);
+    for (const c of s.causes) {
+      pin(c.pos, c.icon, rgb(c.color),
+          `<b>${c.label}</b>: ${c.value}, ${STORY.levels[c.level].word}<br>${c.text}<br><i>${c.hint}</i>`);
+    }
+    if (s.people_pos) pin(s.people_pos, "\u{1F465}", "#444", `<b>People</b><br>${s.people_text}`);
+  }
+  $("showCauses").onchange = () => { const y = storyYear; storyYear = undefined; story(y); };
 
   function select(l) {
     layer = l;

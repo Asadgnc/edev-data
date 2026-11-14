@@ -1,0 +1,5193 @@
+{
+ "how_to_use": "Look up years[<year>]. Draw each entry of 'causes' as a map marker at 'pos' (inside the map) using 'icon' and 'color'; show 'label', 'value' and 'text' on hover. Show 'why', 'outcome', 'people_text' and 'events' as text. Levels run from -2 (pushes towards a small flood) to +2 (pushes towards a large flood).",
+ "normal_period": [
+  1991,
+  2020
+ ],
+ "levels": {
+  "-2": {
+   "word": "far below normal",
+   "color": [
+    178,
+    24,
+    43
+   ]
+  },
+  "-1": {
+   "word": "below normal",
+   "color": [
+    239,
+    138,
+    98
+   ]
+  },
+  "0": {
+   "word": "near normal",
+   "color": [
+    150,
+    150,
+    150
+   ]
+  },
+  "1": {
+   "word": "above normal",
+   "color": [
+    103,
+    169,
+    207
+   ]
+  },
+  "2": {
+   "word": "far above normal",
+   "color": [
+    33,
+    102,
+    172
+   ]
+  }
+ },
+ "sources": {
+  "headwater_rain": "ERA5 reanalysis via Open-Meteo, mean of three points in the Angolan highlands, November-April total",
+  "inflow": "GloFAS river discharge reanalysis via Open-Meteo, peak monthly mean January-June. A MODEL, not a gauge.",
+  "local_rain": "ERA5 reanalysis via Open-Meteo at -19.3, 22.9, November-April total",
+  "heat": "NASA POWER (MERRA-2) daily maximum temperature, May-October mean",
+  "enso": "NOAA Climate Prediction Center, Oceanic Nino Index, December-February",
+  "people": "WorldPop 2020, 1 km, UN-adjusted (CC BY 4.0), counted within 5 km of that year's Landsat open water"
+ },
+ "caveats": [
+  "Causes are associations, not proof: a year can be wet for reasons not listed here, and last year's water carries over.",
+  "River inflow is a hydrological model. It disagrees with the mapped water in some years (for example 2025).",
+  "Population is held at its 2020 distribution in every year, so the change between years comes from the water, not from growth. Living near water is not the same as being flooded or helped.",
+  "Events are from news reports and a travel guide; they are illustrations, not a complete record."
+ ],
+ "population_in_map_area_2020": 81000.0,
+ "typical_recent_water_km2": 1409.8,
+ "years": {
+  "1984": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -0.6",
+     "text": "The rainy season came with a La Nina (index -0.6); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1013 mm",
+     "text": "Rain in the Angolan highlands was 9% above normal (1013 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "462 mm",
+     "text": "Rain over the Delta itself was 18% below normal (462 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "-0.3 C",
+     "text": "Flood-season days were 0.3 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 871.0,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 1984 to trust the area (871 km2 is a lower bound).",
+   "people_near_water": 53000,
+   "people_text": "About 53,000 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -0.6); La Nina usually brings more rain here. Rain in the Angolan highlands was 9% above normal (1013 mm). Rain over the Delta itself was 18% below normal (462 mm). Flood-season days were 0.3 C cooler than normal."
+  },
+  "1985": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -1.0",
+     "text": "The rainy season came with a La Nina (index -1.0); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "716 mm",
+     "text": "Rain in the Angolan highlands was 23% below normal (716 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "413 mm",
+     "text": "Rain over the Delta itself was 27% below normal (413 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "-0.4 C",
+     "text": "Flood-season days were 0.4 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 0.0,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 1985 to trust the area (0 km2 is a lower bound).",
+   "people_near_water": 0,
+   "people_text": "About 0 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -1.0); La Nina usually brings more rain here. Rain in the Angolan highlands was 23% below normal (716 mm). Rain over the Delta itself was 27% below normal (413 mm). Flood-season days were 0.4 C cooler than normal."
+  },
+  "1986": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI -0.4",
+     "text": "The rainy season came with a neutral Pacific (index -0.4).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "864 mm",
+     "text": "Rain in the Angolan highlands was 7% below normal (864 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "489 mm",
+     "text": "Rain over the Delta itself was 13% below normal (489 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "-0.0 C",
+     "text": "Flood-season days were 0.0 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 42.8,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 1986 to trust the area (43 km2 is a lower bound).",
+   "people_near_water": 19800,
+   "people_text": "About 19,800 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index -0.4). Rain in the Angolan highlands was 7% below normal (864 mm). Rain over the Delta itself was 13% below normal (489 mm). Flood-season days were 0.0 C cooler than normal."
+  },
+  "1987": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "ONI +1.2",
+     "text": "The rainy season came with an El Nino (index +1.2); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "786 mm",
+     "text": "Rain in the Angolan highlands was 15% below normal (786 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "294 mm",
+     "text": "Rain over the Delta itself was 48% below normal (294 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.6 C",
+     "text": "Flood-season days were 0.6 C hotter than normal, so more water evaporated.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 794.7,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 1987 to trust the area (795 km2 is a lower bound).",
+   "people_near_water": 20800,
+   "people_text": "About 20,800 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with an El Nino (index +1.2); El Nino usually dries southern Africa. Rain in the Angolan highlands was 15% below normal (786 mm). Rain over the Delta itself was 48% below normal (294 mm). Flood-season days were 0.6 C hotter than normal, so more water evaporated."
+  },
+  "1988": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "ONI +0.6",
+     "text": "The rainy season came with an El Nino (index +0.6); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "868 mm",
+     "text": "Rain in the Angolan highlands was 7% below normal (868 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "590 mm",
+     "text": "Rain over the Delta itself was 4% above normal (590 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "-0.6 C",
+     "text": "Flood-season days were 0.6 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": null,
+   "outcome": "No Landsat water map for this year.",
+   "why": "The rainy season came with an El Nino (index +0.6); El Nino usually dries southern Africa. Rain in the Angolan highlands was 7% below normal (868 mm). Rain over the Delta itself was 4% above normal (590 mm). Flood-season days were 0.6 C cooler than normal."
+  },
+  "1989": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "ONI -1.6",
+     "text": "The rainy season came with a strong La Nina (index -1.6); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1003 mm",
+     "text": "Rain in the Angolan highlands was 8% above normal (1003 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "786 mm",
+     "text": "Rain over the Delta itself was 39% above normal (786 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "-0.3 C",
+     "text": "Flood-season days were 0.3 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 2517.9,
+   "low_coverage": false,
+   "outcome": "Result: 2518 km2 of open water, 79% above a typical recent year.",
+   "people_near_water": 59200,
+   "people_text": "About 59,200 of the 81,000 people in and around the map area lived within 5 km of open water this year, 5% more than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a strong La Nina (index -1.6); La Nina usually brings more rain here. Rain in the Angolan highlands was 8% above normal (1003 mm). Rain over the Delta itself was 39% above normal (786 mm). Flood-season days were 0.3 C cooler than normal."
+  },
+  "1990": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI +0.2",
+     "text": "The rainy season came with a neutral Pacific (index +0.2).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "913 mm",
+     "text": "Rain in the Angolan highlands was close to normal (913 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "443 mm",
+     "text": "Rain over the Delta itself was 22% below normal (443 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "+0.1 C",
+     "text": "Flood-season days were 0.1 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1536.0,
+   "low_coverage": false,
+   "outcome": "Result: 1536 km2 of open water, 9% above a typical recent year.",
+   "people_near_water": 50900,
+   "people_text": "About 50,900 of the 81,000 people in and around the map area lived within 5 km of open water this year, 10% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index +0.2). Rain in the Angolan highlands was close to normal (913 mm). Rain over the Delta itself was 22% below normal (443 mm). Flood-season days were 0.1 C hotter than normal."
+  },
+  "1991": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI +0.3",
+     "text": "The rainy season came with a neutral Pacific (index +0.3).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "783 mm",
+     "text": "Rain in the Angolan highlands was 16% below normal (783 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "627 mm",
+     "text": "Rain over the Delta itself was 11% above normal (627 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "-0.1 C",
+     "text": "Flood-season days were 0.1 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1287.1,
+   "low_coverage": false,
+   "outcome": "Result: 1287 km2 of open water, 9% below a typical recent year.",
+   "people_near_water": 49000,
+   "people_text": "About 49,000 of the 81,000 people in and around the map area lived within 5 km of open water this year, 13% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index +0.3). Rain in the Angolan highlands was 16% below normal (783 mm). Rain over the Delta itself was 11% above normal (627 mm). Flood-season days were 0.1 C cooler than normal."
+  },
+  "1992": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "ONI +1.5",
+     "text": "The rainy season came with a strong El Nino (index +1.5); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1022 mm",
+     "text": "Rain in the Angolan highlands was 10% above normal (1022 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "481 mm",
+     "text": "Rain over the Delta itself was 15% below normal (481 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "-0.1 C",
+     "text": "Flood-season days were 0.1 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1891.1,
+   "low_coverage": false,
+   "outcome": "Result: 1891 km2 of open water, 34% above a typical recent year.",
+   "people_near_water": 41500,
+   "people_text": "About 41,500 of the 81,000 people in and around the map area lived within 5 km of open water this year, 27% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a strong El Nino (index +1.5); El Nino usually dries southern Africa. Rain in the Angolan highlands was 10% above normal (1022 mm). Rain over the Delta itself was 15% below normal (481 mm). Flood-season days were 0.1 C cooler than normal."
+  },
+  "1993": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI +0.1",
+     "text": "The rainy season came with a neutral Pacific (index +0.1).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "780 mm",
+     "text": "Rain in the Angolan highlands was 16% below normal (780 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "566 mm",
+     "text": "Rain over the Delta itself was close to normal (566 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "+0.0 C",
+     "text": "Flood-season days were 0.0 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 167.0,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 1993 to trust the area (167 km2 is a lower bound).",
+   "people_near_water": 21800,
+   "people_text": "About 21,800 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index +0.1). Rain in the Angolan highlands was 16% below normal (780 mm). Rain over the Delta itself was close to normal (566 mm). Flood-season days were 0.0 C hotter than normal."
+  },
+  "1994": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI +0.1",
+     "text": "The rainy season came with a neutral Pacific (index +0.1).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "799 mm",
+     "text": "Rain in the Angolan highlands was 14% below normal (799 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "757 mm",
+     "text": "Rain over the Delta itself was 34% above normal (757 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.7 C",
+     "text": "Flood-season days were 0.7 C hotter than normal, so more water evaporated.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 410.5,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 1994 to trust the area (410 km2 is a lower bound).",
+   "people_near_water": 38100,
+   "people_text": "About 38,100 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index +0.1). Rain in the Angolan highlands was 14% below normal (799 mm). Rain over the Delta itself was 34% above normal (757 mm). Flood-season days were 0.7 C hotter than normal, so more water evaporated."
+  },
+  "1995": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "ONI +0.9",
+     "text": "The rainy season came with an El Nino (index +0.9); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "883 mm",
+     "text": "Rain in the Angolan highlands was 5% below normal (883 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "378 mm",
+     "text": "Rain over the Delta itself was 33% below normal (378 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.3 C",
+     "text": "Flood-season days were 0.3 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 474.4,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 1995 to trust the area (474 km2 is a lower bound).",
+   "people_near_water": 39800,
+   "people_text": "About 39,800 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with an El Nino (index +0.9); El Nino usually dries southern Africa. Rain in the Angolan highlands was 5% below normal (883 mm). Rain over the Delta itself was 33% below normal (378 mm). Flood-season days were 0.3 C hotter than normal."
+  },
+  "1996": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -0.9",
+     "text": "The rainy season came with a La Nina (index -0.9); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "743 mm",
+     "text": "Rain in the Angolan highlands was 20% below normal (743 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "543 mm",
+     "text": "Rain over the Delta itself was 4% below normal (543 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "+0.2 C",
+     "text": "Flood-season days were 0.2 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 102.5,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 1996 to trust the area (102 km2 is a lower bound).",
+   "people_near_water": 16000,
+   "people_text": "About 16,000 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -0.9); La Nina usually brings more rain here. Rain in the Angolan highlands was 20% below normal (743 mm). Rain over the Delta itself was 4% below normal (543 mm). Flood-season days were 0.2 C hotter than normal."
+  },
+  "1997": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI -0.4",
+     "text": "The rainy season came with a neutral Pacific (index -0.4).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "857 mm",
+     "text": "Rain in the Angolan highlands was 8% below normal (857 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "292 m3/s",
+     "text": "Modelled river inflow peaked at 292 m3/s, rank 30 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "612 mm",
+     "text": "Rain over the Delta itself was 8% above normal (612 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.3 C",
+     "text": "Flood-season days were 0.3 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 542.2,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 1997 to trust the area (542 km2 is a lower bound).",
+   "people_near_water": 21600,
+   "people_text": "About 21,600 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index -0.4). Rain in the Angolan highlands was 8% below normal (857 mm). Modelled river inflow peaked at 292 m3/s, rank 30 of 30 years since 1997. Rain over the Delta itself was 8% above normal (612 mm). Flood-season days were 0.3 C hotter than normal."
+  },
+  "1998": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "ONI +2.2",
+     "text": "The rainy season came with a strong El Nino (index +2.2); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "888 mm",
+     "text": "Rain in the Angolan highlands was 4% below normal (888 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "534 m3/s",
+     "text": "Modelled river inflow peaked at 534 m3/s, rank 21 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "338 mm",
+     "text": "Rain over the Delta itself was 40% below normal (338 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "+0.9 C",
+     "text": "Flood-season days were 0.9 C hotter than normal, so more water evaporated.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 829.5,
+   "low_coverage": false,
+   "outcome": "Result: 830 km2 of open water, 41% below a typical recent year.",
+   "people_near_water": 38200,
+   "people_text": "About 38,200 of the 81,000 people in and around the map area lived within 5 km of open water this year, 33% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a strong El Nino (index +2.2); El Nino usually dries southern Africa. Rain in the Angolan highlands was 4% below normal (888 mm). Modelled river inflow peaked at 534 m3/s, rank 21 of 30 years since 1997. Rain over the Delta itself was 40% below normal (338 mm). Flood-season days were 0.9 C hotter than normal, so more water evaporated."
+  },
+  "1999": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "ONI -1.5",
+     "text": "The rainy season came with a strong La Nina (index -1.5); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "961 mm",
+     "text": "Rain in the Angolan highlands was 3% above normal (961 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "736 m3/s",
+     "text": "Modelled river inflow peaked at 736 m3/s, rank 16 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "426 mm",
+     "text": "Rain over the Delta itself was 25% below normal (426 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "-0.2 C",
+     "text": "Flood-season days were 0.2 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 228.6,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 1999 to trust the area (229 km2 is a lower bound).",
+   "people_near_water": 31300,
+   "people_text": "About 31,300 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a strong La Nina (index -1.5); La Nina usually brings more rain here. Rain in the Angolan highlands was 3% above normal (961 mm). Modelled river inflow peaked at 736 m3/s, rank 16 of 30 years since 1997. Rain over the Delta itself was 25% below normal (426 mm). Flood-season days were 0.2 C cooler than normal."
+  },
+  "2000": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -1.5",
+     "text": "The rainy season came with a La Nina (index -1.5); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "889 mm",
+     "text": "Rain in the Angolan highlands was 4% below normal (889 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "453 m3/s",
+     "text": "Modelled river inflow peaked at 453 m3/s, rank 25 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "870 mm",
+     "text": "Rain over the Delta itself was 54% above normal (870 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "-1.1 C",
+     "text": "Flood-season days were 1.1 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 737.3,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 2000 to trust the area (737 km2 is a lower bound).",
+   "people_near_water": 53400,
+   "people_text": "About 53,400 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -1.5); La Nina usually brings more rain here. Rain in the Angolan highlands was 4% below normal (889 mm). Modelled river inflow peaked at 453 m3/s, rank 25 of 30 years since 1997. Rain over the Delta itself was 54% above normal (870 mm). Flood-season days were 1.1 C cooler than normal."
+  },
+  "2001": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -0.8",
+     "text": "The rainy season came with a La Nina (index -0.8); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "963 mm",
+     "text": "Rain in the Angolan highlands was 4% above normal (963 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "834 m3/s",
+     "text": "Modelled river inflow peaked at 834 m3/s, rank 12 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "484 mm",
+     "text": "Rain over the Delta itself was 14% below normal (484 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.4 C",
+     "text": "Flood-season days were 0.4 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1487.1,
+   "low_coverage": false,
+   "outcome": "Result: 1487 km2 of open water, 5% above a typical recent year.",
+   "people_near_water": 51300,
+   "people_text": "About 51,300 of the 81,000 people in and around the map area lived within 5 km of open water this year, 9% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -0.8); La Nina usually brings more rain here. Rain in the Angolan highlands was 4% above normal (963 mm). Modelled river inflow peaked at 834 m3/s, rank 12 of 30 years since 1997. Rain over the Delta itself was 14% below normal (484 mm). Flood-season days were 0.4 C hotter than normal."
+  },
+  "2002": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI -0.1",
+     "text": "The rainy season came with a neutral Pacific (index -0.1).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "930 mm",
+     "text": "Rain in the Angolan highlands was close to normal (930 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "524 m3/s",
+     "text": "Modelled river inflow peaked at 524 m3/s, rank 22 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "493 mm",
+     "text": "Rain over the Delta itself was 13% below normal (493 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "+0.3 C",
+     "text": "Flood-season days were 0.3 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1393.5,
+   "low_coverage": false,
+   "outcome": "Result: 1394 km2 of open water, 1% below a typical recent year.",
+   "people_near_water": 47500,
+   "people_text": "About 47,500 of the 81,000 people in and around the map area lived within 5 km of open water this year, 16% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index -0.1). Rain in the Angolan highlands was close to normal (930 mm). Modelled river inflow peaked at 524 m3/s, rank 22 of 30 years since 1997. Rain over the Delta itself was 13% below normal (493 mm). Flood-season days were 0.3 C hotter than normal."
+  },
+  "2003": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "ONI +0.9",
+     "text": "The rainy season came with an El Nino (index +0.9); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "932 mm",
+     "text": "Rain in the Angolan highlands was close to normal (932 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "573 m3/s",
+     "text": "Modelled river inflow peaked at 573 m3/s, rank 20 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "290 mm",
+     "text": "Rain over the Delta itself was 49% below normal (290 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "+0.1 C",
+     "text": "Flood-season days were 0.1 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 183.8,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 2003 to trust the area (184 km2 is a lower bound).",
+   "people_near_water": 35700,
+   "people_text": "About 35,700 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with an El Nino (index +0.9); El Nino usually dries southern Africa. Rain in the Angolan highlands was close to normal (932 mm). Modelled river inflow peaked at 573 m3/s, rank 20 of 30 years since 1997. Rain over the Delta itself was 49% below normal (290 mm). Flood-season days were 0.1 C hotter than normal."
+  },
+  "2004": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI +0.3",
+     "text": "The rainy season came with a neutral Pacific (index +0.3).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1040 mm",
+     "text": "Rain in the Angolan highlands was 12% above normal (1040 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "772 m3/s",
+     "text": "Modelled river inflow peaked at 772 m3/s, rank 15 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "649 mm",
+     "text": "Rain over the Delta itself was 15% above normal (649 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "-1.0 C",
+     "text": "Flood-season days were 1.0 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 2462.6,
+   "low_coverage": false,
+   "outcome": "Result: 2463 km2 of open water, 75% above a typical recent year.",
+   "people_near_water": 55000,
+   "people_text": "About 55,000 of the 81,000 people in and around the map area lived within 5 km of open water this year, about the same as in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index +0.3). Rain in the Angolan highlands was 12% above normal (1040 mm). Modelled river inflow peaked at 772 m3/s, rank 15 of 30 years since 1997. Rain over the Delta itself was 15% above normal (649 mm). Flood-season days were 1.0 C cooler than normal."
+  },
+  "2005": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "ONI +0.6",
+     "text": "The rainy season came with an El Nino (index +0.6); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "921 mm",
+     "text": "Rain in the Angolan highlands was close to normal (921 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "602 m3/s",
+     "text": "Modelled river inflow peaked at 602 m3/s, rank 19 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "401 mm",
+     "text": "Rain over the Delta itself was 29% below normal (401 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.7 C",
+     "text": "Flood-season days were 0.7 C hotter than normal, so more water evaporated.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1533.7,
+   "low_coverage": false,
+   "outcome": "Result: 1534 km2 of open water, 9% above a typical recent year.",
+   "people_near_water": 47500,
+   "people_text": "About 47,500 of the 81,000 people in and around the map area lived within 5 km of open water this year, 16% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with an El Nino (index +0.6); El Nino usually dries southern Africa. Rain in the Angolan highlands was close to normal (921 mm). Modelled river inflow peaked at 602 m3/s, rank 19 of 30 years since 1997. Rain over the Delta itself was 29% below normal (401 mm). Flood-season days were 0.7 C hotter than normal, so more water evaporated."
+  },
+  "2006": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -0.9",
+     "text": "The rainy season came with a La Nina (index -0.9); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "876 mm",
+     "text": "Rain in the Angolan highlands was 6% below normal (876 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "402 m3/s",
+     "text": "Modelled river inflow peaked at 402 m3/s, rank 27 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "920 mm",
+     "text": "Rain over the Delta itself was 63% above normal (920 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "-0.3 C",
+     "text": "Flood-season days were 0.3 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1745.5,
+   "low_coverage": false,
+   "outcome": "Result: 1746 km2 of open water, 24% above a typical recent year.",
+   "people_near_water": 57100,
+   "people_text": "About 57,100 of the 81,000 people in and around the map area lived within 5 km of open water this year, about the same as in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -0.9); La Nina usually brings more rain here. Rain in the Angolan highlands was 6% below normal (876 mm). Modelled river inflow peaked at 402 m3/s, rank 27 of 30 years since 1997. Rain over the Delta itself was 63% above normal (920 mm). Flood-season days were 0.3 C cooler than normal."
+  },
+  "2007": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "ONI +0.6",
+     "text": "The rainy season came with an El Nino (index +0.6); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1043 mm",
+     "text": "Rain in the Angolan highlands was 12% above normal (1043 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "988 m3/s",
+     "text": "Modelled river inflow peaked at 988 m3/s, rank 5 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "364 mm",
+     "text": "Rain over the Delta itself was 36% below normal (364 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "+0.1 C",
+     "text": "Flood-season days were 0.1 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 2472.6,
+   "low_coverage": false,
+   "outcome": "Result: 2473 km2 of open water, 75% above a typical recent year.",
+   "people_near_water": 54200,
+   "people_text": "About 54,200 of the 81,000 people in and around the map area lived within 5 km of open water this year, 4% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with an El Nino (index +0.6); El Nino usually dries southern Africa. Rain in the Angolan highlands was 12% above normal (1043 mm). Modelled river inflow peaked at 988 m3/s, rank 5 of 30 years since 1997. Rain over the Delta itself was 36% below normal (364 mm). Flood-season days were 0.1 C hotter than normal."
+  },
+  "2008": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "ONI -1.8",
+     "text": "The rainy season came with a strong La Nina (index -1.8); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "911 mm",
+     "text": "Rain in the Angolan highlands was close to normal (911 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "681 m3/s",
+     "text": "Modelled river inflow peaked at 681 m3/s, rank 17 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "583 mm",
+     "text": "Rain over the Delta itself was 3% above normal (583 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.4 C",
+     "text": "Flood-season days were 0.4 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1469.9,
+   "low_coverage": false,
+   "outcome": "Result: 1470 km2 of open water, 4% above a typical recent year.",
+   "people_near_water": 58800,
+   "people_text": "About 58,800 of the 81,000 people in and around the map area lived within 5 km of open water this year, 4% more than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a strong La Nina (index -1.8); La Nina usually brings more rain here. Rain in the Angolan highlands was close to normal (911 mm). Modelled river inflow peaked at 681 m3/s, rank 17 of 30 years since 1997. Rain over the Delta itself was 3% above normal (583 mm). Flood-season days were 0.4 C hotter than normal."
+  },
+  "2009": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -0.9",
+     "text": "The rainy season came with a La Nina (index -0.9); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "931 mm",
+     "text": "Rain in the Angolan highlands was close to normal (931 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "895 m3/s",
+     "text": "Modelled river inflow peaked at 895 m3/s, rank 9 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "679 mm",
+     "text": "Rain over the Delta itself was 20% above normal (679 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "-0.5 C",
+     "text": "Flood-season days were 0.5 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1804.4,
+   "low_coverage": false,
+   "outcome": "Result: 1804 km2 of open water, 28% above a typical recent year.",
+   "people_near_water": 57200,
+   "people_text": "About 57,200 of the 81,000 people in and around the map area lived within 5 km of open water this year, about the same as in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "events": [
+    {
+     "year": 2009,
+     "kind": "people",
+     "title": "Floods displace families",
+     "text": "Floods on the Okavango, Zambezi and Chobe displaced 430 people and submerged eight villages. In Ngamiland 61 hectares of ploughed fields went under water and lodges at Sepopa were flooded.",
+     "source": "Mmegi, 30 March 2009",
+     "url": "https://www.mmegi.bw/ampArticle/17479"
+    }
+   ],
+   "why": "The rainy season came with a La Nina (index -0.9); La Nina usually brings more rain here. Rain in the Angolan highlands was close to normal (931 mm). Modelled river inflow peaked at 895 m3/s, rank 9 of 30 years since 1997. Rain over the Delta itself was 20% above normal (679 mm). Flood-season days were 0.5 C cooler than normal."
+  },
+  "2010": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "ONI +1.5",
+     "text": "The rainy season came with an El Nino (index +1.5); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1059 mm",
+     "text": "Rain in the Angolan highlands was 14% above normal (1059 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "999 m3/s",
+     "text": "Modelled river inflow peaked at 999 m3/s, rank 4 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "550 mm",
+     "text": "Rain over the Delta itself was 3% below normal (550 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "-1.4 C",
+     "text": "Flood-season days were 1.4 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1553.1,
+   "low_coverage": false,
+   "outcome": "Result: 1553 km2 of open water, 10% above a typical recent year.",
+   "people_near_water": 58300,
+   "people_text": "About 58,300 of the 81,000 people in and around the map area lived within 5 km of open water this year, 3% more than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "events": [
+    {
+     "year": 2010,
+     "kind": "nature",
+     "title": "Largest floods in recent memory",
+     "text": "Between 2010 and 2012 the Delta saw some of its largest floods in recent memory; channels and lagoons dry for decades refilled and water reached Lake Ngami.",
+     "source": "okavango.com (travel guide, not a scientific source)",
+     "url": "https://www.okavango.com/okavango-delta-flood-cycle.php"
+    }
+   ],
+   "why": "The rainy season came with an El Nino (index +1.5); El Nino usually dries southern Africa. Rain in the Angolan highlands was 14% above normal (1059 mm). Modelled river inflow peaked at 999 m3/s, rank 4 of 30 years since 1997. Rain over the Delta itself was 3% below normal (550 mm). Flood-season days were 1.4 C cooler than normal."
+  },
+  "2011": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -1.3",
+     "text": "The rainy season came with a La Nina (index -1.3); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "1118 mm",
+     "text": "Rain in the Angolan highlands was 20% above normal (1118 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "1447 m3/s",
+     "text": "Modelled river inflow peaked at 1447 m3/s, rank 1 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "698 mm",
+     "text": "Rain over the Delta itself was 24% above normal (698 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "-0.7 C",
+     "text": "Flood-season days were 0.7 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 2438.3,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 2011 to trust the area (2438 km2 is a lower bound).",
+   "people_near_water": 60800,
+   "people_text": "About 60,800 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -1.3); La Nina usually brings more rain here. Rain in the Angolan highlands was 20% above normal (1118 mm). Modelled river inflow peaked at 1447 m3/s, rank 1 of 30 years since 1997. Rain over the Delta itself was 24% above normal (698 mm). Flood-season days were 0.7 C cooler than normal."
+  },
+  "2012": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -0.7",
+     "text": "The rainy season came with a La Nina (index -0.7); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "988 mm",
+     "text": "Rain in the Angolan highlands was 6% above normal (988 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "972 m3/s",
+     "text": "Modelled river inflow peaked at 972 m3/s, rank 6 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "693 mm",
+     "text": "Rain over the Delta itself was 23% above normal (693 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.5 C",
+     "text": "Flood-season days were 0.5 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 896.9,
+   "low_coverage": true,
+   "outcome": "Landsat saw too few clear days in 2012 to trust the area (897 km2 is a lower bound).",
+   "people_near_water": 57700,
+   "people_text": "About 57,700 of the 81,000 people in and around the map area lived within 5 km of open water this year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -0.7); La Nina usually brings more rain here. Rain in the Angolan highlands was 6% above normal (988 mm). Modelled river inflow peaked at 972 m3/s, rank 6 of 30 years since 1997. Rain over the Delta itself was 23% above normal (693 mm). Flood-season days were 0.5 C hotter than normal."
+  },
+  "2013": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI -0.2",
+     "text": "The rainy season came with a neutral Pacific (index -0.2).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1058 mm",
+     "text": "Rain in the Angolan highlands was 14% above normal (1058 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1107 m3/s",
+     "text": "Modelled river inflow peaked at 1107 m3/s, rank 2 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "471 mm",
+     "text": "Rain over the Delta itself was 17% below normal (471 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.3 C",
+     "text": "Flood-season days were 0.3 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1469.3,
+   "low_coverage": false,
+   "outcome": "Result: 1469 km2 of open water, 4% above a typical recent year.",
+   "people_near_water": 57200,
+   "people_text": "About 57,200 of the 81,000 people in and around the map area lived within 5 km of open water this year, about the same as in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index -0.2). Rain in the Angolan highlands was 14% above normal (1058 mm). Modelled river inflow peaked at 1107 m3/s, rank 2 of 30 years since 1997. Rain over the Delta itself was 17% below normal (471 mm). Flood-season days were 0.3 C hotter than normal."
+  },
+  "2014": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI -0.2",
+     "text": "The rainy season came with a neutral Pacific (index -0.2).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1052 mm",
+     "text": "Rain in the Angolan highlands was 13% above normal (1052 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "909 m3/s",
+     "text": "Modelled river inflow peaked at 909 m3/s, rank 8 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "913 mm",
+     "text": "Rain over the Delta itself was 62% above normal (913 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "-0.9 C",
+     "text": "Flood-season days were 0.9 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 2196.4,
+   "low_coverage": false,
+   "outcome": "Result: 2196 km2 of open water, 56% above a typical recent year.",
+   "people_near_water": 60900,
+   "people_text": "About 60,900 of the 81,000 people in and around the map area lived within 5 km of open water this year, 8% more than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index -0.2). Rain in the Angolan highlands was 13% above normal (1052 mm). Modelled river inflow peaked at 909 m3/s, rank 8 of 30 years since 1997. Rain over the Delta itself was 62% above normal (913 mm). Flood-season days were 0.9 C cooler than normal."
+  },
+  "2015": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "ONI +0.7",
+     "text": "The rainy season came with an El Nino (index +0.7); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "885 mm",
+     "text": "Rain in the Angolan highlands was 5% below normal (885 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "640 m3/s",
+     "text": "Modelled river inflow peaked at 640 m3/s, rank 18 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "581 mm",
+     "text": "Rain over the Delta itself was 3% above normal (581 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.3 C",
+     "text": "Flood-season days were 0.3 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1409.8,
+   "low_coverage": false,
+   "outcome": "Result: 1410 km2 of open water, 0% above a typical recent year.",
+   "people_near_water": 57200,
+   "people_text": "About 57,200 of the 81,000 people in and around the map area lived within 5 km of open water this year, about the same as in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with an El Nino (index +0.7); El Nino usually dries southern Africa. Rain in the Angolan highlands was 5% below normal (885 mm). Modelled river inflow peaked at 640 m3/s, rank 18 of 30 years since 1997. Rain over the Delta itself was 3% above normal (581 mm). Flood-season days were 0.3 C hotter than normal."
+  },
+  "2016": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "ONI +2.5",
+     "text": "The rainy season came with a strong El Nino (index +2.5); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1013 mm",
+     "text": "Rain in the Angolan highlands was 9% above normal (1013 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "816 m3/s",
+     "text": "Modelled river inflow peaked at 816 m3/s, rank 13 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "513 mm",
+     "text": "Rain over the Delta itself was 9% below normal (513 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.4 C",
+     "text": "Flood-season days were 0.4 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1541.4,
+   "low_coverage": false,
+   "outcome": "Result: 1541 km2 of open water, 9% above a typical recent year.",
+   "people_near_water": 55500,
+   "people_text": "About 55,500 of the 81,000 people in and around the map area lived within 5 km of open water this year, about the same as in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a strong El Nino (index +2.5); El Nino usually dries southern Africa. Rain in the Angolan highlands was 9% above normal (1013 mm). Modelled river inflow peaked at 816 m3/s, rank 13 of 30 years since 1997. Rain over the Delta itself was 9% below normal (513 mm). Flood-season days were 0.4 C hotter than normal."
+  },
+  "2017": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI -0.1",
+     "text": "The rainy season came with a neutral Pacific (index -0.1).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "925 mm",
+     "text": "Rain in the Angolan highlands was close to normal (925 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "504 m3/s",
+     "text": "Modelled river inflow peaked at 504 m3/s, rank 23 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "872 mm",
+     "text": "Rain over the Delta itself was 54% above normal (872 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "-0.1 C",
+     "text": "Flood-season days were 0.1 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1163.1,
+   "low_coverage": false,
+   "outcome": "Result: 1163 km2 of open water, 17% below a typical recent year.",
+   "people_near_water": 59600,
+   "people_text": "About 59,600 of the 81,000 people in and around the map area lived within 5 km of open water this year, 5% more than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index -0.1). Rain in the Angolan highlands was close to normal (925 mm). Modelled river inflow peaked at 504 m3/s, rank 23 of 30 years since 1997. Rain over the Delta itself was 54% above normal (872 mm). Flood-season days were 0.1 C cooler than normal."
+  },
+  "2018": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -0.7",
+     "text": "The rainy season came with a La Nina (index -0.7); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1007 mm",
+     "text": "Rain in the Angolan highlands was 8% above normal (1007 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "941 m3/s",
+     "text": "Modelled river inflow peaked at 941 m3/s, rank 7 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "505 mm",
+     "text": "Rain over the Delta itself was 11% below normal (505 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "+0.2 C",
+     "text": "Flood-season days were 0.2 C hotter than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1725.4,
+   "low_coverage": false,
+   "outcome": "Result: 1725 km2 of open water, 22% above a typical recent year.",
+   "people_near_water": 56600,
+   "people_text": "About 56,600 of the 81,000 people in and around the map area lived within 5 km of open water this year, about the same as in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -0.7); La Nina usually brings more rain here. Rain in the Angolan highlands was 8% above normal (1007 mm). Modelled river inflow peaked at 941 m3/s, rank 7 of 30 years since 1997. Rain over the Delta itself was 11% below normal (505 mm). Flood-season days were 0.2 C hotter than normal."
+  },
+  "2019": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "ONI +1.0",
+     "text": "The rainy season came with an El Nino (index +1.0); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "641 mm",
+     "text": "Rain in the Angolan highlands was 31% below normal (641 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "371 m3/s",
+     "text": "Modelled river inflow peaked at 371 m3/s, rank 29 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "223 mm",
+     "text": "Rain over the Delta itself was 61% below normal (223 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "+0.6 C",
+     "text": "Flood-season days were 0.6 C hotter than normal, so more water evaporated.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 375.9,
+   "low_coverage": false,
+   "outcome": "Result: 376 km2 of open water, 73% below a typical recent year.",
+   "people_near_water": 37700,
+   "people_text": "About 37,700 of the 81,000 people in and around the map area lived within 5 km of open water this year, 33% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "events": [
+    {
+     "year": 2019,
+     "kind": "people",
+     "title": "The flood did not arrive",
+     "text": "Water sources across Ngamiland dried up, leaving communities, livestock and wildlife in a dire situation. Fishermen and mokoro polers lost their income and farmers lost cattle.",
+     "source": "Botswana Daily News (BOPA), 26 April 2020",
+     "url": "https://dailynews.gov.bw/news-detail/55851"
+    }
+   ],
+   "why": "The rainy season came with an El Nino (index +1.0); El Nino usually dries southern Africa. Rain in the Angolan highlands was 31% below normal (641 mm). Modelled river inflow peaked at 371 m3/s, rank 29 of 30 years since 1997. Rain over the Delta itself was 61% below normal (223 mm). Flood-season days were 0.6 C hotter than normal, so more water evaporated."
+  },
+  "2020": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "ONI +0.7",
+     "text": "The rainy season came with an El Nino (index +0.7); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "991 mm",
+     "text": "Rain in the Angolan highlands was 7% above normal (991 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1091 m3/s",
+     "text": "Modelled river inflow peaked at 1091 m3/s, rank 3 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "465 mm",
+     "text": "Rain over the Delta itself was 18% below normal (465 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "-0.5 C",
+     "text": "Flood-season days were 0.5 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1734.9,
+   "low_coverage": false,
+   "outcome": "Result: 1735 km2 of open water, 23% above a typical recent year.",
+   "people_near_water": 56500,
+   "people_text": "About 56,500 of the 81,000 people in and around the map area lived within 5 km of open water this year, about the same as in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "events": [
+    {
+     "year": 2020,
+     "kind": "people",
+     "title": "The Delta springs back to life",
+     "text": "The flood returned and was expected to reach the Thamalakane River at Maun in mid-May, restoring water for farming, fishing and mokoro tourism.",
+     "source": "Botswana Daily News (BOPA), 26 April 2020",
+     "url": "https://dailynews.gov.bw/news-detail/55851"
+    }
+   ],
+   "why": "The rainy season came with an El Nino (index +0.7); El Nino usually dries southern Africa. Rain in the Angolan highlands was 7% above normal (991 mm). Modelled river inflow peaked at 1091 m3/s, rank 3 of 30 years since 1997. Rain over the Delta itself was 18% below normal (465 mm). Flood-season days were 0.5 C cooler than normal."
+  },
+  "2021": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -1.0",
+     "text": "The rainy season came with a La Nina (index -1.0); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "595 mm",
+     "text": "Rain in the Angolan highlands was 36% below normal (595 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "863 m3/s",
+     "text": "Modelled river inflow peaked at 863 m3/s, rank 10 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "759 mm",
+     "text": "Rain over the Delta itself was 34% above normal (759 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "-0.7 C",
+     "text": "Flood-season days were 0.7 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 548.2,
+   "low_coverage": false,
+   "outcome": "Result: 548 km2 of open water, 61% below a typical recent year.",
+   "mismatch": "The rainfall estimate and the river model disagree with each other this year; both are models, not measurements.",
+   "people_near_water": 60800,
+   "people_text": "About 60,800 of the 81,000 people in and around the map area lived within 5 km of open water this year, 7% more than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -1.0); La Nina usually brings more rain here. Rain in the Angolan highlands was 36% below normal (595 mm). Modelled river inflow peaked at 863 m3/s, rank 10 of 30 years since 1997. Rain over the Delta itself was 34% above normal (759 mm). Flood-season days were 0.7 C cooler than normal."
+  },
+  "2022": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -0.8",
+     "text": "The rainy season came with a La Nina (index -0.8); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1001 mm",
+     "text": "Rain in the Angolan highlands was 8% above normal (1001 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "835 m3/s",
+     "text": "Modelled river inflow peaked at 835 m3/s, rank 11 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "566 mm",
+     "text": "Rain over the Delta itself was close to normal (566 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "-1.0 C",
+     "text": "Flood-season days were 1.0 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1017.4,
+   "low_coverage": false,
+   "outcome": "Result: 1017 km2 of open water, 28% below a typical recent year.",
+   "mismatch": "The causes and the mapped water disagree this year. The inflow figure is a model and the flood also carries over water from the year before, so treat the explanation with caution.",
+   "people_near_water": 54500,
+   "people_text": "About 54,500 of the 81,000 people in and around the map area lived within 5 km of open water this year, 4% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -0.8); La Nina usually brings more rain here. Rain in the Angolan highlands was 8% above normal (1001 mm). Modelled river inflow peaked at 835 m3/s, rank 11 of 30 years since 1997. Rain over the Delta itself was close to normal (566 mm). Flood-season days were 1.0 C cooler than normal."
+  },
+  "2023": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "ONI -0.6",
+     "text": "The rainy season came with a La Nina (index -0.6); La Nina usually brings more rain here.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "726 mm",
+     "text": "Rain in the Angolan highlands was 22% below normal (726 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "394 m3/s",
+     "text": "Modelled river inflow peaked at 394 m3/s, rank 28 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "415 mm",
+     "text": "Rain over the Delta itself was 27% below normal (415 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "+2.0 C",
+     "text": "Flood-season days were 2.0 C hotter than normal, so more water evaporated.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 733.9,
+   "low_coverage": false,
+   "outcome": "Result: 734 km2 of open water, 48% below a typical recent year.",
+   "people_near_water": 48200,
+   "people_text": "About 48,200 of the 81,000 people in and around the map area lived within 5 km of open water this year, 15% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a La Nina (index -0.6); La Nina usually brings more rain here. Rain in the Angolan highlands was 22% below normal (726 mm). Modelled river inflow peaked at 394 m3/s, rank 28 of 30 years since 1997. Rain over the Delta itself was 27% below normal (415 mm). Flood-season days were 2.0 C hotter than normal, so more water evaporated."
+  },
+  "2024": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "ONI +1.8",
+     "text": "The rainy season came with a strong El Nino (index +1.8); El Nino usually dries southern Africa.",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "804 mm",
+     "text": "Rain in the Angolan highlands was 14% below normal (804 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "415 m3/s",
+     "text": "Modelled river inflow peaked at 415 m3/s, rank 26 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "214 mm",
+     "text": "Rain over the Delta itself was 62% below normal (214 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": -2,
+     "color": [
+      178,
+      24,
+      43
+     ],
+     "value": "+2.0 C",
+     "text": "Flood-season days were 2.0 C hotter than normal, so more water evaporated.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 579.8,
+   "low_coverage": false,
+   "outcome": "Result: 580 km2 of open water, 59% below a typical recent year.",
+   "people_near_water": 38700,
+   "people_text": "About 38,700 of the 81,000 people in and around the map area lived within 5 km of open water this year, 32% fewer than in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "events": [
+    {
+     "year": 2024,
+     "kind": "wildlife",
+     "title": "Hippos stranded near Maun",
+     "text": "During an El Nino drought the Thamalakane River dried up and herds of hippos were stuck in drying pools near Maun; wildlife officials warned they were in danger of dying.",
+     "source": "AFP, 26 April 2024",
+     "url": "https://www.gulf-times.com/article/681371/international/herds-of-hippos-trapped-in-mud-in-drought-hit-botswana"
+    }
+   ],
+   "why": "The rainy season came with a strong El Nino (index +1.8); El Nino usually dries southern Africa. Rain in the Angolan highlands was 14% below normal (804 mm). Modelled river inflow peaked at 415 m3/s, rank 26 of 30 years since 1997. Rain over the Delta itself was 62% below normal (214 mm). Flood-season days were 2.0 C hotter than normal, so more water evaporated."
+  },
+  "2025": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI -0.5",
+     "text": "The rainy season came with a neutral Pacific (index -0.5).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "916 mm",
+     "text": "Rain in the Angolan highlands was close to normal (916 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": -1,
+     "color": [
+      239,
+      138,
+      98
+     ],
+     "value": "460 m3/s",
+     "text": "Modelled river inflow peaked at 460 m3/s, rank 24 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "582 mm",
+     "text": "Rain over the Delta itself was 3% above normal (582 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "-0.3 C",
+     "text": "Flood-season days were 0.3 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": 1477.2,
+   "low_coverage": false,
+   "outcome": "Result: 1477 km2 of open water, 5% above a typical recent year.",
+   "people_near_water": 57200,
+   "people_text": "About 57,200 of the 81,000 people in and around the map area lived within 5 km of open water this year, about the same as in a typical recent year.",
+   "people_pos": [
+    -19.9,
+    23.42
+   ],
+   "why": "The rainy season came with a neutral Pacific (index -0.5). Rain in the Angolan highlands was close to normal (916 mm). Modelled river inflow peaked at 460 m3/s, rank 24 of 30 years since 1997. Rain over the Delta itself was 3% above normal (582 mm). Flood-season days were 0.3 C cooler than normal."
+  },
+  "2026": {
+   "causes": [
+    {
+     "id": "enso",
+     "icon": "🌍",
+     "label": "El Nino / La Nina",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "ONI -0.4",
+     "text": "The rainy season came with a neutral Pacific (index -0.4).",
+     "pos": [
+      -18.4,
+      23.62
+     ],
+     "true_pos": [
+      0.0,
+      -145.0
+     ],
+     "hint": "Pacific Ocean pattern; El Nino usually means drier southern Africa."
+    },
+    {
+     "id": "headwater_rain",
+     "icon": "🌧",
+     "label": "Rain in the Angolan highlands",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "1057 mm",
+     "text": "Rain in the Angolan highlands was 14% above normal (1057 mm).",
+     "pos": [
+      -18.4,
+      22.12
+     ],
+     "true_pos": [
+      -14.2,
+      17.5
+     ],
+     "hint": "About 600 km north-west of the map; arrives months later."
+    },
+    {
+     "id": "inflow",
+     "icon": "🌊",
+     "label": "River inflow into the Delta",
+     "level": 0,
+     "color": [
+      150,
+      150,
+      150
+     ],
+     "value": "808 m3/s",
+     "text": "Modelled river inflow peaked at 808 m3/s, rank 14 of 30 years since 1997.",
+     "pos": [
+      -18.72,
+      22.22
+     ],
+     "true_pos": [
+      -18.275,
+      21.787
+     ],
+     "hint": "Okavango River near Mohembo. Hydrological model, not a gauge."
+    },
+    {
+     "id": "local_rain",
+     "icon": "☔",
+     "label": "Rain over the Delta",
+     "level": 1,
+     "color": [
+      103,
+      169,
+      207
+     ],
+     "value": "781 mm",
+     "text": "Rain over the Delta itself was 38% above normal (781 mm).",
+     "pos": [
+      -18.55,
+      23.25
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "November-April rain falling on the Delta itself."
+    },
+    {
+     "id": "heat",
+     "icon": "🌡",
+     "label": "Flood-season heat",
+     "level": 2,
+     "color": [
+      33,
+      102,
+      172
+     ],
+     "value": "-0.9 C",
+     "text": "Flood-season days were 0.9 C cooler than normal.",
+     "pos": [
+      -19.25,
+      23.55
+     ],
+     "true_pos": [
+      -19.3,
+      22.9
+     ],
+     "hint": "Hotter days evaporate the flood faster."
+    }
+   ],
+   "water_km2": null,
+   "outcome": "Result: see the NISAR radar layers; the Landsat yearly map for this year is not complete yet.",
+   "why": "The rainy season came with a neutral Pacific (index -0.4). Rain in the Angolan highlands was 14% above normal (1057 mm). Modelled river inflow peaked at 808 m3/s, rank 14 of 30 years since 1997. Rain over the Delta itself was 38% above normal (781 mm). Flood-season days were 0.9 C cooler than normal."
+  }
+ },
+ "events": [
+  {
+   "year": 2009,
+   "kind": "people",
+   "title": "Floods displace families",
+   "text": "Floods on the Okavango, Zambezi and Chobe displaced 430 people and submerged eight villages. In Ngamiland 61 hectares of ploughed fields went under water and lodges at Sepopa were flooded.",
+   "source": "Mmegi, 30 March 2009",
+   "url": "https://www.mmegi.bw/ampArticle/17479"
+  },
+  {
+   "year": 2010,
+   "kind": "nature",
+   "title": "Largest floods in recent memory",
+   "text": "Between 2010 and 2012 the Delta saw some of its largest floods in recent memory; channels and lagoons dry for decades refilled and water reached Lake Ngami.",
+   "source": "okavango.com (travel guide, not a scientific source)",
+   "url": "https://www.okavango.com/okavango-delta-flood-cycle.php"
+  },
+  {
+   "year": 2019,
+   "kind": "people",
+   "title": "The flood did not arrive",
+   "text": "Water sources across Ngamiland dried up, leaving communities, livestock and wildlife in a dire situation. Fishermen and mokoro polers lost their income and farmers lost cattle.",
+   "source": "Botswana Daily News (BOPA), 26 April 2020",
+   "url": "https://dailynews.gov.bw/news-detail/55851"
+  },
+  {
+   "year": 2020,
+   "kind": "people",
+   "title": "The Delta springs back to life",
+   "text": "The flood returned and was expected to reach the Thamalakane River at Maun in mid-May, restoring water for farming, fishing and mokoro tourism.",
+   "source": "Botswana Daily News (BOPA), 26 April 2020",
+   "url": "https://dailynews.gov.bw/news-detail/55851"
+  },
+  {
+   "year": 2024,
+   "kind": "wildlife",
+   "title": "Hippos stranded near Maun",
+   "text": "During an El Nino drought the Thamalakane River dried up and herds of hippos were stuck in drying pools near Maun; wildlife officials warned they were in danger of dying.",
+   "source": "AFP, 26 April 2024",
+   "url": "https://www.gulf-times.com/article/681371/international/herds-of-hippos-trapped-in-mud-in-drought-hit-botswana"
+  }
+ ]
+}

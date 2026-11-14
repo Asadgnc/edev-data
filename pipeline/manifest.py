@@ -120,12 +120,47 @@ SOURCES = [
                         "(GIBS), part of NASA's Earth Science Data and "
                         "Information System (ESDIS)."},
     {"id": "power", "field": "nasa_data",
-     "name": "NASA POWER (MERRA-2) monthly precipitation, PRECTOTCORR",
+     "name": "NASA POWER (MERRA-2) monthly maximum temperature, T2M_MAX",
      "provider": "NASA Langley Research Center",
      "url": "https://power.larc.nasa.gov/",
      "license": "Open data",
-     "used_for": "Rainfall in the Angolan headwaters that feeds the flood.",
-     "processing": "Mean of three points; Nov-Apr totals per year."},
+     "name_note": "T2M_MAX only",
+     "used_for": "Flood-season daytime temperature over the Delta (a driver "
+                 "of evaporation). Its precipitation field was tested and "
+                 "rejected: it contains impossible monthly spikes over Angola.",
+     "processing": "May-October mean per year, anomaly against 1991-2020."},
+    {"id": "era5", "field": "references",
+     "name": "ERA5 reanalysis precipitation",
+     "provider": "Copernicus Climate Change Service / ECMWF, accessed through "
+                 "the Open-Meteo Historical Weather API",
+     "url": "https://open-meteo.com/en/docs/historical-weather-api",
+     "license": "CC BY 4.0",
+     "used_for": "Rain in the Angolan headwaters and rain over the Delta.",
+     "processing": "Daily totals summed to months; Nov-Apr totals per year."},
+    {"id": "oni", "field": "references",
+     "name": "Oceanic Nino Index (ONI)",
+     "provider": "NOAA Climate Prediction Center",
+     "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+     "license": "US Government open data",
+     "used_for": "El Nino / La Nina state of each rainy season.",
+     "processing": "December-February value per year."},
+    {"id": "worldpop", "field": "references",
+     "name": "WorldPop 2020 population counts, 1 km, UN-adjusted",
+     "provider": "WorldPop, University of Southampton",
+     "url": "https://www.worldpop.org/",
+     "license": "CC BY 4.0",
+     "used_for": "How many people live within 5 km of each year's open water.",
+     "processing": "Resampled to a 960 m equal-area grid, head count kept."},
+    {"id": "news", "field": "references",
+     "name": "News reports used for documented impacts",
+     "items": [
+         "Mmegi (30 March 2009), floods displace 430 people. "
+         "https://www.mmegi.bw/ampArticle/17479",
+         "Botswana Daily News / BOPA (26 April 2020), Okavango Delta springs "
+         "back to life. https://dailynews.gov.bw/news-detail/55851",
+         "AFP via Gulf Times (26 April 2024), herds of hippos trapped in mud "
+         "in drought-hit Botswana. https://www.gulf-times.com/article/681371/"
+         "international/herds-of-hippos-trapped-in-mud-in-drought-hit-botswana"]},
     {"id": "wofs", "field": "references",
      "name": "Water Observations from Space (WOfS) annual summary, from "
              "USGS/NASA Landsat",
@@ -320,7 +355,7 @@ def main() -> None:
         {"id": "rainfall", "title": "Rain in the Angolan headwaters",
          "url": "drivers.json", "path": "rainfall.monthly", "x": "month", "series": [
              {"key": "mm_day", "label": "Rainfall", "color": [66, 146, 198]}],
-         "unit": "mm/day", "source": "power"},
+         "unit": "mm/day", "source": "era5"},
     ]
     manifest = {
         "version": 1,
@@ -342,6 +377,9 @@ def main() -> None:
             "different things and are never added together."],
         "assistant": {"url": ASSISTANT, "label": AI_USE["in_app_label"]},
         "credits": "sources.json",
+        # Per-year causes (map icons + text), people near water and documented
+        # events. The year comes from the selected time: its first 4 characters.
+        "story": "story.json",
         # Optional "How clean is the data?" panel: summary.plain is 4 sentences.
         "quality": "quality.json",
     }

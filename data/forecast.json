@@ -1,9 +1,9 @@
 {
   "target": "annual open-water extent in the AOI (optical, history.json)",
   "method": "One-variable linear regression, validated by leaving each year out in turn. Skill = 1 - error/error of always predicting the long-term mean; 0 or less means no skill.",
-  "show": false,
-  "verdict": "No predictor beats climatology clearly enough. Do not show a forecast; show the historical ranking instead.",
-  "best": "Feb-Apr river discharge near Mohembo",
+  "show": true,
+  "verdict": "The best predictor beats climatology; a forecast with its interval may be shown.",
+  "best": "Nov-Apr rainfall in the Angolan headwaters",
   "tests": [
     {
       "predictor": "Feb-Apr river discharge near Mohembo",
@@ -148,151 +148,151 @@
         1989,
         2025
       ],
-      "correlation_r": 0.31,
-      "skill_vs_climatology": -0.01,
-      "rmse_km2": 576.3,
+      "correlation_r": 0.77,
+      "skill_vs_climatology": 0.56,
+      "rmse_km2": 380.8,
       "hindcast": [
         {
           "year": 1989,
           "observed_km2": 2517.9,
-          "predicted_km2": 1514.1
+          "predicted_km2": 1722.9
         },
         {
           "year": 1990,
           "observed_km2": 1536.0,
-          "predicted_km2": 1504.5
+          "predicted_km2": 1444.3
         },
         {
           "year": 1991,
           "observed_km2": 1287.1,
-          "predicted_km2": 1516.7
+          "predicted_km2": 960.0
         },
         {
           "year": 1992,
           "observed_km2": 1891.1,
-          "predicted_km2": 1506.1
+          "predicted_km2": 1828.9
         },
         {
           "year": 1998,
           "observed_km2": 829.5,
-          "predicted_km2": 1414.0
+          "predicted_km2": 1381.4
         },
         {
           "year": 2001,
           "observed_km2": 1487.1,
-          "predicted_km2": 1518.8
+          "predicted_km2": 1630.3
         },
         {
           "year": 2002,
           "observed_km2": 1393.5,
-          "predicted_km2": 1451.8
+          "predicted_km2": 1512.2
         },
         {
           "year": 2004,
           "observed_km2": 2462.6,
-          "predicted_km2": 1402.0
+          "predicted_km2": 1852.1
         },
         {
           "year": 2005,
           "observed_km2": 1533.7,
-          "predicted_km2": 1305.4
+          "predicted_km2": 1473.7
         },
         {
           "year": 2006,
           "observed_km2": 1745.5,
-          "predicted_km2": 1323.1
+          "predicted_km2": 1297.9
         },
         {
           "year": 2007,
           "observed_km2": 2472.6,
-          "predicted_km2": 1372.4
+          "predicted_km2": 1861.5
         },
         {
           "year": 2008,
           "observed_km2": 1469.9,
-          "predicted_km2": 1865.5
+          "predicted_km2": 1439.5
         },
         {
           "year": 2009,
           "observed_km2": 1804.4,
-          "predicted_km2": 1481.3
+          "predicted_km2": 1499.9
         },
         {
           "year": 2010,
           "observed_km2": 1553.1,
-          "predicted_km2": 1682.8
+          "predicted_km2": 2001.7
         },
         {
           "year": 2013,
           "observed_km2": 1469.3,
-          "predicted_km2": 1498.6
+          "predicted_km2": 2005.3
         },
         {
           "year": 2014,
           "observed_km2": 2196.4,
-          "predicted_km2": 1492.3
+          "predicted_km2": 1916.3
         },
         {
           "year": 2015,
           "observed_km2": 1409.8,
-          "predicted_km2": 1344.8
+          "predicted_km2": 1346.2
         },
         {
           "year": 2016,
           "observed_km2": 1541.4,
-          "predicted_km2": 1338.6
+          "predicted_km2": 1817.1
         },
         {
           "year": 2017,
           "observed_km2": 1163.1,
-          "predicted_km2": 1362.2
+          "predicted_km2": 1502.7
         },
         {
           "year": 2018,
           "observed_km2": 1725.4,
-          "predicted_km2": 1550.7
+          "predicted_km2": 1783.0
         },
         {
           "year": 2019,
           "observed_km2": 375.9,
-          "predicted_km2": 1379.7
+          "predicted_km2": 521.5
         },
         {
           "year": 2020,
           "observed_km2": 1734.9,
-          "predicted_km2": 2614.0
+          "predicted_km2": 1722.7
         },
         {
           "year": 2021,
           "observed_km2": 548.2,
-          "predicted_km2": 1459.9
+          "predicted_km2": 222.7
         },
         {
           "year": 2022,
           "observed_km2": 1017.4,
-          "predicted_km2": 1548.3
+          "predicted_km2": 1800.1
         },
         {
           "year": 2023,
           "observed_km2": 733.9,
-          "predicted_km2": 1395.4
+          "predicted_km2": 795.2
         },
         {
           "year": 2024,
           "observed_km2": 579.8,
-          "predicted_km2": 1360.7
+          "predicted_km2": 1100.4
         },
         {
           "year": 2025,
           "observed_km2": 1477.2,
-          "predicted_km2": 1358.2
+          "predicted_km2": 1457.6
         }
       ],
       "prediction_2026": {
-        "km2": 1208.6,
-        "low_km2": 79.1,
-        "high_km2": 2338.0,
-        "input": 304
+        "km2": 1956.5,
+        "low_km2": 1210.2,
+        "high_km2": 2702.8,
+        "input": 1057
       }
     }
   ],
