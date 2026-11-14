@@ -1,0 +1,68 @@
+{
+  "aoi": {
+    "lon_min": 22.0,
+    "lat_min": -20.0,
+    "lon_max": 23.8,
+    "lat_max": -18.3
+  },
+  "mission": "NISAR (NASA-ISRO SAR)",
+  "product": "L2 GCOV, frequency A, L-band",
+  "polarizations": [
+    "HH",
+    "HV"
+  ],
+  "geometry": {
+    "track": "172",
+    "frame": "168",
+    "pass": "Ascending",
+    "note": "All dates share one track/frame/pass, so differences between dates are real surface change and not a change in viewing geometry."
+  },
+  "pixel_m": 80.0,
+  "native_pixel_m": 20.0,
+  "looks": 4,
+  "dates": [],
+  "gaps": [
+    [
+      "2026-07-27",
+      "2026-08-10"
+    ]
+  ],
+  "gap_note": "NISAR has a permanent data gap in this window. Show it as 'no data', not as 'no flood'.",
+  "thresholds_db": {
+    "water_hh_max": -18.0,
+    "water_hv_max": -22.0,
+    "fv_hh_min": -5.0,
+    "fv_hhhv_min": 7.0
+  },
+  "uncertain": true,
+  "uncertainty_note": "Backscatter thresholds are tuned on one date's histogram and checked against optical imagery. They are not a calibrated hydrological product.",
+  "quality_note": "Dates up to 2026-10-12 are NISAR PROVISIONAL products; 2026-10-24 is VALIDATED. A small calibration offset between the two is possible.",
+  "legend": [
+    {
+      "class": "open_water",
+      "color": [
+        33,
+        113,
+        181,
+        210
+      ],
+      "label": "Open water",
+      "why": "Calm water mirrors the radar pulse away, so very little energy returns: HH is very low."
+    },
+    {
+      "class": "flooded_vegetation",
+      "color": [
+        49,
+        163,
+        84,
+        200
+      ],
+      "label": "Flooded vegetation",
+      "why": "The pulse bounces off the water and then off trunks and stems and returns to the radar (double bounce): HH is very high and much higher than HV. L-band sees this under the canopy; C-band largely cannot."
+    }
+  ],
+  "db_stretch": [
+    -25.0,
+    0.0
+  ]
+}
