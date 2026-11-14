@@ -6,6 +6,15 @@
   time slider, legends, notes, credits and the assistant box. Copy the pieces
   you need. Language: plain HTML/CSS/JS + Leaflet, no build step, so it runs
   from GitHub Pages or by double-clicking the file.
+
+  How switching is kept instant (the three rules worth copying):
+   1. PRELOAD.   As soon as a layer is selected, all of its images are fetched
+                 and decoded in the background, nearest dates first.
+   2. SWAP LATE. The picture on the map is replaced only when the new one is
+                 fully ready, so the map never goes blank between two frames.
+   3. LATEST WINS. Every request carries a number; an answer that arrives
+                 after a newer request was made is thrown away. Without this a
+                 slow image can land on top of the one the user picked last.
 -->
 <html lang="en">
 <head>
@@ -18,7 +27,7 @@
   body { margin: 0; font: 14px/1.4 system-ui, sans-serif; display: grid;
          grid-template-columns: 320px 1fr; height: 100vh; }
   #side { overflow: auto; padding: 12px; border-right: 1px solid #ccc; }
-  #map { height: 100vh; }
+  #map { height: 100vh; background: #e8e8e4; }
   h3 { margin: 14px 0 4px; font-size: 12px; text-transform: uppercase; color: #555; }
   label { display: block; margin: 3px 0; cursor: pointer; }
   .note, .warn { font-size: 12px; color: #444; margin: 6px 0; }
@@ -26,10 +35,14 @@
   .sw { display: inline-block; width: 12px; height: 12px; margin-right: 6px;
         border: 1px solid #999; vertical-align: -2px; }
   input[type=range] { width: 100%; }
+  #time { font-variant-numeric: tabular-nums; }
+  #busy { color: #888; font-size: 12px; margin-left: 6px; visibility: hidden; }
   #chat textarea { width: 100%; box-sizing: border-box; }
   #answer { white-space: pre-wrap; margin-top: 6px; }
   /* DSWx draws "not water" in white: multiply makes white disappear. */
   .blend-multiply { mix-blend-mode: multiply; }
+  /* A muted base map so blue/green classes stay readable on top of it. */
+  .basemap { filter: grayscale(1) contrast(0.9) brightness(1.05); }
   @media (max-width: 700px) { body { grid-template-columns: 1fr; grid-template-rows: 45vh 55vh; }
                               #map { height: 55vh; order: 2; } }
 </style>
@@ -39,7 +52,7 @@
   <div id="layers"></div>
   <h3>Time</h3>
   <input id="slider" type="range" min="0" max="0" value="0">
-  <div id="time"></div>
+  <div><span id="time"></span><span id="busy">loading…</span></div>
   <div id="flag" class="warn" hidden></div>
   <h3>Legend</h3>
   <div id="legend"></div>
@@ -71,43 +84,115 @@ const rgba = (c) => `rgba(${c[0]},${c[1]},${c[2]},${(c[3] ?? 255) / 255})`;
   const S = (await (await fetch(abs(M.credits))).json()).sources;
 
   const a = M.aoi;
-  const map = L.map("map").fitBounds([[a.lat_min, a.lon_min], [a.lat_max, a.lon_max]]);
+  const map = L.map("map", { fadeAnimation: false })
+      .fitBounds([[a.lat_min, a.lon_min], [a.lat_max, a.lon_max]]);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      { attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
+      { attribution: "&copy; OpenStreetMap contributors", className: "basemap" }).addTo(map);
 
-  let layer = M.layers.find((l) => l.default) ?? M.layers[0];
-  let shown = null;
-
-  // A layer's selectable times: an explicit list, or every day of a range.
-  function times(l) {
-    if (l.times) return l.times;
-    if (!l.time_range) return [null];
-    const out = [];
-    for (let d = new Date(l.time_range[0]); d <= new Date(l.time_range[1]);
-         d.setUTCDate(d.getUTCDate() + 1)) out.push(d.toISOString().slice(0, 10));
-    return out;
+  // ---- caches: every image and every bounds file is fetched exactly once ----
+  const images = new Map();   // url -> Promise<url>, resolved when decoded
+  const boundsCache = new Map();
+  function preload(url) {
+    if (!images.has(url)) {
+      const img = new Image();
+      img.src = url;
+      // decode() resolves when the picture is ready to paint, not just downloaded.
+      images.set(url, img.decode().then(() => url, () => url));
+    }
+    return images.get(url);
+  }
+  function bounds(url) {
+    if (!boundsCache.has(url)) {
+      boundsCache.set(url, fetch(url).then((r) => r.json()).then((b) => b.bounds));
+    }
+    return boundsCache.get(url);
   }
 
-  async function show() {
-    const ts = times(layer);
-    const t = ts[Math.min(+$("slider").value, ts.length - 1)];
-    const url = abs(layer.url.replace("{time}", t));
-    let next;
-    if (layer.kind === "tiles") {
-      next = L.tileLayer(url, { maxNativeZoom: layer.max_native_zoom,
-          opacity: layer.opacity, attribution: "NASA GIBS",
-          className: layer.blend ? `blend-${layer.blend}` : "" });
-    } else {
-      const b = await (await fetch(abs(layer.bounds.replace("{time}", t)))).json();
-      next = L.imageOverlay(url, b.bounds, { opacity: layer.opacity });
+  // A layer's selectable times: an explicit list, or every day of a range.
+  const timesCache = new Map();
+  function times(l) {
+    if (!timesCache.has(l.id)) {
+      let out = l.times ?? [null];
+      if (!l.times && l.time_range) {
+        out = [];
+        for (let d = new Date(l.time_range[0]); d <= new Date(l.time_range[1]);
+             d.setUTCDate(d.getUTCDate() + 1)) out.push(d.toISOString().slice(0, 10));
+      }
+      timesCache.set(l.id, out);
     }
-    if (shown) map.removeLayer(shown);
-    shown = next.addTo(map);
+    return timesCache.get(l.id);
+  }
+  const urlOf = (l, t) => abs(l.url.replace("{time}", t));
+  const boundsOf = (l, t) => abs(l.bounds.replace("{time}", t));
 
+  // Fetch a whole image series in the background, nearest dates first,
+  // three at a time so the frame the user is looking at is never starved.
+  function warm(l, from = 0) {
+    if (l.kind !== "image") return;
+    const ts = times(l);
+    const order = ts.map((t, i) => i).sort((x, y) => Math.abs(x - from) - Math.abs(y - from));
+    let next = 0;
+    const worker = async () => {
+      while (next < order.length) {
+        const t = ts[order[next++]];
+        await Promise.all([preload(urlOf(l, t)), bounds(boundsOf(l, t))]);
+      }
+    };
+    for (let i = 0; i < 3; i++) worker();
+  }
+
+  let layer = M.layers.find((l) => l.default) ?? M.layers[0];
+  let shown = null;        // what is on the map right now
+  let shownLayerId = null;
+  let request = 0;         // rule 3: latest wins
+  let busyTimer = null;
+
+  async function show() {
+    const mine = ++request;
+    const l = layer, ts = times(l);
+    const i = Math.min(+$("slider").value, ts.length - 1), t = ts[i];
+
+    // The label follows the slider at once; the picture follows when ready.
     $("time").textContent = t ?? "(one image, no time)";
-    const flagged = (layer.flag_times ?? []).includes(t);
+    const flagged = (l.flag_times ?? []).includes(t);
     $("flag").hidden = !flagged;
-    $("flag").textContent = flagged ? layer.flag_label : "";
+    $("flag").textContent = flagged ? l.flag_label : "";
+    clearTimeout(busyTimer);
+    busyTimer = setTimeout(() => { $("busy").style.visibility = "visible"; }, 150);
+    const done = () => { clearTimeout(busyTimer); $("busy").style.visibility = "hidden"; };
+
+    if (l.kind === "image") {
+      const [url, b] = await Promise.all([preload(urlOf(l, t)), bounds(boundsOf(l, t))]);
+      if (mine !== request) return;              // a newer choice exists
+      if (shown && shownLayerId === l.id && shown.setUrl) {
+        shown.setUrl(url);                       // same layer, new date: reuse the element
+        shown.setBounds(b);
+      } else {
+        const next = L.imageOverlay(url, b, { opacity: l.opacity }).addTo(map);
+        if (shown) map.removeLayer(shown);
+        shown = next;
+      }
+      shownLayerId = l.id;
+      done();
+    } else {
+      // Tiles come live from NASA: add the new layer UNDER the old one's place
+      // invisibly, and swap only when its tiles have arrived (rule 2).
+      const next = L.tileLayer(urlOf(l, t), { maxNativeZoom: l.max_native_zoom,
+          opacity: 0, attribution: "NASA GIBS", keepBuffer: 4,
+          className: l.blend ? `blend-${l.blend}` : "" }).addTo(map);
+      const swap = () => {
+        if (mine !== request) { map.removeLayer(next); return; }
+        next.setOpacity(l.opacity);
+        if (shown) map.removeLayer(shown);
+        shown = next;
+        shownLayerId = l.id;
+        done();
+      };
+      let fired = false;
+      const once = () => { if (!fired) { fired = true; swap(); } };
+      next.once("load", once);
+      setTimeout(once, 6000);                    // never hang on a missing tile
+    }
   }
 
   function select(l) {
@@ -122,22 +207,41 @@ const rgba = (c) => `rgba(${c[0]},${c[1]},${c[2]},${(c[3] ?? 255) / 255})`;
     const s = S.find((x) => x.id === l.source);
     $("source").innerHTML = s ? `Source: <a href="${s.url}" target="_blank" rel="noopener">${s.name}</a> — ${s.provider}` : "";
     show();
+    warm(l, 0);
   }
 
-  // Layer list, grouped.
+  // Layer list, grouped. Hovering a layer starts loading its first frame, so
+  // by the time it is clicked the picture is usually already there.
   for (const g of [...new Set(M.layers.map((l) => l.group))]) {
     $("layers").insertAdjacentHTML("beforeend", `<h3>${g}</h3>`);
     for (const l of M.layers.filter((x) => x.group === g)) {
       const el = document.createElement("label");
       el.innerHTML = `<input type="radio" name="layer" ${l === layer ? "checked" : ""}> ${l.title}`;
       el.querySelector("input").onchange = () => select(l);
+      el.onpointerenter = () => {
+        if (l.kind === "image") { preload(urlOf(l, times(l)[0])); bounds(boundsOf(l, times(l)[0])); }
+      };
       $("layers").append(el);
     }
   }
-  $("slider").oninput = show;
+
+  // Images are preloaded, so they follow the slider on every step. Live tiles
+  // are requested from NASA, so wait until the slider rests for a moment.
+  let tileTimer = null;
+  $("slider").oninput = () => {
+    if (layer.kind === "image") return show();
+    const ts = times(layer);
+    $("time").textContent = ts[Math.min(+$("slider").value, ts.length - 1)];
+    clearTimeout(tileTimer);
+    tileTimer = setTimeout(show, 180);
+  };
+
   $("must").innerHTML = M.must_show.map((m) => `<div class="warn">${m}</div>`).join("");
   $("ailabel").textContent = M.assistant.label;
   select(layer);
+  // Once the default layer is in, quietly fetch the first frame of the others.
+  setTimeout(() => M.layers.filter((l) => l.kind === "image" && l !== layer)
+      .forEach((l) => { preload(urlOf(l, times(l)[0])); bounds(boundsOf(l, times(l)[0])); }), 1500);
 
   // Assistant: keep the history short, lock the button while waiting.
   const history = [];

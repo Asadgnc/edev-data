@@ -27,7 +27,7 @@
     "2026-10-12",
     "2026-10-24"
    ],
-   "url": "{time}/class.png",
+   "url": "{time}/class.webp",
    "bounds": "{time}/bounds.json",
    "opacity": 0.85,
    "legend": [
@@ -75,7 +75,7 @@
     "2026-10-12",
     "2026-10-24"
    ],
-   "url": "{time}/hh.png",
+   "url": "{time}/hh.webp",
    "bounds": "{time}/bounds.json",
    "opacity": 1.0,
    "source": "nisar",
@@ -287,7 +287,7 @@
     "2024",
     "2025"
    ],
-   "url": "history/{time}.png",
+   "url": "history/{time}.webp",
    "bounds": "history/bounds.json",
    "opacity": 0.9,
    "legend": [
@@ -338,7 +338,7 @@
    "group": "History 1984-2025 (optical)",
    "title": "How often was it water? (JRC, 1984-2024)",
    "kind": "image",
-   "url": "jrc/occurrence.png",
+   "url": "jrc/occurrence.webp",
    "bounds": "jrc/bounds.json",
    "opacity": 0.9,
    "source": "jrc",

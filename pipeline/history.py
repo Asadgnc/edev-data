@@ -178,6 +178,7 @@ def run_wofs():
             for k, col in HCOL.items():
                 rgba[web == k] = col
             Image.fromarray(rgba, "RGBA").save(out / f"{year}.png", optimize=True)
+            Image.fromarray(rgba, "RGBA").save(out / f"{year}.webp", lossless=True, method=4)
             r = recs[-1]
             print(f"{year}  water {r['water_km2']:>7}  perm {r['permanent_km2']:>6}  "
                   f"valid {r['valid_pct']:>5}%  looks {med:>4.0f}"
@@ -257,6 +258,7 @@ def run_jrc():
     rgba[..., :3] = np.where(wet[..., None], lo + (hi - lo) * t, 0).astype(np.uint8)
     rgba[..., 3] = np.where(wet, 220, 0)
     Image.fromarray(rgba, "RGBA").save(out / "occurrence.png", optimize=True)
+    Image.fromarray(rgba, "RGBA").save(out / "occurrence.webp", lossless=True, method=4)
     bounds.update({
         "source": "JRC Global Surface Water v1.5 (European Commission Joint "
                   "Research Centre), occurrence 1984-2024, from Landsat",

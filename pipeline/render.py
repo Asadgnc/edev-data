@@ -260,6 +260,8 @@ def render_one(path: Path, clean: dict | None = None) -> dict:
     rgba[cls_w == WATER] = C.COLORS["water"]
     rgba[cls_w == FLOODED_VEG] = C.COLORS["flooded_veg"]
     Image.fromarray(rgba, "RGBA").save(out_dir / "class.png", optimize=True)
+    # Same pixels as WebP for the web app: lossless, ~2.5x smaller than PNG.
+    Image.fromarray(rgba, "RGBA").save(out_dir / "class.webp", lossless=True, method=4)
 
     # --- HH dB grayscale: the un-interpreted radar image --------------------
     # Fixed stretch across all dates, otherwise a brighter date would look the
@@ -274,6 +276,11 @@ def render_one(path: Path, clean: dict | None = None) -> dict:
     gray[..., 0] = (np.nan_to_num(g) * 255).astype(np.uint8)
     gray[..., 1] = np.where(np.isfinite(hh_w), 255, 0)
     Image.fromarray(gray, "LA").save(out_dir / "hh.png", optimize=True)
+    # The PNG is ~4 MB per date because speckle does not compress losslessly;
+    # ten of them made the date slider stall. Lossy WebP at quality 75 is
+    # ~0.8 MB and visually the same at map zoom. The PNG stays as the exact copy.
+    Image.fromarray(gray, "LA").convert("RGBA").save(
+        out_dir / "hh.webp", quality=75, method=4)
 
     b = bounds_latlon(dst_tf, size)
     b.update(date=date, granule=granule)
