@@ -227,6 +227,10 @@ def render_one(path: Path, clean: dict | None = None) -> dict:
         cls = sieve(classify(to_db(clean[date][0]), to_db(clean[date][1])))
     else:
         cls = classify(hh_db, hv_db)
+    # Frame-edge fade-out is dark but is not water: see config.EDGE_BUFFER_PX.
+    if C.EDGE_BUFFER_PX:
+        k = 2 * C.EDGE_BUFFER_PX + 1
+        cls[_box((cls == NODATA).astype(np.float32), k) > 0] = NODATA
 
     # --- areas: counted in UTM, BEFORE reprojection -------------------------
     # Web Mercator inflates area by 1/cos(lat)^2, which at 19 S would be a ~12%
@@ -360,6 +364,14 @@ def main() -> None:
                     "as 'no data', not as 'no flood'.",
         "thresholds_db": C.THRESH,
         "noise_floor_db": C.NOISE_FLOOR_DB,
+        "edge_buffer": {
+            "pixels": C.EDGE_BUFFER_PX,
+            "why": "The radar image fades to dark at the edge of the frame. "
+                   "Dark is how open water looks, so the edge was being "
+                   "mapped as a straight line of water. Pixels within "
+                   f"{C.EDGE_BUFFER_PX} pixels "
+                   f"({C.EDGE_BUFFER_PX * C.OUT_PIXEL_M / 1000:.2f} km) of the "
+                   "frame edge are now treated as no data."},
         "uncertain": True,
         "uncertainty_note": "Backscatter thresholds are fixed, physically "
                             "motivated values, identical on every date. They "

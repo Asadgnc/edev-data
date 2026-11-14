@@ -55,6 +55,10 @@
     "fv_hhhv_min": 7.0
   },
   "noise_floor_db": -30.0,
+  "edge_buffer": {
+    "pixels": 8,
+    "why": "The radar image fades to dark at the edge of the frame. Dark is how open water looks, so the edge was being mapped as a straight line of water. Pixels within 8 pixels (0.64 km) of the frame edge are now treated as no data."
+  },
   "uncertain": true,
   "uncertainty_note": "Backscatter thresholds are fixed, physically motivated values, identical on every date. They are not calibrated against ground measurements, so treat the areas as a consistent relative index of flooding rather than an absolute hydrological measurement.",
   "conservative_note": "These thresholds are deliberately strict, so the mapped area is a lower bound. Published estimates of the Okavango's total seasonal flood extent are several times larger; part of that difference is real (the area of interest and one radar frame do not cover the whole delta) and part is the strict thresholds. The shape of the seasonal curve is more reliable than its absolute level.",

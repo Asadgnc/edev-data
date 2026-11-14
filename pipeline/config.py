@@ -138,6 +138,15 @@ WORKERS = 1
 # below any real surface return while still clearing the fill.
 NOISE_FLOOR_DB = -30.0
 
+# Frame-edge buffer. MEASURED: of the valid pixels touching the edge of the
+# radar frame, 98% were classified "open water" on every date; the share falls
+# to the background level (1-3%) only about 8 pixels in. The antenna gain rolls
+# off at the swath edge, so the image fades to dark there - dark, but not
+# water. Left in, it drew a straight blue line down the map and added ~43 km2
+# of phantom water to every date (a fifth of all "water" in October).
+# Pixels within this many pixels of invalid data are treated as invalid.
+EDGE_BUFFER_PX = 8
+
 THRESH = {
     "water_hh_max": -18.0,
     "water_hv_max": -22.0,
