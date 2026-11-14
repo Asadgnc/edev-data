@@ -1,0 +1,78 @@
+<!doctype html>
+<!--
+EDev-Vision | Backend self-check, NOT the product.
+
+Opens the rendered PNGs on a real basemap using the bounds.json we publish,
+so geolocation errors are caught before Yamen builds on them. If the water
+pattern does not sit on the Okavango Delta, the pipeline is wrong.
+
+Run from the repo root:   python -m http.server 8000
+Then open:                http://localhost:8000/pipeline/check_overlay.html
+-->
+<meta charset="utf-8">
+<title>Overlay check</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  html, body, #map { height: 100%; margin: 0; }
+  #ui { position: absolute; z-index: 1000; top: 10px; left: 60px;
+        background: #fff; padding: 8px 10px; font: 13px system-ui;
+        border-radius: 6px; box-shadow: 0 1px 6px #0004; }
+  #ui select, #ui label { margin-right: 10px; }
+</style>
+<div id="ui">
+  <select id="date"></select>
+  <label><input type="radio" name="lyr" value="class" checked> classes</label>
+  <label><input type="radio" name="lyr" value="hh"> HH dB</label>
+  <span id="info"></span>
+</div>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// Works both from the working repo (pipeline/ next to edev-data/) and from
+// inside the published data repo (pipeline/ next to data/).
+const CANDIDATES = ["../edev-data/data", "../data",
+                    "https://asadgnc.github.io/edev-data/data"];
+let BASE = CANDIDATES[0];
+
+async function resolveBase() {
+  for (const b of CANDIDATES) {
+    try {
+      const r = await fetch(`${b}/meta.json`, { cache: "no-store" });
+      if (r.ok) return b;
+    } catch (e) { /* try the next one */ }
+  }
+  throw new Error("meta.json not found in any of: " + CANDIDATES.join(", "));
+}
+
+const map = L.map("map").setView([-19.2, 22.9], 8);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  { maxZoom: 14, attribution: "&copy; OpenStreetMap" }).addTo(map);
+// AOI rectangle, so we can see whether the overlay fills it
+L.rectangle([[-20.0, 22.0], [-18.3, 23.8]],
+  { color: "#e31a1c", weight: 1, fill: false }).addTo(map);
+
+let overlay = null;
+const sel = document.getElementById("date");
+const info = document.getElementById("info");
+
+async function show() {
+  const date = sel.value;
+  const kind = document.querySelector("input[name=lyr]:checked").value;
+  const b = await (await fetch(`${BASE}/${date}/bounds.json`)).json();
+  if (overlay) map.removeLayer(overlay);
+  overlay = L.imageOverlay(`${BASE}/${date}/${kind}.png`, b.bounds,
+    { opacity: kind === "class" ? 0.85 : 1 }).addTo(map);
+  info.textContent = `${b.width}x${b.height}px  `
+    + `lat ${b.bounds[0][0].toFixed(2)}..${b.bounds[1][0].toFixed(2)}  `
+    + `lon ${b.bounds[0][1].toFixed(2)}..${b.bounds[1][1].toFixed(2)}`;
+}
+
+(async () => {
+  BASE = await resolveBase();
+  const meta = await (await fetch(`${BASE}/meta.json`)).json();
+  for (const d of meta.dates) sel.add(new Option(d, d));
+  sel.onchange = show;
+  for (const r of document.querySelectorAll("input[name=lyr]")) r.onchange = show;
+  await show();
+})();
+</script>

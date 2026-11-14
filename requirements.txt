@@ -1,0 +1,9 @@
+# Versions this pipeline was developed and run against (November 2026).
+earthaccess==0.17.0
+h5py==3.16.0
+numpy==2.4.6
+rasterio==1.4.4
+pyproj
+pillow
+matplotlib
+pandas

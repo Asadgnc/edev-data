@@ -141,12 +141,37 @@ data/
 `[[south, west], [north, east]]` for Leaflet, and `coordinates` clockwise from
 top-left for MapLibre.
 
-## Reuse
+## Reproduce this
 
-Everything here is produced by the open pipeline in the project repository
-(`pipeline/config.py`, `fetch.py`, `render.py`, `qa.py`). Pointing `AOI` and the
-track/frame selection at another wetland — the Pantanal, the Sudd, the Mekong
-delta — reproduces the same layers for that site without changing the code.
+The full pipeline is in this repository. It needs a free
+[NASA Earthdata Login](https://urs.earthdata.nasa.gov/) — for downloading, not
+for searching.
+
+```bash
+pip install -r requirements.txt
+export EARTHDATA_USERNAME=... EARTHDATA_PASSWORD=...   # or answer the prompt
+
+python pipeline/fetch.py  --all --freq B    # stream the AOI, ~1.2 min per date
+python pipeline/qa.py     B                 # histograms + threshold diagnostics
+python pipeline/render.py --freq B          # PNG overlays + JSON
+```
+
+| File | What it does |
+|---|---|
+| `pipeline/config.py` | Area of interest, date series, thresholds, HDF5 paths. Change this, not the other files. |
+| `pipeline/fetch.py` | Streams the AOI window out of the granules and caches it. Stage 1. |
+| `pipeline/render.py` | Classification, area measurement, reprojection, PNG + JSON. Stage 2. |
+| `pipeline/qa.py` | Histograms, per-date percentiles, calibration-drift check. |
+| `pipeline/check_overlay.html` | Drops the output on a real basemap to catch geolocation errors. |
+| `tools/` | One-off discovery scripts: what collections exist, which granules cover the area, what is actually inside the HDF5, and the granule inventory they produced. |
+
+Fetching and rendering are separate on purpose. Streaming is the slow part and
+threshold tuning is the part you redo many times; with a cache in between, a
+threshold change costs seconds instead of an hour.
+
+Pointing `AOI` and the track/frame selection in `config.py` at another wetland —
+the Pantanal, the Sudd, the Mekong delta — reproduces the same layers for that
+site without changing any other code.
 
 ## Credits
 
