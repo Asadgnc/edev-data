@@ -1,0 +1,404 @@
+{
+  "source": "Digital Earth Africa, Water Observations from Space (WOfS) annual summary, derived from USGS/NASA Landsat, 30 m",
+  "sensor": "optical (Landsat 5/7/8/9)",
+  "pixel_m": 120.0,
+  "method": "Per calendar year. Water = wet in >= 10% of cloud-free looks and at least 2 times. Permanent = wet in >= 80% of looks. Seasonal = water minus permanent. Areas counted in equal-area EPSG:6933.",
+  "caveat": "Optical sensors map OPEN water. Water under reeds, papyrus and trees is largely missed, so these areas are not comparable in level with the NISAR flooded-vegetation class and must not be plotted as one series with NISAR.",
+  "low_coverage_note": "Years flagged low_coverage have fewer than 8 cloud-free Landsat looks; their area is a lower bound. The flood lasts only a few months, so a year with few looks can miss it entirely.",
+  "reliable_since": 2013,
+  "reliable_note": "From 2013 (Landsat 8) every year has 23+ looks. Compare years confidently from 2013 on; treat earlier year-to-year jumps with caution.",
+  "legend": [
+    {
+      "class": "seasonal_water",
+      "color": [
+        107,
+        174,
+        214,
+        200
+      ],
+      "label": "Seasonal open water"
+    },
+    {
+      "class": "permanent_water",
+      "color": [
+        8,
+        81,
+        156,
+        220
+      ],
+      "label": "Permanent open water"
+    }
+  ],
+  "overlay": "history/<year>.png with history/bounds.json",
+  "years": [
+    {
+      "year": 1984,
+      "water_km2": 871.0,
+      "permanent_km2": 176.8,
+      "seasonal_km2": 694.2,
+      "valid_pct": 100.0,
+      "median_clear_obs": 3.0,
+      "low_coverage": true
+    },
+    {
+      "year": 1985,
+      "water_km2": 0.0,
+      "permanent_km2": 0.0,
+      "seasonal_km2": 0.0,
+      "valid_pct": 59.3,
+      "median_clear_obs": 1.0,
+      "low_coverage": true
+    },
+    {
+      "year": 1986,
+      "water_km2": 42.8,
+      "permanent_km2": 23.2,
+      "seasonal_km2": 19.6,
+      "valid_pct": 98.8,
+      "median_clear_obs": 2.0,
+      "low_coverage": true
+    },
+    {
+      "year": 1987,
+      "water_km2": 794.7,
+      "permanent_km2": 31.8,
+      "seasonal_km2": 762.9,
+      "valid_pct": 96.6,
+      "median_clear_obs": 6.0,
+      "low_coverage": true
+    },
+    {
+      "year": 1989,
+      "water_km2": 2517.9,
+      "permanent_km2": 244.7,
+      "seasonal_km2": 2273.2,
+      "valid_pct": 100.0,
+      "median_clear_obs": 10.0,
+      "low_coverage": false
+    },
+    {
+      "year": 1990,
+      "water_km2": 1536.0,
+      "permanent_km2": 29.0,
+      "seasonal_km2": 1507.1,
+      "valid_pct": 100.0,
+      "median_clear_obs": 10.0,
+      "low_coverage": false
+    },
+    {
+      "year": 1991,
+      "water_km2": 1287.1,
+      "permanent_km2": 43.4,
+      "seasonal_km2": 1243.7,
+      "valid_pct": 100.0,
+      "median_clear_obs": 10.0,
+      "low_coverage": false
+    },
+    {
+      "year": 1992,
+      "water_km2": 1891.1,
+      "permanent_km2": 17.5,
+      "seasonal_km2": 1873.5,
+      "valid_pct": 100.0,
+      "median_clear_obs": 10.0,
+      "low_coverage": false
+    },
+    {
+      "year": 1993,
+      "water_km2": 167.0,
+      "permanent_km2": 21.4,
+      "seasonal_km2": 145.6,
+      "valid_pct": 100.0,
+      "median_clear_obs": 5.0,
+      "low_coverage": true
+    },
+    {
+      "year": 1994,
+      "water_km2": 410.5,
+      "permanent_km2": 40.5,
+      "seasonal_km2": 370.0,
+      "valid_pct": 100.0,
+      "median_clear_obs": 5.0,
+      "low_coverage": true
+    },
+    {
+      "year": 1995,
+      "water_km2": 474.4,
+      "permanent_km2": 32.9,
+      "seasonal_km2": 441.5,
+      "valid_pct": 100.0,
+      "median_clear_obs": 6.0,
+      "low_coverage": true
+    },
+    {
+      "year": 1996,
+      "water_km2": 102.5,
+      "permanent_km2": 14.5,
+      "seasonal_km2": 88.0,
+      "valid_pct": 100.0,
+      "median_clear_obs": 4.0,
+      "low_coverage": true
+    },
+    {
+      "year": 1997,
+      "water_km2": 542.2,
+      "permanent_km2": 28.3,
+      "seasonal_km2": 513.9,
+      "valid_pct": 100.0,
+      "median_clear_obs": 7.0,
+      "low_coverage": true
+    },
+    {
+      "year": 1998,
+      "water_km2": 829.5,
+      "permanent_km2": 18.4,
+      "seasonal_km2": 811.1,
+      "valid_pct": 100.0,
+      "median_clear_obs": 11.0,
+      "low_coverage": false
+    },
+    {
+      "year": 1999,
+      "water_km2": 228.6,
+      "permanent_km2": 17.9,
+      "seasonal_km2": 210.6,
+      "valid_pct": 100.0,
+      "median_clear_obs": 6.0,
+      "low_coverage": true
+    },
+    {
+      "year": 2000,
+      "water_km2": 737.3,
+      "permanent_km2": 25.7,
+      "seasonal_km2": 711.6,
+      "valid_pct": 100.0,
+      "median_clear_obs": 7.0,
+      "low_coverage": true
+    },
+    {
+      "year": 2001,
+      "water_km2": 1487.1,
+      "permanent_km2": 16.5,
+      "seasonal_km2": 1470.6,
+      "valid_pct": 100.0,
+      "median_clear_obs": 13.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2002,
+      "water_km2": 1393.5,
+      "permanent_km2": 14.1,
+      "seasonal_km2": 1379.4,
+      "valid_pct": 100.0,
+      "median_clear_obs": 15.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2003,
+      "water_km2": 183.8,
+      "permanent_km2": 12.5,
+      "seasonal_km2": 171.3,
+      "valid_pct": 100.0,
+      "median_clear_obs": 7.0,
+      "low_coverage": true
+    },
+    {
+      "year": 2004,
+      "water_km2": 2462.6,
+      "permanent_km2": 110.5,
+      "seasonal_km2": 2352.1,
+      "valid_pct": 100.0,
+      "median_clear_obs": 17.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2005,
+      "water_km2": 1533.7,
+      "permanent_km2": 16.9,
+      "seasonal_km2": 1516.8,
+      "valid_pct": 100.0,
+      "median_clear_obs": 14.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2006,
+      "water_km2": 1745.5,
+      "permanent_km2": 39.0,
+      "seasonal_km2": 1706.6,
+      "valid_pct": 100.0,
+      "median_clear_obs": 16.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2007,
+      "water_km2": 2472.6,
+      "permanent_km2": 46.7,
+      "seasonal_km2": 2425.9,
+      "valid_pct": 100.0,
+      "median_clear_obs": 15.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2008,
+      "water_km2": 1469.9,
+      "permanent_km2": 48.4,
+      "seasonal_km2": 1421.5,
+      "valid_pct": 100.0,
+      "median_clear_obs": 17.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2009,
+      "water_km2": 1804.4,
+      "permanent_km2": 54.7,
+      "seasonal_km2": 1749.8,
+      "valid_pct": 100.0,
+      "median_clear_obs": 9.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2010,
+      "water_km2": 1553.1,
+      "permanent_km2": 42.5,
+      "seasonal_km2": 1510.7,
+      "valid_pct": 100.0,
+      "median_clear_obs": 8.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2011,
+      "water_km2": 2438.3,
+      "permanent_km2": 276.6,
+      "seasonal_km2": 2161.8,
+      "valid_pct": 100.0,
+      "median_clear_obs": 6.0,
+      "low_coverage": true
+    },
+    {
+      "year": 2012,
+      "water_km2": 896.9,
+      "permanent_km2": 48.7,
+      "seasonal_km2": 848.2,
+      "valid_pct": 100.0,
+      "median_clear_obs": 7.0,
+      "low_coverage": true
+    },
+    {
+      "year": 2013,
+      "water_km2": 1469.3,
+      "permanent_km2": 45.5,
+      "seasonal_km2": 1423.8,
+      "valid_pct": 100.0,
+      "median_clear_obs": 23.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2014,
+      "water_km2": 2196.4,
+      "permanent_km2": 50.4,
+      "seasonal_km2": 2146.0,
+      "valid_pct": 100.0,
+      "median_clear_obs": 27.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2015,
+      "water_km2": 1409.8,
+      "permanent_km2": 25.5,
+      "seasonal_km2": 1384.2,
+      "valid_pct": 100.0,
+      "median_clear_obs": 33.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2016,
+      "water_km2": 1541.4,
+      "permanent_km2": 19.8,
+      "seasonal_km2": 1521.6,
+      "valid_pct": 100.0,
+      "median_clear_obs": 30.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2017,
+      "water_km2": 1163.1,
+      "permanent_km2": 23.1,
+      "seasonal_km2": 1140.1,
+      "valid_pct": 100.0,
+      "median_clear_obs": 30.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2018,
+      "water_km2": 1725.4,
+      "permanent_km2": 18.3,
+      "seasonal_km2": 1707.1,
+      "valid_pct": 100.0,
+      "median_clear_obs": 31.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2019,
+      "water_km2": 375.9,
+      "permanent_km2": 13.4,
+      "seasonal_km2": 362.6,
+      "valid_pct": 100.0,
+      "median_clear_obs": 36.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2020,
+      "water_km2": 1734.9,
+      "permanent_km2": 13.6,
+      "seasonal_km2": 1721.3,
+      "valid_pct": 100.0,
+      "median_clear_obs": 29.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2021,
+      "water_km2": 548.2,
+      "permanent_km2": 16.6,
+      "seasonal_km2": 531.6,
+      "valid_pct": 100.0,
+      "median_clear_obs": 30.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2022,
+      "water_km2": 1017.4,
+      "permanent_km2": 17.2,
+      "seasonal_km2": 1000.2,
+      "valid_pct": 100.0,
+      "median_clear_obs": 42.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2023,
+      "water_km2": 733.9,
+      "permanent_km2": 15.1,
+      "seasonal_km2": 718.7,
+      "valid_pct": 100.0,
+      "median_clear_obs": 49.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2024,
+      "water_km2": 579.8,
+      "permanent_km2": 14.3,
+      "seasonal_km2": 565.5,
+      "valid_pct": 100.0,
+      "median_clear_obs": 41.0,
+      "low_coverage": false
+    },
+    {
+      "year": 2025,
+      "water_km2": 1477.2,
+      "permanent_km2": 15.6,
+      "seasonal_km2": 1461.6,
+      "valid_pct": 100.0,
+      "median_clear_obs": 34.0,
+      "low_coverage": false
+    }
+  ]
+}

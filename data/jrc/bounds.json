@@ -1,0 +1,54 @@
+{
+  "bounds": [
+    [
+      -19.999210307560904,
+      22.000000000000142
+    ],
+    [
+      -18.300000000000058,
+      23.800367189972
+    ]
+  ],
+  "coordinates": [
+    [
+      22.000000000000142,
+      -18.300000000000058
+    ],
+    [
+      23.800367189972,
+      -18.300000000000058
+    ],
+    [
+      23.800367189972,
+      -19.999210307560904
+    ],
+    [
+      22.000000000000142,
+      -19.999210307560904
+    ]
+  ],
+  "crs": "EPSG:3857",
+  "width": 2335,
+  "height": 2333,
+  "source": "JRC Global Surface Water v1.5 (European Commission Joint Research Centre), occurrence 1984-2024, from Landsat",
+  "meaning": "Share of cloud-free observations 1984-2024 in which the pixel was open water. Pale = rarely, dark = almost always.",
+  "color_ramp": {
+    "1": [
+      158,
+      202,
+      225
+    ],
+    "100": [
+      8,
+      48,
+      107
+    ]
+  },
+  "stats": {
+    "ever_water_km2": 1913.1,
+    "water_25pct_km2": 95.5,
+    "water_75pct_km2": 12.7,
+    "valid_km2": 35820.3
+  },
+  "caveat": "Optical, open water only. Not a NISAR product."
+}

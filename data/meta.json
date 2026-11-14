@@ -7,7 +7,14 @@
   },
   "mission": "NISAR (NASA-ISRO SAR)",
   "product": "L2 GCOV, L-band",
-  "band_note": "Frequency B (5 MHz, natively 80 m) was used. It is the same acquisition, geometry and calibration as the 20 MHz frequency A band, at 1/16 the data volume; measured dB percentiles agree with frequency A to within a few tenths of a dB. The cost is a coarser native range resolution, so slightly more speckle.",
+  "band_note": "Frequency B (5 MHz, natively 80 m) was used. It is the same acquisition and geometry as the 20 MHz frequency A band at 1/16 the data volume; measured dB percentiles agree with frequency A to within a few tenths of a dB. Costs: more speckle, and NISAR's known-issues page reports larger systematic radiometric calibration residuals for frequency B than for frequency A.",
+  "despeckle": {
+    "applied": true,
+    "method": "Multitemporal speckle filter (Quegan & Yu 2001), 5x5 local window, over all 10 dates; then classified pixels with no same-class neighbour are removed.",
+    "why": "Radar images are grainy (speckle). Unfiltered, about one in six mapped pixels stood alone, which is noise, not ponds. The filter uses the other dates to clean each date without blurring thin channels.",
+    "effect": "Mapped areas are smaller than unfiltered ones. The dates of the two seasonal peaks do not change.",
+    "note": "class.png and timeseries.json are filtered; hh.png is the unfiltered radar image."
+  },
   "polarizations": [
     "HH",
     "HV"
@@ -19,8 +26,9 @@
     "note": "All dates share one track/frame/pass, so differences between dates are real surface change and not a change in viewing geometry."
   },
   "pixel_m": 80.0,
-  "native_pixel_m": 20.0,
-  "looks": 4,
+  "frequency": "B",
+  "native_pixel_m": 80.0,
+  "looks": 1,
   "dates": [
     "2026-06-26",
     "2026-07-08",

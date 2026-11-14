@@ -85,6 +85,90 @@ def classify(hh_db: np.ndarray, hv_db: np.ndarray | None) -> np.ndarray:
     return out
 
 
+def _box(a: np.ndarray, k: int) -> np.ndarray:
+    """k x k moving average that ignores NaN. Summed-area table, numpy only."""
+    r = k // 2
+    v = np.isfinite(a)
+
+    def sat(m):
+        m = np.pad(m, ((r + 1, r), (r + 1, r)))
+        s = m.cumsum(0).cumsum(1)
+        return s[k:, k:] - s[:-k, k:] - s[k:, :-k] + s[:-k, :-k]
+
+    n = sat(v.astype(np.float64))
+    with np.errstate(invalid="ignore", divide="ignore"):
+        return np.where(n > 0, sat(np.where(v, a, 0).astype(np.float64)) / n,
+                        np.nan).astype(np.float32)
+
+
+DESPECKLE_WIN = 5
+
+
+def despeckle(files) -> dict | None:
+    """Multitemporal speckle filter (Quegan & Yu 2001) over the whole series.
+
+    Speckle is the grainy noise every radar image has: a pixel's brightness is
+    a random draw around the true value. One date alone can only be cleaned by
+    blurring it, and blurring erases the Delta's thin channels (a plain 5x5
+    mean removed 70% of the mapped open water in our test).
+
+    This filter uses the other dates instead. For each date k:
+        J_k = <I_k> * mean over dates i of ( I_i / <I_i> )
+    <.> is a local 5x5 mean. I_i / <I_i> is "pure speckle texture" with the
+    seasonal brightness divided out, so averaging it over 10 dates cancels the
+    noise while every date keeps its own radiometry <I_k>. Sharp, stable edges
+    (channel banks) survive because they are present in every date's ratio.
+
+    It needs every date on the same grid, which the single track/frame series
+    guarantees. Returns {date: (hh_lin, hv_lin)} or None if it cannot run.
+    """
+    hh, hv, key, grid = [], [], [], set()
+    for p in files:
+        with np.load(p, allow_pickle=False) as z:
+            if "hv_lin" not in z:
+                return None
+            hh.append(z["hh_lin"].astype(np.float32))
+            hv.append(z["hv_lin"].astype(np.float32))
+            key.append(str(z["date"]))
+            grid.add((z["hh_lin"].shape, tuple(np.round(z["bbox_utm"], 1))))
+    if len(files) < 3 or len(grid) != 1:
+        return None
+    hh, hv = np.stack(hh), np.stack(hv)
+    floor = 10 ** (C.NOISE_FLOOR_DB / 10)
+    bad = ~(np.isfinite(hh) & np.isfinite(hv) & (hh > floor) & (hv > floor))
+    out = []
+    for s in (hh, hv):
+        s[bad] = np.nan
+        loc = np.stack([_box(x, DESPECKLE_WIN) for x in s])
+        with np.errstate(invalid="ignore", divide="ignore"):
+            ratio = s / loc
+        n = np.isfinite(ratio).sum(axis=0)
+        ratio = np.where(n > 0, np.nansum(ratio, axis=0) / np.maximum(n, 1), np.nan)
+        f = (loc * ratio).astype(np.float32)
+        f[bad] = np.nan
+        out.append(f)
+    return {d: (out[0][i], out[1][i]) for i, d in enumerate(key)}
+
+
+def sieve(cls: np.ndarray) -> np.ndarray:
+    """Drop classified pixels that touch no other pixel of their own class
+    (8 neighbours). A lone 80 m pixel of "water" in dry savanna is far more
+    likely to be leftover speckle than a 0.6 ha pond; real channels are
+    connected and are kept."""
+    out = cls.copy()
+    h, w = cls.shape
+    for k in (WATER, FLOODED_VEG):
+        m = cls == k
+        p = np.pad(m, 1)
+        n = np.zeros((h, w), np.uint8)
+        for dy in range(3):
+            for dx in range(3):
+                if (dy, dx) != (1, 1):
+                    n += p[dy:dy + h, dx:dx + w]
+        out[m & (n == 0)] = NONE
+    return out
+
+
 def warp(src: np.ndarray, bbox, epsg: int, nodata, resampling):
     """Reproject an array from the product CRS to Web Mercator.
 
@@ -126,7 +210,7 @@ def bounds_latlon(dst_tf, size) -> dict:
     }
 
 
-def render_one(path: Path) -> dict:
+def render_one(path: Path, clean: dict | None = None) -> dict:
     with np.load(path, allow_pickle=False) as z:
         hh_db = to_db(z["hh_lin"])
         hv_db = to_db(z["hv_lin"]) if "hv_lin" in z else None
@@ -137,7 +221,12 @@ def render_one(path: Path) -> dict:
         quality = str(z["quality"])
         partial = bool(z["partial"])
 
-    cls = classify(hh_db, hv_db)
+    # Classify the despeckled backscatter, then drop lone pixels. hh.png below
+    # still shows the UNFILTERED image: it is "what the radar saw".
+    if clean and date in clean:
+        cls = sieve(classify(to_db(clean[date][0]), to_db(clean[date][1])))
+    else:
+        cls = classify(hh_db, hv_db)
 
     # --- areas: counted in UTM, BEFORE reprojection -------------------------
     # Web Mercator inflates area by 1/cos(lat)^2, which at 19 S would be a ~12%
@@ -198,16 +287,24 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date")
     ap.add_argument("--freq", choices=["A", "B"], default="A")
+    ap.add_argument("--raw", action="store_true",
+                    help="skip the speckle filter and the lone-pixel sieve")
     a = ap.parse_args()
 
     files = sorted(C.cache_dir(a.freq).glob("*.npz"))
-    if a.date:
-        files = [p for p in files if p.stem == a.date]
     if not files:
         raise SystemExit(f"no cache in {C.cache_dir(a.freq)} - run fetch.py first")
+    # The filter needs the WHOLE series even when one date is rendered.
+    clean = None if a.raw else despeckle(files)
+    if not a.raw and clean is None:
+        print("speckle filter skipped: dates are not on one common grid")
+    if a.date:
+        files = [p for p in files if p.stem == a.date]
+        if not files:
+            raise SystemExit(f"no cached date {a.date}")
 
     C.OUT.mkdir(parents=True, exist_ok=True)
-    recs = [render_one(p) for p in files]
+    recs = [render_one(p, clean) for p in files]
 
     # timeseries.json keeps the agreed shape; "partial" is dropped so the
     # published file only ever carries finished dates.
@@ -221,12 +318,31 @@ def main() -> None:
                 "lon_max": C.AOI[2], "lat_max": C.AOI[3]},
         "mission": "NISAR (NASA-ISRO SAR)",
         "product": "L2 GCOV, L-band",
-        "band_note": "Frequency B (5 MHz, natively 80 m) was used. It is the "
-                     "same acquisition, geometry and calibration as the "
-                     "20 MHz frequency A band, at 1/16 the data volume; "
-                     "measured dB percentiles agree with frequency A to "
-                     "within a few tenths of a dB. The cost is a coarser "
-                     "native range resolution, so slightly more speckle.",
+        "band_note": (
+            "Frequency B (5 MHz, natively 80 m) was used. It is the same "
+            "acquisition and geometry as the 20 MHz frequency A band at 1/16 "
+            "the data volume; measured dB percentiles agree with frequency A "
+            "to within a few tenths of a dB. Costs: more speckle, and NISAR's "
+            "known-issues page reports larger systematic radiometric "
+            "calibration residuals for frequency B than for frequency A."
+            if a.freq == "B" else
+            "Frequency A (20 MHz, natively 20 m) was used, averaged 4x4 in "
+            "linear power to 80 m. This is NISAR's primary science band."),
+        "despeckle": (
+            {"applied": True,
+             "method": "Multitemporal speckle filter (Quegan & Yu 2001), "
+                       f"{DESPECKLE_WIN}x{DESPECKLE_WIN} local window, over "
+                       f"all {len(clean)} dates; then classified pixels with "
+                       "no same-class neighbour are removed.",
+             "why": "Radar images are grainy (speckle). Unfiltered, about one "
+                    "in six mapped pixels stood alone, which is noise, not "
+                    "ponds. The filter uses the other dates to clean each "
+                    "date without blurring thin channels.",
+             "effect": "Mapped areas are smaller than unfiltered ones. The "
+                       "dates of the two seasonal peaks do not change.",
+             "note": "class.png and timeseries.json are filtered; hh.png is "
+                     "the unfiltered radar image."}
+            if clean else {"applied": False}),
         "polarizations": ["HH", "HV"],
         "geometry": {"track": C.TRACK, "frame": C.FRAME,
                      "pass": "Ascending", "note":
@@ -234,8 +350,10 @@ def main() -> None:
                      "between dates are real surface change and not a change "
                      "in viewing geometry."},
         "pixel_m": C.OUT_PIXEL_M,
-        "native_pixel_m": C.PIXEL_M,
-        "looks": C.LOOKS,
+        # Must describe the band that was actually rendered, not frequency A.
+        "frequency": a.freq,
+        "native_pixel_m": C.NATIVE_M[a.freq],
+        "looks": C.LOOKS_BY_FREQ[a.freq],
         "dates": [r["date"] for r in series],
         "gaps": [list(g) for g in C.GAPS],
         "gap_note": "NISAR has a permanent data gap in this window. Show it "
