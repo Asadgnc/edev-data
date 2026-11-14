@@ -1,0 +1,167 @@
+<!doctype html>
+<!--
+  EDev-Vision | Minimal working example for the frontend (not the final site).
+
+  Everything on this page is built from data/layers.json: the layer list, the
+  time slider, legends, notes, credits and the assistant box. Copy the pieces
+  you need. Language: plain HTML/CSS/JS + Leaflet, no build step, so it runs
+  from GitHub Pages or by double-clicking the file.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Okavango layers demo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  body { margin: 0; font: 14px/1.4 system-ui, sans-serif; display: grid;
+         grid-template-columns: 320px 1fr; height: 100vh; }
+  #side { overflow: auto; padding: 12px; border-right: 1px solid #ccc; }
+  #map { height: 100vh; }
+  h3 { margin: 14px 0 4px; font-size: 12px; text-transform: uppercase; color: #555; }
+  label { display: block; margin: 3px 0; cursor: pointer; }
+  .note, .warn { font-size: 12px; color: #444; margin: 6px 0; }
+  .warn { background: #fff4d6; padding: 6px; border-radius: 4px; }
+  .sw { display: inline-block; width: 12px; height: 12px; margin-right: 6px;
+        border: 1px solid #999; vertical-align: -2px; }
+  input[type=range] { width: 100%; }
+  #chat textarea { width: 100%; box-sizing: border-box; }
+  #answer { white-space: pre-wrap; margin-top: 6px; }
+  /* DSWx draws "not water" in white: multiply makes white disappear. */
+  .blend-multiply { mix-blend-mode: multiply; }
+  @media (max-width: 700px) { body { grid-template-columns: 1fr; grid-template-rows: 45vh 55vh; }
+                              #map { height: 55vh; order: 2; } }
+</style>
+</head>
+<body>
+<div id="side">
+  <div id="layers"></div>
+  <h3>Time</h3>
+  <input id="slider" type="range" min="0" max="0" value="0">
+  <div id="time"></div>
+  <div id="flag" class="warn" hidden></div>
+  <h3>Legend</h3>
+  <div id="legend"></div>
+  <div id="note" class="note"></div>
+  <div id="source" class="note"></div>
+  <h3>Ask the Delta</h3>
+  <div id="chat">
+    <textarea id="q" rows="2" placeholder="Why does the water shrink?"></textarea>
+    <button id="ask">Ask</button>
+    <div id="answer"></div>
+    <div id="ailabel" class="note"></div>
+  </div>
+  <h3>Keep in mind</h3>
+  <div id="must"></div>
+</div>
+<div id="map"></div>
+
+<script>
+// Works both from GitHub Pages and from a local copy of the repo.
+const LOCAL = location.protocol === "file:" || location.hostname === "localhost";
+const $ = (id) => document.getElementById(id);
+const rgba = (c) => `rgba(${c[0]},${c[1]},${c[2]},${(c[3] ?? 255) / 255})`;
+
+(async () => {
+  const M = await (await fetch(LOCAL ? "data/layers.json"
+      : "https://asadgnc.github.io/edev-data/data/layers.json")).json();
+  const ROOT = LOCAL ? "data" : M.data_root;
+  const abs = (u) => (u.startsWith("http") ? u : `${ROOT}/${u}`);
+  const S = (await (await fetch(abs(M.credits))).json()).sources;
+
+  const a = M.aoi;
+  const map = L.map("map").fitBounds([[a.lat_min, a.lon_min], [a.lat_max, a.lon_max]]);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      { attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
+
+  let layer = M.layers.find((l) => l.default) ?? M.layers[0];
+  let shown = null;
+
+  // A layer's selectable times: an explicit list, or every day of a range.
+  function times(l) {
+    if (l.times) return l.times;
+    if (!l.time_range) return [null];
+    const out = [];
+    for (let d = new Date(l.time_range[0]); d <= new Date(l.time_range[1]);
+         d.setUTCDate(d.getUTCDate() + 1)) out.push(d.toISOString().slice(0, 10));
+    return out;
+  }
+
+  async function show() {
+    const ts = times(layer);
+    const t = ts[Math.min(+$("slider").value, ts.length - 1)];
+    const url = abs(layer.url.replace("{time}", t));
+    let next;
+    if (layer.kind === "tiles") {
+      next = L.tileLayer(url, { maxNativeZoom: layer.max_native_zoom,
+          opacity: layer.opacity, attribution: "NASA GIBS",
+          className: layer.blend ? `blend-${layer.blend}` : "" });
+    } else {
+      const b = await (await fetch(abs(layer.bounds.replace("{time}", t)))).json();
+      next = L.imageOverlay(url, b.bounds, { opacity: layer.opacity });
+    }
+    if (shown) map.removeLayer(shown);
+    shown = next.addTo(map);
+
+    $("time").textContent = t ?? "(one image, no time)";
+    const flagged = (layer.flag_times ?? []).includes(t);
+    $("flag").hidden = !flagged;
+    $("flag").textContent = flagged ? layer.flag_label : "";
+  }
+
+  function select(l) {
+    layer = l;
+    const ts = times(l);
+    $("slider").max = ts.length - 1;
+    $("slider").value = 0;
+    $("slider").disabled = ts.length < 2;
+    $("legend").innerHTML = (l.legend ?? []).map((g) =>
+        `<div><span class="sw" style="background:${rgba(g.color)}"></span>${g.label}</div>`).join("");
+    $("note").textContent = l.note ?? "";
+    const s = S.find((x) => x.id === l.source);
+    $("source").innerHTML = s ? `Source: <a href="${s.url}" target="_blank" rel="noopener">${s.name}</a> — ${s.provider}` : "";
+    show();
+  }
+
+  // Layer list, grouped.
+  for (const g of [...new Set(M.layers.map((l) => l.group))]) {
+    $("layers").insertAdjacentHTML("beforeend", `<h3>${g}</h3>`);
+    for (const l of M.layers.filter((x) => x.group === g)) {
+      const el = document.createElement("label");
+      el.innerHTML = `<input type="radio" name="layer" ${l === layer ? "checked" : ""}> ${l.title}`;
+      el.querySelector("input").onchange = () => select(l);
+      $("layers").append(el);
+    }
+  }
+  $("slider").oninput = show;
+  $("must").innerHTML = M.must_show.map((m) => `<div class="warn">${m}</div>`).join("");
+  $("ailabel").textContent = M.assistant.label;
+  select(layer);
+
+  // Assistant: keep the history short, lock the button while waiting.
+  const history = [];
+  $("ask").onclick = async () => {
+    const q = $("q").value.trim();
+    if (!q) return;
+    $("ask").disabled = true;
+    $("answer").textContent = "…";
+    history.push({ role: "user", content: q.slice(0, 800) });
+    try {
+      const r = await fetch(M.assistant.url, { method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: history.slice(-9) }) });
+      const d = await r.json();
+      $("answer").textContent = d.answer ?? d.error;
+      if (d.answer) history.push({ role: "assistant", content: d.answer.slice(0, 800) });
+      else history.pop();
+    } catch (e) {
+      $("answer").textContent = "Assistant unreachable.";
+      history.pop();
+    }
+    $("ask").disabled = false;
+  };
+})();
+</script>
+</body>
+</html>

@@ -248,6 +248,8 @@ def main() -> None:
                 r["month"][5:]: round(r["m3s"]) for r in drv["discharge"]["monthly"]
                 if r["month"].startswith("2026")}},
         "findings": findings,
+        "data_quality": (load("quality.json").get("summary")
+                         if (C.OUT / "quality.json").exists() else None),
         "forecast": {
             "shown_in_app": show, "verdict": forecast["verdict"],
             "tests": [{k: t[k] for k in ("predictor", "n_years", "correlation_r",

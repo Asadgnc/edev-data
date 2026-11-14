@@ -1,0 +1,110 @@
+{
+ "sources": [
+  {
+   "id": "nisar",
+   "field": "nasa_data",
+   "name": "NISAR L2 Geocoded Polarimetric Covariance (GCOV), L-band",
+   "provider": "NASA / ISRO, distributed by the Alaska Satellite Facility DAAC",
+   "url": "https://search.asf.alaska.edu/",
+   "docs": "https://nisar-docs.asf.alaska.edu/gcov/",
+   "license": "Open data (NASA Earth Science Data policy)",
+   "used_for": "The core of the project: HH and HV backscatter for 10 dates (track 172, frame 168, ascending), classified into open water and flooded vegetation.",
+   "processing": "Streamed over the AOI only, converted to dB, despeckled (Quegan & Yu 2001), thresholded. See meta.json."
+  },
+  {
+   "id": "gibs",
+   "field": "nasa_data",
+   "name": "NASA Global Imagery Browse Services (GIBS): NISAR GCOV browse imagery, OPERA Dynamic Surface Water Extent (DSWx-HLS), MODIS Aqua corrected reflectance",
+   "provider": "NASA EOSDIS (OPERA products by NASA JPL)",
+   "url": "https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/gibs-api",
+   "license": "Open data; NASA asks for acknowledgement of GIBS",
+   "used_for": "Live reference map layers, shown unmodified next to our own classification.",
+   "processing": "None. Tiles are requested from NASA by the browser.",
+   "acknowledgement": "We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS)."
+  },
+  {
+   "id": "power",
+   "field": "nasa_data",
+   "name": "NASA POWER (MERRA-2) monthly precipitation, PRECTOTCORR",
+   "provider": "NASA Langley Research Center",
+   "url": "https://power.larc.nasa.gov/",
+   "license": "Open data",
+   "used_for": "Rainfall in the Angolan headwaters that feeds the flood.",
+   "processing": "Mean of three points; Nov-Apr totals per year."
+  },
+  {
+   "id": "wofs",
+   "field": "references",
+   "name": "Water Observations from Space (WOfS) annual summary, from USGS/NASA Landsat",
+   "provider": "Digital Earth Africa",
+   "url": "https://docs.digitalearthafrica.org/en/latest/data_specs/Landsat_WOfS_specs.html",
+   "license": "CC BY 4.0",
+   "used_for": "Open-water extent of every year 1984-2025, the long-term context NISAR cannot give yet.",
+   "processing": "Cropped to the AOI at 120 m; yearly areas. See history.json."
+  },
+  {
+   "id": "jrc",
+   "field": "references",
+   "name": "JRC Global Surface Water v1.5, occurrence 1984-2024",
+   "provider": "European Commission Joint Research Centre",
+   "url": "https://global-surface-water.appspot.com/",
+   "license": "Copernicus open licence; cite Pekel et al. 2016, Nature 540",
+   "citation": "Pekel, J.-F., Cottam, A., Gorelick, N., Belward, A. S. (2016). High-resolution mapping of global surface water and its long-term changes. Nature 540, 418-422.",
+   "used_for": "How often each pixel was open water over 40 years.",
+   "processing": "Cropped to the AOI, averaged to 80 m."
+  },
+  {
+   "id": "glofas",
+   "field": "references",
+   "name": "GloFAS river discharge reanalysis",
+   "provider": "Copernicus Emergency Management Service / ECMWF, accessed through the Open-Meteo Flood API",
+   "url": "https://open-meteo.com/en/docs/flood-api",
+   "license": "CC BY 4.0",
+   "used_for": "Modelled inflow of the Okavango River near Mohembo.",
+   "processing": "Daily values averaged to months."
+  },
+  {
+   "id": "basemap",
+   "field": "references",
+   "name": "Base map tiles and data",
+   "provider": "OpenStreetMap contributors",
+   "url": "https://www.openstreetmap.org/copyright",
+   "license": "ODbL",
+   "used_for": "Background map.",
+   "processing": "None."
+  },
+  {
+   "id": "papers",
+   "field": "references",
+   "name": "Scientific references",
+   "items": [
+    "Quegan, S., Yu, J. J. (2001). Filtering of multichannel SAR images. IEEE Trans. Geosci. Remote Sens. 39(11), 2373-2379.",
+    "Inman, V. L., Lyons, M. B. (2020). Automated inundation mapping over large areas using Landsat data and Google Earth Engine. Remote Sensing 12(8), 1348.",
+    "Wolski, P., Murray-Hudson, M., Thito, K., Cassidy, L. (2017). Keeping it simple: monitoring flood extent in large data-poor wetlands using MODIS SWIR data. Int. J. Appl. Earth Obs. Geoinf. 57, 224-234.",
+    "NISAR Provisional Product Known Issues, https://nisar-docs.asf.alaska.edu/provisional-known-issues/"
+   ]
+  }
+ ],
+ "ai": {
+  "field": "use_of_ai",
+  "tools": [
+   {
+    "tool": "Claude (Anthropic), via Claude Code",
+    "used_for": "Writing and reviewing the Python data pipeline and the serverless assistant function, checking data sources, drafting documentation.",
+    "human_check": "Every number in the app is computed by the published pipeline from the cited data, not written by an AI."
+   },
+   {
+    "tool": "OpenAI GPT-5.4 mini via API; open-weight gpt-oss models on Groq as backup",
+    "used_for": "The in-app 'Ask the Delta' assistant.",
+    "human_check": "It may only answer from assistant_context.json, a file generated from our data. It is not trained or fine-tuned by us."
+   }
+  ],
+  "not_ai": "No AI-generated images, video or audio are used. All maps are rendered from satellite data. No NASA logo or insignia is used.",
+  "in_app_label": "AI-generated answer based on this project's data files. It can be wrong: check the numbers against the charts."
+ },
+ "fields": {
+  "nasa_data": "NASA Data",
+  "references": "Space Agency Partner Data & References",
+  "use_of_ai": "Use of AI"
+ }
+}

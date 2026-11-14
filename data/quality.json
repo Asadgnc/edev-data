@@ -1,0 +1,366 @@
+{
+  "frequency": "B",
+  "source": "NISAR L2 GCOV product metadata (calibrationInformation, processingInformation), read per granule",
+  "explain": {
+    "rfi_likelihood": "NASA documents this as radio-interference severity in [0,1]. Several of our granules report values above 1, outside the documented range, so we do NOT interpret the scale. It is listed for transparency only.",
+    "nesz_db": "Instrument noise floor (noise-equivalent backscatter) over the AOI as reported in the product, in dB. A surface darker than this cannot be measured.",
+    "water_above_noise_db": "How many dB the median open-water pixel sits above the noise floor. Near 0 means the channel is measuring noise, not water."
+  },
+  "dates": [
+    {
+      "date": "2026-06-26",
+      "quality": "PROVISIONAL",
+      "rfi_likelihood": {
+        "HH": 0.1153,
+        "HV": 0.0974
+      },
+      "nesz_db": {
+        "HH": {
+          "median": -25.6,
+          "min": -27.1,
+          "max": -24.4
+        },
+        "HV": {
+          "median": -25.3,
+          "min": -26.8,
+          "max": -24.1
+        }
+      },
+      "flags": {
+        "noiseCorrectionApplied": "False",
+        "rfiMitigationApplied": "False",
+        "shadowMaskingApplied": "False",
+        "validSamplesSubSwathMaskingApplied": "False"
+      },
+      "open_water_median_db": {
+        "HH": -19.5,
+        "HV": -23.0
+      },
+      "water_above_noise_db": {
+        "HH": 6.1,
+        "HV": 2.3
+      }
+    },
+    {
+      "date": "2026-07-08",
+      "quality": "PROVISIONAL",
+      "rfi_likelihood": {
+        "HH": 1.717,
+        "HV": 1.5704
+      },
+      "nesz_db": {
+        "HH": {
+          "median": -25.6,
+          "min": -26.9,
+          "max": -24.5
+        },
+        "HV": {
+          "median": -25.4,
+          "min": -27.0,
+          "max": -24.2
+        }
+      },
+      "flags": {
+        "noiseCorrectionApplied": "False",
+        "rfiMitigationApplied": "False",
+        "shadowMaskingApplied": "False",
+        "validSamplesSubSwathMaskingApplied": "False"
+      },
+      "open_water_median_db": {
+        "HH": -19.6,
+        "HV": -23.0
+      },
+      "water_above_noise_db": {
+        "HH": 6.0,
+        "HV": 2.4
+      }
+    },
+    {
+      "date": "2026-07-20",
+      "quality": "PROVISIONAL",
+      "rfi_likelihood": {
+        "HH": 1.5805,
+        "HV": 1.4394
+      },
+      "nesz_db": {
+        "HH": {
+          "median": -25.5,
+          "min": -26.9,
+          "max": -24.5
+        },
+        "HV": {
+          "median": -25.3,
+          "min": -27.0,
+          "max": -24.1
+        }
+      },
+      "flags": {
+        "noiseCorrectionApplied": "False",
+        "rfiMitigationApplied": "False",
+        "shadowMaskingApplied": "False",
+        "validSamplesSubSwathMaskingApplied": "False"
+      },
+      "open_water_median_db": {
+        "HH": -19.4,
+        "HV": -23.0
+      },
+      "water_above_noise_db": {
+        "HH": 6.1,
+        "HV": 2.3
+      }
+    },
+    {
+      "date": "2026-08-13",
+      "quality": "PROVISIONAL",
+      "rfi_likelihood": {
+        "HH": 2.3344,
+        "HV": 2.4194
+      },
+      "nesz_db": {
+        "HH": {
+          "median": -25.2,
+          "min": -26.8,
+          "max": -24.2
+        },
+        "HV": {
+          "median": -25.3,
+          "min": -26.9,
+          "max": -24.2
+        }
+      },
+      "flags": {
+        "noiseCorrectionApplied": "False",
+        "rfiMitigationApplied": "False",
+        "shadowMaskingApplied": "False",
+        "validSamplesSubSwathMaskingApplied": "False"
+      },
+      "open_water_median_db": {
+        "HH": -19.3,
+        "HV": -22.9
+      },
+      "water_above_noise_db": {
+        "HH": 5.9,
+        "HV": 2.4
+      }
+    },
+    {
+      "date": "2026-08-25",
+      "quality": "PROVISIONAL",
+      "rfi_likelihood": {
+        "HH": 1.5712,
+        "HV": 1.7375
+      },
+      "nesz_db": {
+        "HH": {
+          "median": -25.2,
+          "min": -26.7,
+          "max": -24.1
+        },
+        "HV": {
+          "median": -25.3,
+          "min": -26.9,
+          "max": -24.2
+        }
+      },
+      "flags": {
+        "noiseCorrectionApplied": "False",
+        "rfiMitigationApplied": "False",
+        "shadowMaskingApplied": "False",
+        "validSamplesSubSwathMaskingApplied": "False"
+      },
+      "open_water_median_db": {
+        "HH": -19.3,
+        "HV": -23.0
+      },
+      "water_above_noise_db": {
+        "HH": 5.9,
+        "HV": 2.3
+      }
+    },
+    {
+      "date": "2026-09-06",
+      "quality": "PROVISIONAL",
+      "rfi_likelihood": {
+        "HH": 1.6602,
+        "HV": 1.9669
+      },
+      "nesz_db": {
+        "HH": {
+          "median": -25.1,
+          "min": -26.7,
+          "max": -24.0
+        },
+        "HV": {
+          "median": -25.2,
+          "min": -27.0,
+          "max": -24.1
+        }
+      },
+      "flags": {
+        "noiseCorrectionApplied": "False",
+        "rfiMitigationApplied": "False",
+        "shadowMaskingApplied": "False",
+        "validSamplesSubSwathMaskingApplied": "False"
+      },
+      "open_water_median_db": {
+        "HH": -19.1,
+        "HV": -23.1
+      },
+      "water_above_noise_db": {
+        "HH": 6.0,
+        "HV": 2.1
+      }
+    },
+    {
+      "date": "2026-09-18",
+      "quality": "PROVISIONAL",
+      "rfi_likelihood": {
+        "HH": 1.5997,
+        "HV": 1.8027
+      },
+      "nesz_db": {
+        "HH": {
+          "median": -25.1,
+          "min": -26.7,
+          "max": -24.0
+        },
+        "HV": {
+          "median": -25.3,
+          "min": -26.8,
+          "max": -24.1
+        }
+      },
+      "flags": {
+        "noiseCorrectionApplied": "False",
+        "rfiMitigationApplied": "False",
+        "shadowMaskingApplied": "False",
+        "validSamplesSubSwathMaskingApplied": "False"
+      },
+      "open_water_median_db": {
+        "HH": -19.0,
+        "HV": -23.0
+      },
+      "water_above_noise_db": {
+        "HH": 6.1,
+        "HV": 2.3
+      }
+    },
+    {
+      "date": "2026-09-30",
+      "quality": "PROVISIONAL",
+      "rfi_likelihood": {
+        "HH": 1.6149,
+        "HV": 1.6688
+      },
+      "nesz_db": {
+        "HH": {
+          "median": -25.1,
+          "min": -26.7,
+          "max": -24.1
+        },
+        "HV": {
+          "median": -25.1,
+          "min": -26.7,
+          "max": -24.1
+        }
+      },
+      "flags": {
+        "noiseCorrectionApplied": "False",
+        "rfiMitigationApplied": "False",
+        "shadowMaskingApplied": "False",
+        "validSamplesSubSwathMaskingApplied": "False"
+      },
+      "open_water_median_db": {
+        "HH": -19.1,
+        "HV": -22.9
+      },
+      "water_above_noise_db": {
+        "HH": 6.0,
+        "HV": 2.2
+      }
+    },
+    {
+      "date": "2026-10-12",
+      "quality": "PROVISIONAL",
+      "rfi_likelihood": {
+        "HH": 1.6075,
+        "HV": 1.7771
+      },
+      "nesz_db": {
+        "HH": {
+          "median": -25.1,
+          "min": -26.5,
+          "max": -24.0
+        },
+        "HV": {
+          "median": -25.2,
+          "min": -26.7,
+          "max": -24.0
+        }
+      },
+      "flags": {
+        "noiseCorrectionApplied": "False",
+        "rfiMitigationApplied": "False",
+        "shadowMaskingApplied": "False",
+        "validSamplesSubSwathMaskingApplied": "False"
+      },
+      "open_water_median_db": {
+        "HH": -18.9,
+        "HV": -23.0
+      },
+      "water_above_noise_db": {
+        "HH": 6.2,
+        "HV": 2.2
+      }
+    },
+    {
+      "date": "2026-10-24",
+      "quality": "VALIDATED",
+      "rfi_likelihood": {
+        "HH": 1.6472,
+        "HV": 1.7758
+      },
+      "nesz_db": {
+        "HH": {
+          "median": -25.6,
+          "min": -26.9,
+          "max": -24.1
+        },
+        "HV": {
+          "median": -25.4,
+          "min": -26.8,
+          "max": -24.1
+        }
+      },
+      "flags": {
+        "noiseCorrectionApplied": "False",
+        "rfiMitigationApplied": "False",
+        "shadowMaskingApplied": "False",
+        "validSamplesSubSwathMaskingApplied": "False"
+      },
+      "open_water_median_db": {
+        "HH": -18.8,
+        "HV": -23.2
+      },
+      "water_above_noise_db": {
+        "HH": 6.8,
+        "HV": 2.2
+      }
+    }
+  ],
+  "summary": {
+    "noise_floor_db": -25.2,
+    "open_water_above_noise_db": {
+      "HH": 6.0,
+      "HV": 2.3
+    },
+    "noise_subtracted_by_nasa": false,
+    "rfi_mitigated_by_nasa": false,
+    "plain": [
+      "The radar's noise floor is steady across all ten dates, so the seasonal change is not an instrument effect.",
+      "Open water is clearly above the noise in HH but only about 2 dB above it in HV. Open water is therefore mapped mainly by HH; its HV value is mostly instrument noise.",
+      "NASA did not subtract thermal noise in these products, so very dark surfaces read slightly brighter than they are. This does not affect the bright flooded-vegetation class.",
+      "NASA's 'mask' layer marks samples that were not fully focused as invalid; these are the same edge-strip pixels our noise-floor rule already removes."
+    ]
+  }
+}
