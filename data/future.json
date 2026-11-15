@@ -1,0 +1,950 @@
+{
+ "name": "RSynthesis estimation engine",
+ "version": "2.1",
+ "generated": "2026-11-15",
+ "what": "Probability (0 to 1) that each 120 m pixel of the study area holds open water in a given year, 2026-2030, with the yearly open-water area it implies.",
+ "stage1": {
+  "question": "How much open water will the year hold?",
+  "method": "RSynthesis v2.1: causes reduced by exhaustive Bayesian subset search (6 candidates); an equal mixture of 4 robust Bayesian regressions on a Box-Cox scale, with Student-t errors and low-coverage years as lower bounds. Cause screening is repeated inside each validation fold. coef and t_values give the model equivalents at a normal year in v1's units.",
+  "engine": "RSynthesis v2.1 (pipeline/rsynthesis.py, details in rsynthesis.json)",
+  "models": 4,
+  "formula": "Equal mixture of 4 robust Bayesian models on a Box-Cox scale; core causes: Rain in the Angolan highlands (Nov-Apr), Calendar year (slow change); optional causes: Rain over the Delta (Nov-Apr), El Nino / La Nina (Dec-Feb ocean index). Student-t errors, low-coverage years as lower bounds, Gibbs sampling. Cause screening is repeated inside each validation fold.",
+  "causes_used": [
+   "headwater_rain",
+   "local_rain",
+   "enso",
+   "trend"
+  ],
+  "causes_dropped": [
+   "heat",
+   "prev_headwater_rain",
+   "river inflow (gauge and GloFAS)",
+   "where the rain fell"
+  ],
+  "coef": {
+   "c1_km2_per_mm": 3.857,
+   "c2_km2_per_year": -14.5,
+   "local_rain_km2_per_mm": 0.423,
+   "enso_km2_per_point": -57.299
+  },
+  "t_values": {
+   "year": -2.64
+  },
+  "n_years": 27,
+  "years": [
+   1989,
+   2025
+  ],
+  "loo_skill": 0.583,
+  "loo_rmse_km2": 371.2,
+  "loo_mae_km2": 297.0,
+  "loo_crps_km2": 209.8,
+  "chrono_skill": 0.592,
+  "chrono_rmse_km2": 456.9,
+  "chrono_split": "fit to 2012, forecast 2013-2025",
+  "rolling_skill": 0.277,
+  "rolling_rmse_km2": 498.6,
+  "rolling_from": 2006,
+  "v1": {
+   "loo_skill": 0.606,
+   "loo_rmse_km2": 360.9,
+   "chrono_skill": 0.761,
+   "rolling_rmse_km2": 380.8
+  },
+  "rain_trend_mm_per_year": 1.28,
+  "rain_trend_t": 0.82,
+  "outlier_years": [
+   1989,
+   1998,
+   2004,
+   2006,
+   2007,
+   2010,
+   2013,
+   2014,
+   2021,
+   2022
+  ],
+  "explained_outlier_years": [
+   1989,
+   2014,
+   2021
+  ]
+ },
+ "stage2": {
+  "question": "Where will that water be?",
+  "method": "Bayesian logistic regression for every pixel that held open water in at least one well-observed year: P(water) = sigmoid(a + b * standardised yearly area), priors a ~ N(0, 5^2), b ~ N(0, 2.5^2), fitted for all pixels at once by Newton's method; Laplace approximation for parameter uncertainty.",
+  "pixels": 366971,
+  "pixel_m": 120.0,
+  "years_used": [
+   1989,
+   1990,
+   1991,
+   1992,
+   1998,
+   2001,
+   2002,
+   2004,
+   2005,
+   2006,
+   2007,
+   2008,
+   2009,
+   2010,
+   2013,
+   2014,
+   2015,
+   2016,
+   2017,
+   2018,
+   2019,
+   2020,
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "validation": {
+   "brier_skill_where": 0.037,
+   "brier_skill_full": 0.095,
+   "mean_iou": 0.441,
+   "mean_iou_frequency_map": 0.429,
+   "per_year": [
+    {
+     "year": 1989,
+     "true_km2": 2517.9,
+     "brier_skill_where": 0.033,
+     "iou": 0.566,
+     "iou_frequency_map": 0.556,
+     "predicted_km2": 2241.8,
+     "brier_skill_full": 0.215
+    },
+    {
+     "year": 1990,
+     "true_km2": 1536.0,
+     "brier_skill_where": -0.003,
+     "iou": 0.419,
+     "iou_frequency_map": 0.419,
+     "predicted_km2": 1677.8,
+     "brier_skill_full": -0.002
+    },
+    {
+     "year": 1991,
+     "true_km2": 1287.1,
+     "brier_skill_where": -0.03,
+     "iou": 0.378,
+     "iou_frequency_map": 0.387,
+     "predicted_km2": 1054.9,
+     "brier_skill_full": -0.088
+    },
+    {
+     "year": 1992,
+     "true_km2": 1891.1,
+     "brier_skill_where": 0.021,
+     "iou": 0.5,
+     "iou_frequency_map": 0.495,
+     "predicted_km2": 2102.8,
+     "brier_skill_full": 0.019
+    },
+    {
+     "year": 1998,
+     "true_km2": 829.5,
+     "brier_skill_where": -0.022,
+     "iou": 0.225,
+     "iou_frequency_map": 0.295,
+     "predicted_km2": 1362.5,
+     "brier_skill_full": 0.119
+    },
+    {
+     "year": 2001,
+     "true_km2": 1487.1,
+     "brier_skill_where": 0.014,
+     "iou": 0.478,
+     "iou_frequency_map": 0.478,
+     "predicted_km2": 1817.1,
+     "brier_skill_full": 0.004
+    },
+    {
+     "year": 2002,
+     "true_km2": 1393.5,
+     "brier_skill_where": 0.002,
+     "iou": 0.444,
+     "iou_frequency_map": 0.443,
+     "predicted_km2": 1592.4,
+     "brier_skill_full": 0.012
+    },
+    {
+     "year": 2004,
+     "true_km2": 2462.6,
+     "brier_skill_where": 0.102,
+     "iou": 0.617,
+     "iou_frequency_map": 0.583,
+     "predicted_km2": 2056.2,
+     "brier_skill_full": 0.243
+    },
+    {
+     "year": 2005,
+     "true_km2": 1533.7,
+     "brier_skill_where": 0.027,
+     "iou": 0.494,
+     "iou_frequency_map": 0.493,
+     "predicted_km2": 1315.4,
+     "brier_skill_full": -0.058
+    },
+    {
+     "year": 2006,
+     "true_km2": 1745.5,
+     "brier_skill_where": 0.09,
+     "iou": 0.597,
+     "iou_frequency_map": 0.545,
+     "predicted_km2": 1499.8,
+     "brier_skill_full": 0.0
+    },
+    {
+     "year": 2007,
+     "true_km2": 2472.6,
+     "brier_skill_where": 0.122,
+     "iou": 0.647,
+     "iou_frequency_map": 0.622,
+     "predicted_km2": 1676.9,
+     "brier_skill_full": 0.124
+    },
+    {
+     "year": 2008,
+     "true_km2": 1469.9,
+     "brier_skill_where": 0.016,
+     "iou": 0.499,
+     "iou_frequency_map": 0.499,
+     "predicted_km2": 1576.7,
+     "brier_skill_full": 0.024
+    },
+    {
+     "year": 2009,
+     "true_km2": 1804.4,
+     "brier_skill_where": 0.059,
+     "iou": 0.524,
+     "iou_frequency_map": 0.496,
+     "predicted_km2": 1588.5,
+     "brier_skill_full": 0.037
+    },
+    {
+     "year": 2010,
+     "true_km2": 1553.1,
+     "brier_skill_where": 0.009,
+     "iou": 0.436,
+     "iou_frequency_map": 0.433,
+     "predicted_km2": 2135.5,
+     "brier_skill_full": -0.073
+    },
+    {
+     "year": 2013,
+     "true_km2": 1469.3,
+     "brier_skill_where": 0.014,
+     "iou": 0.47,
+     "iou_frequency_map": 0.47,
+     "predicted_km2": 2065.6,
+     "brier_skill_full": -0.187
+    },
+    {
+     "year": 2014,
+     "true_km2": 2196.4,
+     "brier_skill_where": -0.029,
+     "iou": 0.553,
+     "iou_frequency_map": 0.566,
+     "predicted_km2": 2193.5,
+     "brier_skill_full": 0.095
+    },
+    {
+     "year": 2015,
+     "true_km2": 1409.8,
+     "brier_skill_where": 0.018,
+     "iou": 0.477,
+     "iou_frequency_map": 0.462,
+     "predicted_km2": 1183.4,
+     "brier_skill_full": -0.061
+    },
+    {
+     "year": 2016,
+     "true_km2": 1541.4,
+     "brier_skill_where": 0.036,
+     "iou": 0.542,
+     "iou_frequency_map": 0.548,
+     "predicted_km2": 1532.1,
+     "brier_skill_full": 0.008
+    },
+    {
+     "year": 2017,
+     "true_km2": 1163.1,
+     "brier_skill_where": -0.042,
+     "iou": 0.357,
+     "iou_frequency_map": 0.375,
+     "predicted_km2": 1736.9,
+     "brier_skill_full": -0.089
+    },
+    {
+     "year": 2018,
+     "true_km2": 1725.4,
+     "brier_skill_where": -0.021,
+     "iou": 0.534,
+     "iou_frequency_map": 0.546,
+     "predicted_km2": 1677.2,
+     "brier_skill_full": 0.008
+    },
+    {
+     "year": 2019,
+     "true_km2": 375.9,
+     "brier_skill_where": 0.178,
+     "iou": 0.223,
+     "iou_frequency_map": 0.115,
+     "predicted_km2": 518.5,
+     "brier_skill_full": 0.65
+    },
+    {
+     "year": 2020,
+     "true_km2": 1734.9,
+     "brier_skill_where": -0.051,
+     "iou": 0.429,
+     "iou_frequency_map": 0.437,
+     "predicted_km2": 1313.2,
+     "brier_skill_full": -0.014
+    },
+    {
+     "year": 2021,
+     "true_km2": 548.2,
+     "brier_skill_where": 0.175,
+     "iou": 0.224,
+     "iou_frequency_map": 0.151,
+     "predicted_km2": 504.3,
+     "brier_skill_full": 0.527
+    },
+    {
+     "year": 2022,
+     "true_km2": 1017.4,
+     "brier_skill_where": 0.129,
+     "iou": 0.378,
+     "iou_frequency_map": 0.346,
+     "predicted_km2": 1858.3,
+     "brier_skill_full": -0.316
+    },
+    {
+     "year": 2023,
+     "true_km2": 733.9,
+     "brier_skill_where": 0.221,
+     "iou": 0.315,
+     "iou_frequency_map": 0.251,
+     "predicted_km2": 670.7,
+     "brier_skill_full": 0.434
+    },
+    {
+     "year": 2024,
+     "true_km2": 579.8,
+     "brier_skill_where": 0.158,
+     "iou": 0.249,
+     "iou_frequency_map": 0.231,
+     "predicted_km2": 767.5,
+     "brier_skill_full": 0.515
+    },
+    {
+     "year": 2025,
+     "true_km2": 1477.2,
+     "brier_skill_where": -0.007,
+     "iou": 0.342,
+     "iou_frequency_map": 0.342,
+     "predicted_km2": 1176.1,
+     "brier_skill_full": 0.061
+    }
+   ],
+   "meaning": "Brier skill > 0 means the map beats the plain 'how often was this pixel wet' map. 'where' gives the model the true yearly area; 'full' gives it only the stage-1 forecast, refitted without the year."
+  }
+ },
+ "stage3": {
+  "method": "For a given yearly area the pixel log-odds a + b z (shrunk by each pixel's parameter uncertainty, probit approximation, MacKay 1992) get one global shift, found by bisection, so the map holds exactly that area. The expected map averages these maps over 40 equal-probability nodes of the stage-1 forecast; dry and wet use its 10th and 90th percentiles.",
+  "scenarios": {
+   "expected": "averaged over the whole forecast range",
+   "dry": "10th percentile of that year's forecast area",
+   "wet": "90th percentile of that year's forecast area"
+  }
+ },
+ "projection": [
+  {
+   "year": 2026,
+   "rain_mm": 1057,
+   "rain_known": true,
+   "delta_rain_mm": 781,
+   "enso": -0.4,
+   "mean_km2": 1908.2,
+   "sd_km2": 467.0,
+   "p025_km2": 1116.3,
+   "p10_km2": 1368.6,
+   "p50_km2": 1875.6,
+   "p90_km2": 2467.8,
+   "p975_km2": 2930.3,
+   "nodes_km2": [
+    997.9,
+    1182.6,
+    1275.4,
+    1340.3,
+    1393.8,
+    1441.9,
+    1483.6,
+    1521.5,
+    1557.0,
+    1590.5,
+    1623.2,
+    1653.0,
+    1680.5,
+    1707.8,
+    1732.9,
+    1758.4,
+    1784.3,
+    1811.0,
+    1837.1,
+    1863.6,
+    1887.7,
+    1911.6,
+    1937.1,
+    1965.6,
+    1990.9,
+    2018.7,
+    2048.3,
+    2078.7,
+    2109.6,
+    2144.0,
+    2178.9,
+    2218.9,
+    2263.2,
+    2310.2,
+    2363.2,
+    2427.9,
+    2505.5,
+    2623.7,
+    2792.2,
+    3156.2
+   ],
+   "map_km2": {
+    "expected": 1904.2,
+    "dry": 1368.6,
+    "wet": 2467.8
+   },
+   "likely_km2": 1558.7
+  },
+  {
+   "year": 2027,
+   "rain_mm": null,
+   "rain_known": false,
+   "delta_rain_mm": null,
+   "enso": null,
+   "mean_km2": 1217.1,
+   "sd_km2": 532.9,
+   "p025_km2": 379.9,
+   "p10_km2": 584.9,
+   "p50_km2": 1162.6,
+   "p90_km2": 1896.5,
+   "p975_km2": 2401.0,
+   "nodes_km2": [
+    310.3,
+    430.2,
+    502.2,
+    559.9,
+    608.3,
+    657.2,
+    697.1,
+    737.4,
+    778.2,
+    814.8,
+    848.4,
+    884.0,
+    917.6,
+    949.9,
+    982.5,
+    1015.8,
+    1047.3,
+    1081.7,
+    1113.8,
+    1145.7,
+    1179.1,
+    1212.5,
+    1244.8,
+    1277.6,
+    1313.1,
+    1349.7,
+    1388.5,
+    1425.8,
+    1467.8,
+    1510.4,
+    1554.5,
+    1603.4,
+    1663.1,
+    1721.1,
+    1780.7,
+    1853.6,
+    1946.1,
+    2057.4,
+    2242.3,
+    2657.6
+   ],
+   "map_km2": {
+    "expected": 1213.3,
+    "dry": 584.9,
+    "wet": 1896.5
+   },
+   "likely_km2": 648.7
+  },
+  {
+   "year": 2028,
+   "rain_mm": null,
+   "rain_known": false,
+   "delta_rain_mm": null,
+   "enso": null,
+   "mean_km2": 1206.5,
+   "sd_km2": 523.5,
+   "p025_km2": 376.9,
+   "p10_km2": 575.5,
+   "p50_km2": 1151.9,
+   "p90_km2": 1896.9,
+   "p975_km2": 2390.9,
+   "nodes_km2": [
+    306.3,
+    423.4,
+    493.3,
+    548.8,
+    601.7,
+    651.3,
+    695.0,
+    734.3,
+    772.8,
+    807.5,
+    843.6,
+    878.2,
+    912.2,
+    946.1,
+    977.0,
+    1008.7,
+    1037.7,
+    1071.3,
+    1105.0,
+    1134.0,
+    1166.8,
+    1197.5,
+    1231.2,
+    1265.3,
+    1300.3,
+    1338.4,
+    1374.9,
+    1412.5,
+    1453.0,
+    1493.3,
+    1537.0,
+    1590.3,
+    1642.0,
+    1697.4,
+    1768.5,
+    1850.4,
+    1947.9,
+    2063.5,
+    2249.1,
+    2641.5
+   ],
+   "map_km2": {
+    "expected": 1204.2,
+    "dry": 575.5,
+    "wet": 1896.9
+   },
+   "likely_km2": 635.4
+  },
+  {
+   "year": 2029,
+   "rain_mm": null,
+   "rain_known": false,
+   "delta_rain_mm": null,
+   "enso": null,
+   "mean_km2": 1192.2,
+   "sd_km2": 523.0,
+   "p025_km2": 359.1,
+   "p10_km2": 564.0,
+   "p50_km2": 1138.0,
+   "p90_km2": 1873.0,
+   "p975_km2": 2370.1,
+   "nodes_km2": [
+    298.5,
+    408.8,
+    477.9,
+    534.8,
+    590.3,
+    636.4,
+    679.0,
+    721.1,
+    759.3,
+    796.5,
+    832.5,
+    866.4,
+    899.6,
+    933.8,
+    962.7,
+    995.0,
+    1025.7,
+    1055.4,
+    1087.2,
+    1120.8,
+    1154.1,
+    1185.8,
+    1218.5,
+    1251.3,
+    1286.7,
+    1323.1,
+    1360.0,
+    1397.5,
+    1437.0,
+    1481.4,
+    1527.9,
+    1573.1,
+    1628.7,
+    1686.1,
+    1754.6,
+    1831.5,
+    1923.2,
+    2028.8,
+    2233.3,
+    2611.0
+   ],
+   "map_km2": {
+    "expected": 1189.4,
+    "dry": 564.0,
+    "wet": 1873.0
+   },
+   "likely_km2": 620.5
+  },
+  {
+   "year": 2030,
+   "rain_mm": null,
+   "rain_known": false,
+   "delta_rain_mm": null,
+   "enso": null,
+   "mean_km2": 1187.2,
+   "sd_km2": 518.4,
+   "p025_km2": 372.5,
+   "p10_km2": 568.8,
+   "p50_km2": 1130.5,
+   "p90_km2": 1858.9,
+   "p975_km2": 2349.1,
+   "nodes_km2": [
+    309.8,
+    413.6,
+    488.9,
+    546.2,
+    592.6,
+    639.5,
+    680.2,
+    720.8,
+    757.6,
+    793.6,
+    828.7,
+    861.3,
+    892.9,
+    927.8,
+    959.4,
+    989.5,
+    1020.7,
+    1050.6,
+    1083.5,
+    1113.3,
+    1147.6,
+    1180.0,
+    1213.2,
+    1242.8,
+    1274.8,
+    1314.0,
+    1350.0,
+    1389.4,
+    1428.7,
+    1472.6,
+    1520.0,
+    1568.6,
+    1620.4,
+    1676.0,
+    1740.2,
+    1819.3,
+    1912.1,
+    2027.0,
+    2213.2,
+    2599.2
+   ],
+   "map_km2": {
+    "expected": 1184.5,
+    "dry": 568.8,
+    "wet": 1858.9
+   },
+   "likely_km2": 617.2
+  }
+ ],
+ "hindcast": [
+  {
+   "year": 1989,
+   "observed_km2": 2517.9,
+   "predicted_km2": 2244.9,
+   "low_km2": 1545.9,
+   "high_km2": 2996.4
+  },
+  {
+   "year": 1990,
+   "observed_km2": 1536.0,
+   "predicted_km2": 1680.1,
+   "low_km2": 1203.1,
+   "high_km2": 2194.7
+  },
+  {
+   "year": 1991,
+   "observed_km2": 1287.1,
+   "predicted_km2": 1057.0,
+   "low_km2": 687.2,
+   "high_km2": 1468.0
+  },
+  {
+   "year": 1992,
+   "observed_km2": 1891.1,
+   "predicted_km2": 2106.0,
+   "low_km2": 1541.4,
+   "high_km2": 2728.4
+  },
+  {
+   "year": 1998,
+   "observed_km2": 829.5,
+   "predicted_km2": 1364.5,
+   "low_km2": 968.1,
+   "high_km2": 1803.3
+  },
+  {
+   "year": 2001,
+   "observed_km2": 1487.1,
+   "predicted_km2": 1820.5,
+   "low_km2": 1339.0,
+   "high_km2": 2329.7
+  },
+  {
+   "year": 2002,
+   "observed_km2": 1393.5,
+   "predicted_km2": 1596.8,
+   "low_km2": 1162.7,
+   "high_km2": 2059.8
+  },
+  {
+   "year": 2004,
+   "observed_km2": 2462.6,
+   "predicted_km2": 2058.2,
+   "low_km2": 1551.9,
+   "high_km2": 2585.7
+  },
+  {
+   "year": 2005,
+   "observed_km2": 1533.7,
+   "predicted_km2": 1319.5,
+   "low_km2": 973.6,
+   "high_km2": 1680.0
+  },
+  {
+   "year": 2006,
+   "observed_km2": 1745.5,
+   "predicted_km2": 1502.7,
+   "low_km2": 1044.4,
+   "high_km2": 1993.5
+  },
+  {
+   "year": 2007,
+   "observed_km2": 2472.6,
+   "predicted_km2": 1677.9,
+   "low_km2": 1285.2,
+   "high_km2": 2063.6
+  },
+  {
+   "year": 2008,
+   "observed_km2": 1469.9,
+   "predicted_km2": 1578.9,
+   "low_km2": 1113.3,
+   "high_km2": 2079.8
+  },
+  {
+   "year": 2009,
+   "observed_km2": 1804.4,
+   "predicted_km2": 1591.2,
+   "low_km2": 1159.6,
+   "high_km2": 2055.0
+  },
+  {
+   "year": 2010,
+   "observed_km2": 1553.1,
+   "predicted_km2": 2139.2,
+   "low_km2": 1547.1,
+   "high_km2": 2771.5
+  },
+  {
+   "year": 2013,
+   "observed_km2": 1469.3,
+   "predicted_km2": 2069.2,
+   "low_km2": 1540.9,
+   "high_km2": 2633.7
+  },
+  {
+   "year": 2014,
+   "observed_km2": 2196.4,
+   "predicted_km2": 2197.4,
+   "low_km2": 1538.8,
+   "high_km2": 2904.5
+  },
+  {
+   "year": 2015,
+   "observed_km2": 1409.8,
+   "predicted_km2": 1186.3,
+   "low_km2": 835.2,
+   "high_km2": 1552.1
+  },
+  {
+   "year": 2016,
+   "observed_km2": 1541.4,
+   "predicted_km2": 1535.8,
+   "low_km2": 1029.1,
+   "high_km2": 2080.1
+  },
+  {
+   "year": 2017,
+   "observed_km2": 1163.1,
+   "predicted_km2": 1740.6,
+   "low_km2": 1303.8,
+   "high_km2": 2198.1
+  },
+  {
+   "year": 2018,
+   "observed_km2": 1725.4,
+   "predicted_km2": 1680.7,
+   "low_km2": 1214.4,
+   "high_km2": 2198.2
+  },
+  {
+   "year": 2019,
+   "observed_km2": 375.9,
+   "predicted_km2": 520.0,
+   "low_km2": 321.6,
+   "high_km2": 748.8
+  },
+  {
+   "year": 2020,
+   "observed_km2": 1734.9,
+   "predicted_km2": 1315.0,
+   "low_km2": 940.7,
+   "high_km2": 1704.9
+  },
+  {
+   "year": 2021,
+   "observed_km2": 548.2,
+   "predicted_km2": 505.9,
+   "low_km2": 232.1,
+   "high_km2": 795.9
+  },
+  {
+   "year": 2022,
+   "observed_km2": 1017.4,
+   "predicted_km2": 1861.1,
+   "low_km2": 1418.8,
+   "high_km2": 2319.7
+  },
+  {
+   "year": 2023,
+   "observed_km2": 733.9,
+   "predicted_km2": 672.6,
+   "low_km2": 430.3,
+   "high_km2": 943.4
+  },
+  {
+   "year": 2024,
+   "observed_km2": 579.8,
+   "predicted_km2": 769.6,
+   "low_km2": 494.0,
+   "high_km2": 1081.6
+  },
+  {
+   "year": 2025,
+   "observed_km2": 1477.2,
+   "predicted_km2": 1177.5,
+   "low_km2": 852.7,
+   "high_km2": 1526.3
+  }
+ ],
+ "climatology": {
+  "mean_km2": 1479.9,
+  "sd_km2": 563.9,
+  "years": [
+   1989,
+   2025
+  ],
+  "n_years": 27
+ },
+ "images": {
+  "pattern": "future/<year>_<scenario>.webp",
+  "bounds": "future/bounds.json",
+  "years": [
+   2026,
+   2027,
+   2028,
+   2029,
+   2030
+  ],
+  "scenarios": [
+   "expected",
+   "dry",
+   "wet"
+  ]
+ },
+ "legend": [
+  {
+   "p": 0.05,
+   "color": [
+    34,
+    86,
+    120,
+    90
+   ]
+  },
+  {
+   "p": 0.25,
+   "color": [
+    46,
+    128,
+    182,
+    150
+   ]
+  },
+  {
+   "p": 0.5,
+   "color": [
+    78,
+    176,
+    226,
+    205
+   ]
+  },
+  {
+   "p": 0.75,
+   "color": [
+    150,
+    218,
+    246,
+    235
+   ]
+  },
+  {
+   "p": 0.95,
+   "color": [
+    232,
+    249,
+    255,
+    255
+   ]
+  }
+ ],
+ "caveats": [
+  "A statistical projection, not a certainty: rain and El Nino after April 2026 are unknown, so 2027-2030 use the causes of past years and the band is wide.",
+  "Landsat sees OPEN water only. Water under reeds and papyrus (the NISAR flooded-vegetation class) is not part of this projection.",
+  "The downward trend is measured in this study area only. Part of it may be water moving between channels of the Delta, or a long dry phase, rather than a permanent loss.",
+  "Pixels never wet in the 27 well-observed years stay near zero by design."
+ ]
+}

@@ -76,6 +76,63 @@ def story_table():
     }
 
 
+def future_block():
+    """Compact summary of future.json + rsynthesis.json (pipeline/future.py) for the assistant."""
+    if not (C.OUT / "future.json").exists():
+        return None
+    import rsynthesis as RS
+
+    f = load("future.json")
+    s1, v = f["stage1"], f["stage2"]["validation"]
+    rs = load("rsynthesis.json") if (C.OUT / "rsynthesis.json").exists() else None
+    dropped = [RS.CANDIDATES.get(c, c) for c in s1.get("causes_dropped", [])]
+    block = {
+        "what": f"RSynthesis estimation engine v{f.get('version', '2.1')}, our own algorithm: yearly open water in the "
+                "study area (Landsat type, km2) and a probability map (0 to 1 per 120 m pixel), 2026-2030.",
+        "how": f"Stage 1 (how much): {s1.get('formula', 'Robust Bayesian regression with cause screening.')} "
+               "Stage 2 (where): a Bayesian logistic regression for each pixel places the water. "
+               "For future years with unknown causes, the algorithm samples all causes together from a "
+               "past year, preserving their correlations.",
+        "dropped_causes": "Tested but not retained in the final model: " + ", ".join(dropped),
+        "trend": f"With the causes held at a normal year, open water in the study area falls about "
+                 f"{abs(s1['coef']['c2_km2_per_year'])} km2 per year (posterior z = {s1['t_values']['year']}); "
+                 f"Angolan rain itself shows no significant trend (t = {s1['rain_trend_t']}). Possible "
+                 "reasons are not separated yet: heat, water moving between Delta channels, upstream use, "
+                 "vegetation closing channels.",
+        "skill": f"Yearly area, each year left out: skill {s1['loo_skill']}, error {s1['loo_rmse_km2']} km2 "
+                 f"(the earlier v1: {s1['v1']['loo_rmse_km2']} km2). Forecasting each year from {s1['rolling_from']} "
+                 f"from earlier years only: error {s1['rolling_rmse_km2']} km2 (v1: {s1['v1']['rolling_rmse_km2']}). "
+                 f"Trained on 1989-2012 and tested on 2013-2025: skill {s1['chrono_skill']}. Map: Brier skill "
+                 f"{v['brier_skill_full']} against an average-year map.",
+        "columns": ["year", "median_km2", "low_10pct_km2", "high_90pct_km2", "causes"],
+        "rows": [[p["year"], round(p["p50_km2"]), round(p["p10_km2"]), round(p["p90_km2"]),
+                  f"known: Angolan rain {p['rain_mm']} mm, Delta rain {p.get('delta_rain_mm')} mm, "
+                  f"El Nino index {p.get('enso')}" if p["rain_known"] else "unknown"] for p in f["projection"]],
+        "average_km2": round(f["climatology"]["mean_km2"]),
+        "average_years": f["climatology"]["years"],
+        "caveats": f["caveats"][:3],
+    }
+    if rs:
+        lg = rs["step3_outlier_logic"]
+        block["outlier_years"] = {
+            "what": "Years the old v1 model (rain + trend, straight line) missed by more than its own "
+                    "typical error, and what v2 says about them.",
+            "logic": "What most of them share is the rain over the Delta itself (La Nina years tend "
+                     "to bring more of it, El Nino years less): a very wet Delta adds water the highland rain does not explain, "
+                     "a very dry one removes it. Extreme highland rain years also follow a curved, "
+                     "multiplicative law rather than a straight line.",
+            "years": [r["text"] for r in lg["years"]],
+            "mean_miss_km2": lg["mean_abs_miss_outlier_years"],
+        }
+        block["contributions"] = {
+            "what": "km2 each cause added to or removed from a year, against a normal year "
+                    "(exact Shapley split of the v2 estimate).",
+            "rows": [[r["year"], r["normal_year_km2"], r["contribution_km2"]] for r in rs["years"]
+                     if r["year"] >= 2015],
+        }
+    return block
+
+
 def loyo(x: np.ndarray, y: np.ndarray):
     """Leave-one-year-out linear regression. Returns predictions and skill
     against the leave-one-out mean (climatology). skill <= 0 means useless."""
@@ -197,8 +254,14 @@ def main() -> None:
             "them side by side or say one is larger. To judge whether 2026 "
             "was a big year use ONLY the river-discharge rank; Landsat has no "
             "2026 value. Read each number from its own column; do not mix "
-            "open water with flooded vegetation. If asked about the future, "
-            "explain the forecast test result instead of predicting. "
+            "open water with flooded vegetation. If asked about the future "
+            "(2026-2030), use future_projection only: give the median and the "
+            "80% range in km2 of Landsat-type open water, say it is a "
+            "statistical projection of our own algorithm (rain after April "
+            "2026 has not fallen yet, so 2027-2030 are uncertain), and never "
+            "present it as certain or as NISAR flooded vegetation. If asked "
+            "why a past year was unusually wet or dry, use "
+            "future_projection.outlier_years and contributions. "
             "Never show field names or raw level numbers from this document "
             "(write 'far below normal', not '-2'; write 'Landsat', not a key "
             "name). Causes are associations, not proof: say 'went together "
@@ -281,6 +344,7 @@ def main() -> None:
         "causes_and_people_by_year": story_table(),
         "data_quality": (load("quality.json").get("summary")
                          if (C.OUT / "quality.json").exists() else None),
+        "future_projection": future_block(),
         "forecast": {
             "shown_in_app": show, "verdict": forecast["verdict"],
             "tests": [{k: t[k] for k in ("predictor", "n_years", "correlation_r",

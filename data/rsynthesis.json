@@ -1,0 +1,2363 @@
+{
+ "name": "RSynthesis estimation engine",
+ "version": "2.1",
+ "generated": "2026-11-15",
+ "target": "Yearly open-water area of the study area from Landsat (history.json), km2",
+ "summary": {
+  "causes_used": [
+   "headwater_rain",
+   "local_rain",
+   "enso",
+   "trend"
+  ],
+  "core": [
+   "headwater_rain",
+   "trend"
+  ],
+  "contested": [
+   "local_rain",
+   "enso"
+  ],
+  "causes_dropped": [
+   "heat",
+   "prev_headwater_rain",
+   "river inflow (gauge and GloFAS)",
+   "where the rain fell"
+  ],
+  "models": 4,
+  "leave_one_out": {
+   "v1_rmse": 360.9,
+   "v2_rmse": 371.2,
+   "rmse_change_pct": 2.9,
+   "mae_change_pct": -0.5,
+   "crps_change_pct": 0.3
+  },
+  "rolling_origin": {
+   "v1_rmse": 380.8,
+   "v2_rmse": 498.6,
+   "rmse_change_pct": 30.9,
+   "mae_change_pct": 12.0,
+   "crps_change_pct": 20.0
+  }
+ },
+ "step1_cause_reduction": {
+  "candidates": {
+   "headwater_rain": "Rain in the Angolan highlands (Nov-Apr)",
+   "local_rain": "Rain over the Delta (Nov-Apr)",
+   "heat": "Flood-season heat (May-Oct)",
+   "enso": "El Nino / La Nina (Dec-Feb ocean index)",
+   "prev_headwater_rain": "Last year's rain in the Angolan highlands",
+   "trend": "Calendar year (slow change)"
+  },
+  "n_years": 27,
+  "lambda_used": 0.425,
+  "models_scored": 64,
+  "inclusion_probability": {
+   "headwater_rain": 1.0,
+   "local_rain": 0.661,
+   "heat": 0.298,
+   "enso": 0.484,
+   "prev_headwater_rain": 0.315,
+   "trend": 0.797
+  },
+  "core": [
+   "headwater_rain",
+   "trend"
+  ],
+  "contested": [
+   "local_rain",
+   "enso"
+  ],
+  "dropped": [
+   "heat",
+   "prev_headwater_rain"
+  ],
+  "ensemble_cause_sets": [
+   [
+    "headwater_rain",
+    "trend"
+   ],
+   [
+    "headwater_rain",
+    "trend",
+    "local_rain"
+   ],
+   [
+    "headwater_rain",
+    "trend",
+    "enso"
+   ],
+   [
+    "headwater_rain",
+    "trend",
+    "local_rain",
+    "enso"
+   ]
+  ],
+  "rule": "PIP >= 2/3 (odds 2:1 for): core, in every model. PIP <= 1/3 (odds 2:1 against): dropped. In between: contested; the ensemble holds every on/off pattern of the contested causes with equal weight.",
+  "top_models": [
+   {
+    "causes": [
+     "headwater_rain",
+     "local_rain",
+     "trend"
+    ],
+    "posterior": 0.18
+   },
+   {
+    "causes": [
+     "headwater_rain",
+     "local_rain",
+     "enso",
+     "trend"
+    ],
+    "posterior": 0.092
+   },
+   {
+    "causes": [
+     "headwater_rain",
+     "enso",
+     "trend"
+    ],
+    "posterior": 0.082
+   },
+   {
+    "causes": [
+     "headwater_rain",
+     "local_rain",
+     "heat",
+     "enso",
+     "prev_headwater_rain",
+     "trend"
+    ],
+    "posterior": 0.059
+   },
+   {
+    "causes": [
+     "headwater_rain",
+     "local_rain"
+    ],
+    "posterior": 0.059
+   },
+   {
+    "causes": [
+     "headwater_rain",
+     "local_rain",
+     "prev_headwater_rain",
+     "trend"
+    ],
+    "posterior": 0.054
+   }
+  ],
+  "partial_correlation_with_area": {
+   "headwater_rain": 0.83,
+   "local_rain": 0.25,
+   "heat": -0.04,
+   "enso": -0.25,
+   "prev_headwater_rain": 0.13,
+   "trend": -0.48
+  },
+  "plain_correlation_with_area": {
+   "headwater_rain": 0.81,
+   "local_rain": 0.41,
+   "heat": -0.49,
+   "enso": -0.19,
+   "prev_headwater_rain": -0.01,
+   "trend": -0.45
+  },
+  "enso_correlation_with": {
+   "headwater_rain": 0.07,
+   "local_rain": -0.53,
+   "heat": 0.23
+  },
+  "partial_record_causes": {
+   "glofas_feb_apr": {
+    "label": "GloFAS modelled inflow, Feb-Apr (from 1997)",
+    "n_years": 23,
+    "years": [
+     1998,
+     2025
+    ],
+    "loo_skill_v2_causes": 0.69,
+    "loo_skill_v2_causes_plus_this": 0.665,
+    "loo_skill_this_alone": 0.173
+   },
+   "gauge_feb_may": {
+    "label": "Measured Mohembo inflow, Feb-May (gauge)",
+    "n_years": 22,
+    "years": [
+     1989,
+     2021
+    ],
+    "loo_skill_v2_causes": 0.771,
+    "loo_skill_v2_causes_plus_this": 0.754,
+    "loo_skill_this_alone": 0.557
+   }
+  }
+ },
+ "step2_engine": {
+  "formula": "For each model m: BoxCox(area, lambda_m) = b0 + sum_k b_k (cause_k - mean_k) / sd_k + e, e ~ Student-t(nu, 0, s2). Forecast = equal mixture of the models' predictive draws.",
+  "members": [
+   {
+    "causes": [
+     "headwater_rain",
+     "trend"
+    ],
+    "lambda": 0.375,
+    "coefficients_scaled": {
+     "intercept": {
+      "median": 37.9559,
+      "p05": 36.7273,
+      "p95": 39.2667,
+      "prob_positive": 1.0
+     },
+     "headwater_rain": {
+      "median": 4.8929,
+      "p05": 3.7893,
+      "p95": 6.0397,
+      "prob_positive": 1.0
+     },
+     "trend": {
+      "median": -1.8563,
+      "p05": -3.1559,
+      "p95": -0.6043,
+      "prob_positive": 0.008
+     }
+    },
+    "nu_posterior": {
+     "4": 0.062,
+     "5": 0.075,
+     "6": 0.087,
+     "8": 0.109,
+     "12": 0.142,
+     "20": 0.172,
+     "40": 0.169,
+     "1000": 0.184
+    },
+    "standardisation": {
+     "headwater_rain": [
+      905.33,
+      118.51
+     ],
+     "trend": [
+      5.42,
+      11.67
+     ]
+    }
+   },
+   {
+    "causes": [
+     "headwater_rain",
+     "trend",
+     "local_rain"
+    ],
+    "lambda": 0.2,
+    "coefficients_scaled": {
+     "intercept": {
+      "median": 16.2623,
+      "p05": 15.979,
+      "p95": 16.5671,
+      "prob_positive": 1.0
+     },
+     "headwater_rain": {
+      "median": 1.3409,
+      "p05": 1.0612,
+      "p95": 1.6189,
+      "prob_positive": 1.0
+     },
+     "trend": {
+      "median": -0.5047,
+      "p05": -0.8037,
+      "p95": -0.2017,
+      "prob_positive": 0.002
+     },
+     "local_rain": {
+      "median": 0.5381,
+      "p05": 0.2546,
+      "p95": 0.8155,
+      "prob_positive": 0.999
+     }
+    },
+    "nu_posterior": {
+     "4": 0.088,
+     "5": 0.098,
+     "6": 0.112,
+     "8": 0.135,
+     "12": 0.139,
+     "20": 0.145,
+     "40": 0.14,
+     "1000": 0.144
+    },
+    "standardisation": {
+     "headwater_rain": [
+      905.33,
+      118.51
+     ],
+     "trend": [
+      5.42,
+      11.67
+     ],
+     "local_rain": [
+      547.65,
+      178.87
+     ]
+    }
+   },
+   {
+    "causes": [
+     "headwater_rain",
+     "trend",
+     "enso"
+    ],
+    "lambda": 0.25,
+    "coefficients_scaled": {
+     "intercept": {
+      "median": 20.5758,
+      "p05": 20.1119,
+      "p95": 21.0146,
+      "prob_positive": 1.0
+     },
+     "headwater_rain": {
+      "median": 2.0794,
+      "p05": 1.6546,
+      "p95": 2.4851,
+      "prob_positive": 1.0
+     },
+     "trend": {
+      "median": -0.7345,
+      "p05": -1.1953,
+      "p95": -0.2634,
+      "prob_positive": 0.006
+     },
+     "enso": {
+      "median": -0.6779,
+      "p05": -1.087,
+      "p95": -0.2841,
+      "prob_positive": 0.004
+     }
+    },
+    "nu_posterior": {
+     "4": 0.071,
+     "5": 0.085,
+     "6": 0.093,
+     "8": 0.124,
+     "12": 0.148,
+     "20": 0.156,
+     "40": 0.157,
+     "1000": 0.165
+    },
+    "standardisation": {
+     "headwater_rain": [
+      905.33,
+      118.51
+     ],
+     "trend": [
+      5.42,
+      11.67
+     ],
+     "enso": [
+      -0.02,
+      1.06
+     ]
+    }
+   },
+   {
+    "causes": [
+     "headwater_rain",
+     "trend",
+     "local_rain",
+     "enso"
+    ],
+    "lambda": 0.175,
+    "coefficients_scaled": {
+     "intercept": {
+      "median": 14.5911,
+      "p05": 14.3533,
+      "p95": 14.8259,
+      "prob_positive": 1.0
+     },
+     "headwater_rain": {
+      "median": 1.1488,
+      "p05": 0.9282,
+      "p95": 1.3743,
+      "prob_positive": 1.0
+     },
+     "trend": {
+      "median": -0.422,
+      "p05": -0.6651,
+      "p95": -0.1914,
+      "prob_positive": 0.003
+     },
+     "local_rain": {
+      "median": 0.3211,
+      "p05": 0.0481,
+      "p95": 0.5853,
+      "prob_positive": 0.968
+     },
+     "enso": {
+      "median": -0.2185,
+      "p05": -0.4832,
+      "p95": 0.0345,
+      "prob_positive": 0.075
+     }
+    },
+    "nu_posterior": {
+     "4": 0.094,
+     "5": 0.111,
+     "6": 0.113,
+     "8": 0.126,
+     "12": 0.145,
+     "20": 0.148,
+     "40": 0.129,
+     "1000": 0.133
+    },
+    "standardisation": {
+     "headwater_rain": [
+      905.33,
+      118.51
+     ],
+     "trend": [
+      5.42,
+      11.67
+     ],
+     "local_rain": [
+      547.65,
+      178.87
+     ],
+     "enso": [
+      -0.02,
+      1.06
+     ]
+    }
+   }
+  ],
+  "effects": {
+   "km2_per_unit_at_normal_year": {
+    "headwater_rain": 3.857,
+    "local_rain": 0.423,
+    "enso": -57.299,
+    "trend": -14.453
+   },
+   "units": {
+    "headwater_rain": "mm",
+    "local_rain": "mm",
+    "enso": "index point",
+    "trend": "year"
+   },
+   "trend_posterior_z": -2.64,
+   "trend_prob_negative": 0.995,
+   "rain_trend_mm_per_year": 1.28,
+   "rain_trend_t": 0.82,
+   "normal_year": {
+    "headwater_rain": 922.1,
+    "local_rain": 551.0,
+    "enso": 0.1,
+    "trend": 9.6
+   }
+  },
+  "years_fitted": {
+   "exact": [
+    1989,
+    1990,
+    1991,
+    1992,
+    1998,
+    2001,
+    2002,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "lower_bound_only": [
+    1985,
+    1986,
+    1987,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1999,
+    2000,
+    2003,
+    2011,
+    2012
+   ]
+  },
+  "sampler": {
+   "method": "Gibbs sampling with data augmentation",
+   "iterations": 6000,
+   "burn_in": 1500,
+   "seed": 2026
+  },
+  "why_equal_weights": "Weights learnt from earlier forecast scores (stacking) lost to equal weights out of time: 20 years are too few to learn them."
+ },
+ "step3_outlier_logic": {
+  "definition": "An outlier year is one that v1 (rain + trend, least squares) missed by more than its own leave-one-out RMSE (361 km2).",
+  "outlier_years": [
+   1989,
+   1998,
+   2004,
+   2006,
+   2007,
+   2010,
+   2013,
+   2014,
+   2021,
+   2022
+  ],
+  "explained_years": [
+   1989,
+   2014,
+   2021
+  ],
+  "unexplained_years": [
+   1998,
+   2004,
+   2006,
+   2007,
+   2010,
+   2013,
+   2022
+  ],
+  "shared_cause": "local_rain",
+  "links": {
+   "headwater_rain": {
+    "r_with_v1_miss": 0.02,
+    "r_with_v2_miss": 0.05
+   },
+   "local_rain": {
+    "r_with_v1_miss": -0.46,
+    "r_with_v2_miss": -0.1
+   },
+   "enso": {
+    "r_with_v1_miss": 0.42,
+    "r_with_v2_miss": 0.12
+   },
+   "heat": {
+    "r_with_v1_miss": 0.29,
+    "r_with_v2_miss": 0.02
+   },
+   "prev_headwater_rain": {
+    "r_with_v1_miss": -0.21,
+    "r_with_v2_miss": -0.08
+   }
+  },
+  "curvature": {
+   "r_with_v1_miss": -0.18,
+   "r_with_v2_miss": -0.01
+  },
+  "mean_abs_miss_outlier_years": {
+   "v1": 519.7,
+   "v2": 432.3
+  },
+  "mean_abs_miss_other_years": {
+   "v1": 168.3,
+   "v2": 213.4
+  },
+  "unexplained_with_gauge": {
+   "years": 6,
+   "river_agrees": 2
+  },
+  "river_rule": "river_vs_rain_pct: measured Feb-May inflow at Mohembo against what that year's headwater rain implies (log-linear fit over gauge years). It counts only beyond +/-10%.",
+  "years": [
+   {
+    "year": 1989,
+    "observed_km2": 2517.9,
+    "v1_miss_km2": -585.5,
+    "v2_miss_km2": -273.0,
+    "explained_by_v2": true,
+    "weight": 1.05,
+    "headwater_rain_mm": 1003,
+    "local_rain_mm": 786,
+    "enso": -1.6,
+    "river_vs_rain_pct": -3,
+    "text": "1989: v1 missed by 586 km2, v2 by 273 km2. Explained by a very wet Delta (786 mm of rain on the Delta itself), La Nina (index -1.6)."
+   },
+   {
+    "year": 1998,
+    "observed_km2": 829.5,
+    "v1_miss_km2": 776.3,
+    "v2_miss_km2": 535.0,
+    "explained_by_v2": false,
+    "weight": 0.84,
+    "headwater_rain_mm": 888,
+    "local_rain_mm": 338,
+    "enso": 2.2,
+    "river_vs_rain_pct": -4,
+    "river_agrees": false,
+    "text": "1998: still not explained (v1 missed by 776 km2, v2 by 535 km2). The measured river inflow was close to what the rain implies (-4%), so the river does not explain it either."
+   },
+   {
+    "year": 2004,
+    "observed_km2": 2462.6,
+    "v1_miss_km2": -565.4,
+    "v2_miss_km2": -404.4,
+    "explained_by_v2": false,
+    "weight": 0.99,
+    "headwater_rain_mm": 1040,
+    "local_rain_mm": 649,
+    "enso": 0.3,
+    "river_vs_rain_pct": 15,
+    "river_agrees": true,
+    "text": "2004: still not explained (v1 missed by 565 km2, v2 by 404 km2). The measured river inflow was 15% above what the rain implies, which matches the miss."
+   },
+   {
+    "year": 2006,
+    "observed_km2": 1745.5,
+    "v1_miss_km2": -382.3,
+    "v2_miss_km2": -242.8,
+    "explained_by_v2": false,
+    "weight": 1.02,
+    "headwater_rain_mm": 876,
+    "local_rain_mm": 920,
+    "enso": -0.9,
+    "river_vs_rain_pct": -3,
+    "river_agrees": false,
+    "text": "2006: still not explained (v1 missed by 382 km2, v2 by 243 km2). The measured river inflow was close to what the rain implies (-3%), so the river does not explain it either."
+   },
+   {
+    "year": 2007,
+    "observed_km2": 2472.6,
+    "v1_miss_km2": -611.1,
+    "v2_miss_km2": -794.7,
+    "explained_by_v2": false,
+    "weight": 0.87,
+    "headwater_rain_mm": 1043,
+    "local_rain_mm": 364,
+    "enso": 0.6,
+    "river_vs_rain_pct": 0,
+    "river_agrees": false,
+    "text": "2007: still not explained (v1 missed by 611 km2, v2 by 795 km2). The measured river inflow was close to what the rain implies (+0%), so the river does not explain it either."
+   },
+   {
+    "year": 2010,
+    "observed_km2": 1553.1,
+    "v1_miss_km2": 398.3,
+    "v2_miss_km2": 586.1,
+    "explained_by_v2": false,
+    "weight": 0.96,
+    "headwater_rain_mm": 1059,
+    "local_rain_mm": 550,
+    "enso": 1.5,
+    "river_vs_rain_pct": 33,
+    "river_agrees": false,
+    "text": "2010: still not explained (v1 missed by 398 km2, v2 by 586 km2). The measured river inflow was 33% above what the rain implies, which does not match the miss."
+   },
+   {
+    "year": 2013,
+    "observed_km2": 1469.3,
+    "v1_miss_km2": 444.2,
+    "v2_miss_km2": 599.9,
+    "explained_by_v2": false,
+    "weight": 0.9,
+    "headwater_rain_mm": 1058,
+    "local_rain_mm": 471,
+    "enso": -0.2,
+    "river_vs_rain_pct": -16,
+    "river_agrees": true,
+    "text": "2013: still not explained (v1 missed by 444 km2, v2 by 600 km2). The measured river inflow was 16% below what the rain implies, which matches the miss."
+   },
+   {
+    "year": 2014,
+    "observed_km2": 2196.4,
+    "v1_miss_km2": -399.0,
+    "v2_miss_km2": 1.0,
+    "explained_by_v2": true,
+    "weight": 1.05,
+    "headwater_rain_mm": 1052,
+    "local_rain_mm": 913,
+    "enso": -0.2,
+    "river_vs_rain_pct": -15,
+    "text": "2014: v1 missed by 399 km2, v2 by 1 km2. Explained by a very wet Delta (913 mm of rain on the Delta itself), extreme headwater rain (1052 mm) on a multiplicative scale."
+   },
+   {
+    "year": 2021,
+    "observed_km2": 548.2,
+    "v1_miss_km2": -420.4,
+    "v2_miss_km2": -42.3,
+    "explained_by_v2": true,
+    "weight": 1.04,
+    "headwater_rain_mm": 595,
+    "local_rain_mm": 759,
+    "enso": -1.0,
+    "river_vs_rain_pct": 4,
+    "text": "2021: v1 missed by 420 km2, v2 by 42 km2. Explained by a very wet Delta (759 mm of rain on the Delta itself), La Nina (index -1.0), extreme headwater rain (595 mm) on a multiplicative scale."
+   },
+   {
+    "year": 2022,
+    "observed_km2": 1017.4,
+    "v1_miss_km2": 614.3,
+    "v2_miss_km2": 843.7,
+    "explained_by_v2": false,
+    "weight": 0.76,
+    "headwater_rain_mm": 1001,
+    "local_rain_mm": 566,
+    "enso": -0.8,
+    "text": "2022: still not explained (v1 missed by 614 km2, v2 by 844 km2). No measured river inflow exists for this year."
+   }
+  ],
+  "hypotheses_for_unexplained_years": {
+   "tests": [
+    {
+     "id": "memory_last_year_water",
+     "idea": "Memory: last year's open water carries over",
+     "n_years": 26,
+     "loo_skill_without": 0.73,
+     "loo_skill_with": 0.702,
+     "verdict": "does not help"
+    },
+    {
+     "id": "memory_last_year_rain",
+     "idea": "Memory: last year's headwater rain (slow groundwater of the Cuito)",
+     "n_years": 27,
+     "loo_skill_without": 0.756,
+     "loo_skill_with": 0.705,
+     "verdict": "does not help"
+    },
+    {
+     "id": "heat",
+     "idea": "Heat: hot flood seasons evaporate more",
+     "n_years": 27,
+     "loo_skill_without": 0.756,
+     "loo_skill_with": 0.727,
+     "verdict": "does not help"
+    },
+    {
+     "id": "river_gauge",
+     "idea": "River: measured Mohembo inflow, Feb-May (log)",
+     "n_years": 22,
+     "loo_skill_without": 0.771,
+     "loo_skill_with": 0.754,
+     "verdict": "does not help"
+    },
+    {
+     "id": "river_glofas",
+     "idea": "River: GloFAS modelled inflow, Feb-Apr (log)",
+     "n_years": 23,
+     "loo_skill_without": 0.69,
+     "loo_skill_with": 0.665,
+     "verdict": "does not help"
+    },
+    {
+     "id": "where_rain_fell",
+     "idea": "Where in the basin the rain fell (EOF mode 2 of 17 ERA5 points: north-west highlands against the south-east)",
+     "n_years": 27,
+     "loo_skill_without": 0.756,
+     "loo_skill_with": 0.761,
+     "verdict": "does not help"
+    },
+    {
+     "id": "basin_total",
+     "idea": "Whole-basin rain (17 points) instead of 3 points",
+     "n_years": 27,
+     "loo_skill_without": 0.756,
+     "loo_skill_with": 0.691,
+     "verdict": "does not help"
+    }
+   ],
+   "basin_eof_variance_share": [
+    0.645,
+    0.202,
+    0.033
+   ],
+   "basin_points": [
+    [
+     -12.77,
+     15.74
+    ],
+    [
+     -13.5,
+     16.2
+    ],
+    [
+     -14.0,
+     16.8
+    ],
+    [
+     -14.66,
+     17.69
+    ],
+    [
+     -15.5,
+     17.6
+    ],
+    [
+     -16.4,
+     18.3
+    ],
+    [
+     -17.4,
+     19.0
+    ],
+    [
+     -12.8,
+     18.6
+    ],
+    [
+     -13.6,
+     18.9
+    ],
+    [
+     -14.4,
+     19.1
+    ],
+    [
+     -15.16,
+     19.17
+    ],
+    [
+     -16.0,
+     19.8
+    ],
+    [
+     -16.9,
+     20.3
+    ],
+    [
+     -17.6,
+     20.8
+    ],
+    [
+     -13.2,
+     17.3
+    ],
+    [
+     -14.3,
+     18.0
+    ],
+    [
+     -15.6,
+     18.6
+    ]
+   ]
+  }
+ },
+ "step4_validation": {
+  "leave_one_out": {
+   "v2": {
+    "rmse_km2": 371.2,
+    "mae_km2": 297.0,
+    "skill_vs_climatology": 0.583,
+    "crps_km2": 209.8,
+    "coverage_80pct": 0.78,
+    "mean_width_80pct_km2": 897.0,
+    "n_years": 27
+   },
+   "baseline": {
+    "rmse_km2": 358.7,
+    "mae_km2": 311.7,
+    "skill_vs_climatology": 0.61,
+    "crps_km2": 206.0,
+    "coverage_80pct": 0.85,
+    "mean_width_80pct_km2": 944.0,
+    "n_years": 27
+   },
+   "v1": {
+    "rmse_km2": 360.9,
+    "mae_km2": 298.4,
+    "skill_vs_climatology": 0.606,
+    "crps_km2": 209.2,
+    "coverage_80pct": 0.81,
+    "mean_width_80pct_km2": 930.0,
+    "n_years": 27
+   },
+   "what": "Nested leave-one-year-out: cause screening, lambda, coefficients, weights and nu refitted without the held-out year."
+  },
+  "rolling_origin": {
+   "v2": {
+    "rmse_km2": 498.6,
+    "mae_km2": 354.0,
+    "skill_vs_climatology": 0.277,
+    "crps_km2": 262.1,
+    "coverage_80pct": 0.72,
+    "mean_width_80pct_km2": 976.0,
+    "n_years": 18
+   },
+   "baseline": {
+    "rmse_km2": 375.2,
+    "mae_km2": 305.6,
+    "skill_vs_climatology": 0.591,
+    "crps_km2": 211.5,
+    "coverage_80pct": 0.83,
+    "mean_width_80pct_km2": 1011.0,
+    "n_years": 18
+   },
+   "v1": {
+    "rmse_km2": 380.8,
+    "mae_km2": 316.1,
+    "skill_vs_climatology": 0.578,
+    "crps_km2": 218.5,
+    "coverage_80pct": 0.78,
+    "mean_width_80pct_km2": 1108.0,
+    "n_years": 18
+   },
+   "what": "Rolling origin: each year from 2006 forecast only from the years before it."
+  },
+  "single_split": {
+   "split": "fit to 2012, forecast 2013-2025",
+   "v2": {
+    "skill": 0.592,
+    "rmse_km2": 456.9
+   },
+   "v1": {
+    "skill": 0.761,
+    "rmse_km2": 349.6
+   },
+   "per_year": [
+    {
+     "year": 2013,
+     "observed_km2": 1469.3,
+     "v2_km2": 2231.7,
+     "v1_km2": 2072.2
+    },
+    {
+     "year": 2014,
+     "observed_km2": 2196.4,
+     "v2_km2": 2507.1,
+     "v1_km2": 2036.8
+    },
+    {
+     "year": 2015,
+     "observed_km2": 1409.8,
+     "v2_km2": 1437.7,
+     "v1_km2": 1303.7
+    },
+    {
+     "year": 2016,
+     "observed_km2": 1541.4,
+     "v2_km2": 1828.0,
+     "v1_km2": 1849.0
+    },
+    {
+     "year": 2017,
+     "observed_km2": 1163.1,
+     "v2_km2": 1833.7,
+     "v1_km2": 1458.3
+    },
+    {
+     "year": 2018,
+     "observed_km2": 1725.4,
+     "v2_km2": 2047.9,
+     "v1_km2": 1804.2
+    },
+    {
+     "year": 2019,
+     "observed_km2": 375.9,
+     "v2_km2": 588.8,
+     "v1_km2": 208.8
+    },
+    {
+     "year": 2020,
+     "observed_km2": 1734.9,
+     "v2_km2": 1829.2,
+     "v1_km2": 1716.0
+    },
+    {
+     "year": 2021,
+     "observed_km2": 548.2,
+     "v2_km2": 710.2,
+     "v1_km2": -9.4
+    },
+    {
+     "year": 2022,
+     "observed_km2": 1017.4,
+     "v2_km2": 2067.3,
+     "v1_km2": 1740.6
+    },
+    {
+     "year": 2023,
+     "observed_km2": 733.9,
+     "v2_km2": 919.6,
+     "v1_km2": 539.5
+    },
+    {
+     "year": 2024,
+     "observed_km2": 579.8,
+     "v2_km2": 967.4,
+     "v1_km2": 868.1
+    },
+    {
+     "year": 2025,
+     "observed_km2": 1477.2,
+     "v2_km2": 1655.8,
+     "v1_km2": 1344.0
+    }
+   ]
+  },
+  "baseline": "v1's causes ['headwater_rain', 'trend'] on the v2 engine (no cause screening involved): the part of the gain that comes from the engine alone."
+ },
+ "step5_projection": {
+  "cause_memory_test": {
+   "headwater_rain": {
+    "transitions_low_mid_high": [
+     [
+      6,
+      3,
+      5
+     ],
+     [
+      3,
+      6,
+      5
+     ],
+     [
+      4,
+      5,
+      4
+     ]
+    ],
+    "n_consecutive_transitions": 41,
+    "chi2": 2.13,
+    "dof": 4,
+    "p_value": 0.776,
+    "p_value_method": "9999 random permutations of annual terciles",
+    "lag1_r": -0.0
+   },
+   "local_rain": {
+    "transitions_low_mid_high": [
+     [
+      4,
+      4,
+      6
+     ],
+     [
+      4,
+      3,
+      7
+     ],
+     [
+      5,
+      7,
+      2
+     ]
+    ],
+    "n_consecutive_transitions": 42,
+    "chi2": 4.81,
+    "dof": 4,
+    "p_value": 0.322,
+    "p_value_method": "9999 random permutations of annual terciles",
+    "lag1_r": -0.15
+   },
+   "enso": {
+    "transitions_low_mid_high": [
+     [
+      5,
+      6,
+      3
+     ],
+     [
+      2,
+      3,
+      7
+     ],
+     [
+      7,
+      3,
+      6
+     ]
+    ],
+    "n_consecutive_transitions": 42,
+    "chi2": 5.45,
+    "dof": 4,
+    "p_value": 0.263,
+    "p_value_method": "9999 random permutations of annual terciles",
+    "lag1_r": -0.06
+   }
+  },
+  "future_causes": "2027-2030: each posterior draw takes the causes of one random year of 1985-2026 together, keeping their correlations.",
+  "years": [
+   {
+    "year": 2026,
+    "causes_known": true,
+    "headwater_rain": 1057,
+    "local_rain": 781.3,
+    "enso": -0.4,
+    "mean_km2": 1908.2,
+    "sd_km2": 467.0,
+    "p025_km2": 1116.3,
+    "p10_km2": 1368.6,
+    "p50_km2": 1875.6,
+    "p90_km2": 2467.8,
+    "p975_km2": 2930.3
+   },
+   {
+    "year": 2027,
+    "causes_known": false,
+    "mean_km2": 1217.1,
+    "sd_km2": 532.9,
+    "p025_km2": 379.9,
+    "p10_km2": 584.9,
+    "p50_km2": 1162.6,
+    "p90_km2": 1896.5,
+    "p975_km2": 2401.0
+   },
+   {
+    "year": 2028,
+    "causes_known": false,
+    "mean_km2": 1206.5,
+    "sd_km2": 523.5,
+    "p025_km2": 376.9,
+    "p10_km2": 575.5,
+    "p50_km2": 1151.9,
+    "p90_km2": 1896.9,
+    "p975_km2": 2390.9
+   },
+   {
+    "year": 2029,
+    "causes_known": false,
+    "mean_km2": 1192.2,
+    "sd_km2": 523.0,
+    "p025_km2": 359.1,
+    "p10_km2": 564.0,
+    "p50_km2": 1138.0,
+    "p90_km2": 1873.0,
+    "p975_km2": 2370.1
+   },
+   {
+    "year": 2030,
+    "causes_known": false,
+    "mean_km2": 1187.2,
+    "sd_km2": 518.4,
+    "p025_km2": 372.5,
+    "p10_km2": 568.8,
+    "p50_km2": 1130.5,
+    "p90_km2": 1858.9,
+    "p975_km2": 2349.1
+   }
+  ]
+ },
+ "years": [
+  {
+   "year": 1985,
+   "observed_km2": 0.0,
+   "low_coverage": true,
+   "fitted_km2": 1024.5,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -713.7,
+    "local_rain": -51.1,
+    "enso": 60.0,
+    "trend": 321.7
+   },
+   "headwater_rain": 716,
+   "local_rain": 413.4,
+   "enso": -1.0,
+   "weight": 1.0
+  },
+  {
+   "year": 1986,
+   "observed_km2": 42.8,
+   "low_coverage": true,
+   "fitted_km2": 1533.4,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -232.2,
+    "local_rain": -27.1,
+    "enso": 32.2,
+    "trend": 352.8
+   },
+   "headwater_rain": 864,
+   "local_rain": 488.7,
+   "enso": -0.4,
+   "weight": 1.01
+  },
+  {
+   "year": 1987,
+   "observed_km2": 794.7,
+   "low_coverage": true,
+   "fitted_km2": 1078.5,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -476.6,
+    "local_rain": -96.0,
+    "enso": -54.7,
+    "trend": 298.2
+   },
+   "headwater_rain": 786,
+   "local_rain": 294.5,
+   "enso": 1.2,
+   "weight": 1.02
+  },
+  {
+   "year": 1988,
+   "observed_km2": null,
+   "low_coverage": null,
+   "fitted_km2": 1504.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -214.5,
+    "local_rain": 17.3,
+    "enso": -27.0,
+    "trend": 320.5
+   },
+   "headwater_rain": 868,
+   "local_rain": 590.4,
+   "enso": 0.6
+  },
+  {
+   "year": 1989,
+   "observed_km2": 2517.9,
+   "low_coverage": false,
+   "fitted_km2": 2420.2,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 387.8,
+    "local_rain": 127.7,
+    "enso": 127.3,
+    "trend": 369.7
+   },
+   "headwater_rain": 1003,
+   "local_rain": 785.7,
+   "enso": -1.6,
+   "loo_km2": 2244.9,
+   "loo_p10_km2": 1545.9,
+   "loo_p90_km2": 2996.4,
+   "v1_loo_km2": 1932.4,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.518,
+    "heat": 0.282,
+    "enso": 0.351,
+    "prev_headwater_rain": 0.323,
+    "trend": 0.555
+   },
+   "weight": 1.05
+  },
+  {
+   "year": 1990,
+   "observed_km2": 1536.0,
+   "low_coverage": false,
+   "fitted_km2": 1617.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -37.1,
+    "local_rain": -48.0,
+    "enso": -3.8,
+    "trend": 298.3
+   },
+   "headwater_rain": 913,
+   "local_rain": 442.6,
+   "enso": 0.2,
+   "loo_km2": 1680.1,
+   "loo_p10_km2": 1203.1,
+   "loo_p90_km2": 2194.7,
+   "v1_loo_km2": 1769.1,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.642,
+    "heat": 0.293,
+    "enso": 0.475,
+    "prev_headwater_rain": 0.311,
+    "trend": 0.751
+   },
+   "weight": 1.07
+  },
+  {
+   "year": 1991,
+   "observed_km2": 1287.1,
+   "low_coverage": false,
+   "fitted_km2": 1178.6,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -504.7,
+    "local_rain": 30.8,
+    "enso": -8.7,
+    "trend": 253.7
+   },
+   "headwater_rain": 783,
+   "local_rain": 627.3,
+   "enso": 0.3,
+   "loo_km2": 1057.0,
+   "loo_p10_km2": 687.2,
+   "loo_p90_km2": 1468.0,
+   "v1_loo_km2": 1298.4,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.606,
+    "heat": 0.272,
+    "enso": 0.497,
+    "prev_headwater_rain": 0.322,
+    "trend": 0.644
+   },
+   "weight": 1.04
+  },
+  {
+   "year": 1992,
+   "observed_km2": 1891.1,
+   "low_coverage": false,
+   "fitted_km2": 2018.9,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 442.7,
+    "local_rain": -34.8,
+    "enso": -89.2,
+    "trend": 292.5
+   },
+   "headwater_rain": 1022,
+   "local_rain": 480.5,
+   "enso": 1.5,
+   "loo_km2": 2106.0,
+   "loo_p10_km2": 1541.4,
+   "loo_p90_km2": 2728.4,
+   "v1_loo_km2": 2080.0,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.645,
+    "heat": 0.294,
+    "enso": 0.473,
+    "prev_headwater_rain": 0.313,
+    "trend": 0.762
+   },
+   "weight": 1.06
+  },
+  {
+   "year": 1993,
+   "observed_km2": 167.0,
+   "low_coverage": true,
+   "fitted_km2": 1130.7,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -507.6,
+    "local_rain": 5.7,
+    "enso": 2.0,
+    "trend": 223.0
+   },
+   "headwater_rain": 780,
+   "local_rain": 565.5,
+   "enso": 0.1,
+   "weight": 1.0
+  },
+  {
+   "year": 1994,
+   "observed_km2": 410.5,
+   "low_coverage": true,
+   "fitted_km2": 1256.2,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -457.4,
+    "local_rain": 86.4,
+    "enso": 2.0,
+    "trend": 217.5
+   },
+   "headwater_rain": 799,
+   "local_rain": 757.4,
+   "enso": 0.1,
+   "weight": 1.0
+  },
+  {
+   "year": 1995,
+   "observed_km2": 474.4,
+   "low_coverage": true,
+   "fitted_km2": 1353.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -148.5,
+    "local_rain": -71.0,
+    "enso": -42.8,
+    "trend": 207.7
+   },
+   "headwater_rain": 883,
+   "local_rain": 377.7,
+   "enso": 0.9,
+   "weight": 1.01
+  },
+  {
+   "year": 1996,
+   "observed_km2": 102.5,
+   "low_coverage": true,
+   "fitted_km2": 1018.0,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -617.3,
+    "local_rain": -2.9,
+    "enso": 54.0,
+    "trend": 176.7
+   },
+   "headwater_rain": 743,
+   "local_rain": 543.2,
+   "enso": -0.9,
+   "weight": 1.0
+  },
+  {
+   "year": 1997,
+   "observed_km2": 542.2,
+   "low_coverage": true,
+   "fitted_km2": 1395.5,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -250.9,
+    "local_rain": 26.1,
+    "enso": 30.9,
+    "trend": 181.8
+   },
+   "headwater_rain": 857,
+   "local_rain": 612.3,
+   "enso": -0.4,
+   "weight": 1.0
+  },
+  {
+   "year": 1998,
+   "observed_km2": 829.5,
+   "low_coverage": false,
+   "fitted_km2": 1248.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -125.5,
+    "local_rain": -84.6,
+    "enso": -109.6,
+    "trend": 160.0
+   },
+   "headwater_rain": 888,
+   "local_rain": 338.3,
+   "enso": 2.2,
+   "loo_km2": 1364.5,
+   "loo_p10_km2": 968.1,
+   "loo_p90_km2": 1803.3,
+   "v1_loo_km2": 1605.8,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.627,
+    "heat": 0.277,
+    "enso": 0.339,
+    "prev_headwater_rain": 0.278,
+    "trend": 0.914
+   },
+   "weight": 0.84
+  },
+  {
+   "year": 1999,
+   "observed_km2": 228.6,
+   "low_coverage": true,
+   "fitted_km2": 1790.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 164.6,
+    "local_rain": -56.7,
+    "enso": 106.9,
+    "trend": 167.8
+   },
+   "headwater_rain": 961,
+   "local_rain": 426.4,
+   "enso": -1.5,
+   "weight": 1.0
+  },
+  {
+   "year": 2000,
+   "observed_km2": 737.3,
+   "low_coverage": true,
+   "fitted_km2": 1670.4,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -137.1,
+    "local_rain": 149.4,
+    "enso": 101.8,
+    "trend": 148.5
+   },
+   "headwater_rain": 889,
+   "local_rain": 870.1,
+   "enso": -1.5,
+   "weight": 1.0
+  },
+  {
+   "year": 2001,
+   "observed_km2": 1487.1,
+   "low_coverage": false,
+   "fitted_km2": 1742.6,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 171.2,
+    "local_rain": -30.6,
+    "enso": 59.7,
+    "trend": 134.7
+   },
+   "headwater_rain": 963,
+   "local_rain": 483.8,
+   "enso": -0.8,
+   "loo_km2": 1820.5,
+   "loo_p10_km2": 1339.0,
+   "loo_p90_km2": 2329.7,
+   "v1_loo_km2": 1750.4,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.6,
+    "heat": 0.296,
+    "enso": 0.552,
+    "prev_headwater_rain": 0.314,
+    "trend": 0.814
+   },
+   "weight": 1.01
+  },
+  {
+   "year": 2002,
+   "observed_km2": 1393.5,
+   "low_coverage": false,
+   "fitted_km2": 1541.4,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 31.5,
+    "local_rain": -25.4,
+    "enso": 14.2,
+    "trend": 113.5
+   },
+   "headwater_rain": 930,
+   "local_rain": 492.6,
+   "enso": -0.1,
+   "loo_km2": 1596.8,
+   "loo_p10_km2": 1162.7,
+   "loo_p90_km2": 2059.8,
+   "v1_loo_km2": 1626.5,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.631,
+    "heat": 0.299,
+    "enso": 0.496,
+    "prev_headwater_rain": 0.321,
+    "trend": 0.793
+   },
+   "weight": 1.05
+  },
+  {
+   "year": 2003,
+   "observed_km2": 183.8,
+   "low_coverage": true,
+   "fitted_km2": 1390.0,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 37.9,
+    "local_rain": -106.8,
+    "enso": -43.4,
+    "trend": 94.6
+   },
+   "headwater_rain": 932,
+   "local_rain": 289.8,
+   "enso": 0.9,
+   "weight": 1.0
+  },
+  {
+   "year": 2004,
+   "observed_km2": 2462.6,
+   "low_coverage": false,
+   "fitted_km2": 2068.8,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 528.4,
+    "local_rain": 49.5,
+    "enso": -10.9,
+    "trend": 94.2
+   },
+   "headwater_rain": 1040,
+   "local_rain": 648.8,
+   "enso": 0.3,
+   "loo_km2": 2058.2,
+   "loo_p10_km2": 1551.9,
+   "loo_p90_km2": 2585.7,
+   "v1_loo_km2": 1897.2,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.627,
+    "heat": 0.284,
+    "enso": 0.516,
+    "prev_headwater_rain": 0.303,
+    "trend": 0.779
+   },
+   "weight": 0.99
+  },
+  {
+   "year": 2005,
+   "observed_km2": 1533.7,
+   "low_coverage": false,
+   "fitted_km2": 1381.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -4.2,
+    "local_rain": -61.8,
+    "enso": -26.3,
+    "trend": 65.8
+   },
+   "headwater_rain": 921,
+   "local_rain": 401.4,
+   "enso": 0.6,
+   "loo_km2": 1319.5,
+   "loo_p10_km2": 973.6,
+   "loo_p90_km2": 1680.0,
+   "v1_loo_km2": 1542.1,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.684,
+    "heat": 0.297,
+    "enso": 0.471,
+    "prev_headwater_rain": 0.296,
+    "trend": 0.771
+   },
+   "weight": 1.04
+  },
+  {
+   "year": 2006,
+   "observed_km2": 1745.5,
+   "low_coverage": false,
+   "fitted_km2": 1506.6,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -183.3,
+    "local_rain": 167.7,
+    "enso": 61.1,
+    "trend": 53.5
+   },
+   "headwater_rain": 876,
+   "local_rain": 920.5,
+   "enso": -0.9,
+   "loo_km2": 1502.7,
+   "loo_p10_km2": 1044.4,
+   "loo_p90_km2": 1993.5,
+   "v1_loo_km2": 1363.2,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.519,
+    "heat": 0.289,
+    "enso": 0.479,
+    "prev_headwater_rain": 0.322,
+    "trend": 0.749
+   },
+   "weight": 1.02
+  },
+  {
+   "year": 2007,
+   "observed_km2": 2472.6,
+   "low_coverage": false,
+   "fitted_km2": 1850.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 517.6,
+    "local_rain": -87.0,
+    "enso": -29.8,
+    "trend": 41.7
+   },
+   "headwater_rain": 1043,
+   "local_rain": 364.3,
+   "enso": 0.6,
+   "loo_km2": 1677.9,
+   "loo_p10_km2": 1285.2,
+   "loo_p90_km2": 2063.6,
+   "v1_loo_km2": 1861.5,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.875,
+    "heat": 0.308,
+    "enso": 0.438,
+    "prev_headwater_rain": 0.322,
+    "trend": 0.873
+   },
+   "weight": 0.87
+  },
+  {
+   "year": 2008,
+   "observed_km2": 1469.9,
+   "low_coverage": false,
+   "fitted_km2": 1519.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -44.2,
+    "local_rain": 13.9,
+    "enso": 118.1,
+    "trend": 23.7
+   },
+   "headwater_rain": 911,
+   "local_rain": 583.0,
+   "enso": -1.8,
+   "loo_km2": 1578.9,
+   "loo_p10_km2": 1113.3,
+   "loo_p90_km2": 2079.8,
+   "v1_loo_km2": 1466.6,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.628,
+    "heat": 0.296,
+    "enso": 0.504,
+    "prev_headwater_rain": 0.322,
+    "trend": 0.783
+   },
+   "weight": 1.06
+  },
+  {
+   "year": 2009,
+   "observed_km2": 1804.4,
+   "low_coverage": false,
+   "fitted_km2": 1572.6,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 35.8,
+    "local_rain": 57.3,
+    "enso": 62.9,
+    "trend": 8.9
+   },
+   "headwater_rain": 931,
+   "local_rain": 679.2,
+   "enso": -0.9,
+   "loo_km2": 1591.2,
+   "loo_p10_km2": 1159.6,
+   "loo_p90_km2": 2055.0,
+   "v1_loo_km2": 1505.9,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.646,
+    "heat": 0.289,
+    "enso": 0.45,
+    "prev_headwater_rain": 0.315,
+    "trend": 0.785
+   },
+   "weight": 1.04
+  },
+  {
+   "year": 2010,
+   "observed_km2": 1553.1,
+   "low_coverage": false,
+   "fitted_km2": 1907.3,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 593.6,
+    "local_rain": -0.3,
+    "enso": -87.0,
+    "trend": -6.6
+   },
+   "headwater_rain": 1059,
+   "local_rain": 550.3,
+   "enso": 1.5,
+   "loo_km2": 2139.2,
+   "loo_p10_km2": 1547.1,
+   "loo_p90_km2": 2771.5,
+   "v1_loo_km2": 1951.4,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "heat",
+    "enso",
+    "prev_headwater_rain",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.62,
+    "heat": 0.393,
+    "enso": 0.395,
+    "prev_headwater_rain": 0.368,
+    "trend": 0.763
+   },
+   "weight": 0.96
+  },
+  {
+   "year": 2011,
+   "observed_km2": 2438.3,
+   "low_coverage": true,
+   "fitted_km2": 2526.0,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 954.8,
+    "local_rain": 81.4,
+    "enso": 108.2,
+    "trend": -25.9
+   },
+   "headwater_rain": 1118,
+   "local_rain": 698.0,
+   "enso": -1.3,
+   "weight": 1.0
+  },
+  {
+   "year": 2012,
+   "observed_km2": 896.9,
+   "low_coverage": true,
+   "fitted_km2": 1767.4,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 277.8,
+    "local_rain": 66.9,
+    "enso": 53.1,
+    "trend": -38.1
+   },
+   "headwater_rain": 988,
+   "local_rain": 693.0,
+   "enso": -0.7,
+   "weight": 1.01
+  },
+  {
+   "year": 2013,
+   "observed_km2": 1469.3,
+   "low_coverage": false,
+   "fitted_km2": 1928.2,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 592.3,
+    "local_rain": -38.2,
+    "enso": 22.3,
+    "trend": -55.8
+   },
+   "headwater_rain": 1058,
+   "local_rain": 471.2,
+   "enso": -0.2,
+   "loo_km2": 2069.2,
+   "loo_p10_km2": 1540.9,
+   "loo_p90_km2": 2633.7,
+   "v1_loo_km2": 1913.5,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "prev_headwater_rain",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.555,
+    "heat": 0.296,
+    "enso": 0.588,
+    "prev_headwater_rain": 0.402,
+    "trend": 0.744
+   },
+   "weight": 0.9
+  },
+  {
+   "year": 2014,
+   "observed_km2": 2196.4,
+   "low_coverage": false,
+   "fitted_km2": 2136.9,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 591.3,
+    "local_rain": 190.7,
+    "enso": 22.8,
+    "trend": -75.6
+   },
+   "headwater_rain": 1052,
+   "local_rain": 912.6,
+   "enso": -0.2,
+   "loo_km2": 2197.4,
+   "loo_p10_km2": 1538.8,
+   "loo_p90_km2": 2904.5,
+   "v1_loo_km2": 1797.4,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.619,
+    "heat": 0.289,
+    "enso": 0.481,
+    "prev_headwater_rain": 0.305,
+    "trend": 0.78
+   },
+   "weight": 1.05
+  },
+  {
+   "year": 2015,
+   "observed_km2": 1409.8,
+   "low_coverage": false,
+   "fitted_km2": 1182.3,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -134.2,
+    "local_rain": 11.9,
+    "enso": -29.8,
+    "trend": -73.3
+   },
+   "headwater_rain": 885,
+   "local_rain": 580.9,
+   "enso": 0.7,
+   "loo_km2": 1186.3,
+   "loo_p10_km2": 835.2,
+   "loo_p90_km2": 1552.1,
+   "v1_loo_km2": 1276.7,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.627,
+    "heat": 0.304,
+    "enso": 0.527,
+    "prev_headwater_rain": 0.298,
+    "trend": 0.811
+   },
+   "weight": 1.01
+  },
+  {
+   "year": 2016,
+   "observed_km2": 1541.4,
+   "low_coverage": false,
+   "fitted_km2": 1521.5,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 360.7,
+    "local_rain": -16.8,
+    "enso": -134.7,
+    "trend": -95.4
+   },
+   "headwater_rain": 1013,
+   "local_rain": 513.0,
+   "enso": 2.5,
+   "loo_km2": 1535.8,
+   "loo_p10_km2": 1029.1,
+   "loo_p90_km2": 2080.1,
+   "v1_loo_km2": 1694.6,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.617,
+    "heat": 0.298,
+    "enso": 0.493,
+    "prev_headwater_rain": 0.31,
+    "trend": 0.771
+   },
+   "weight": 1.04
+  },
+  {
+   "year": 2017,
+   "observed_km2": 1163.1,
+   "low_coverage": false,
+   "fitted_km2": 1467.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 11.3,
+    "local_rain": 143.6,
+    "enso": 13.7,
+    "trend": -109.1
+   },
+   "headwater_rain": 925,
+   "local_rain": 871.5,
+   "enso": -0.1,
+   "loo_km2": 1740.6,
+   "loo_p10_km2": 1303.8,
+   "loo_p90_km2": 2198.1,
+   "v1_loo_km2": 1396.8,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "prev_headwater_rain",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.857,
+    "heat": 0.292,
+    "enso": 0.368,
+    "prev_headwater_rain": 0.344,
+    "trend": 0.725
+   },
+   "weight": 0.94
+  },
+  {
+   "year": 2018,
+   "observed_km2": 1725.4,
+   "low_coverage": false,
+   "fitted_km2": 1658.5,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 349.0,
+    "local_rain": -20.7,
+    "enso": 52.3,
+    "trend": -129.6
+   },
+   "headwater_rain": 1007,
+   "local_rain": 504.7,
+   "enso": -0.7,
+   "loo_km2": 1680.7,
+   "loo_p10_km2": 1214.4,
+   "loo_p90_km2": 2198.2,
+   "v1_loo_km2": 1625.0,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.664,
+    "heat": 0.295,
+    "enso": 0.46,
+    "prev_headwater_rain": 0.309,
+    "trend": 0.79
+   },
+   "weight": 1.06
+  },
+  {
+   "year": 2019,
+   "observed_km2": 375.9,
+   "low_coverage": false,
+   "fitted_km2": 448.7,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -737.6,
+    "local_rain": -92.2,
+    "enso": -34.1,
+    "trend": -95.0
+   },
+   "headwater_rain": 641,
+   "local_rain": 222.6,
+   "enso": 1.0,
+   "loo_km2": 520.0,
+   "loo_p10_km2": 321.6,
+   "loo_p90_km2": 748.8,
+   "v1_loo_km2": 458.5,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "prev_headwater_rain",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.587,
+    "heat": 0.318,
+    "enso": 0.469,
+    "prev_headwater_rain": 0.333,
+    "trend": 0.776
+   },
+   "weight": 1.03
+  },
+  {
+   "year": 2020,
+   "observed_km2": 1734.9,
+   "low_coverage": false,
+   "fitted_km2": 1455.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 269.1,
+    "local_rain": -36.7,
+    "enso": -32.6,
+    "trend": -152.4
+   },
+   "headwater_rain": 991,
+   "local_rain": 464.8,
+   "enso": 0.7,
+   "loo_km2": 1315.0,
+   "loo_p10_km2": 940.7,
+   "loo_p90_km2": 1704.9,
+   "v1_loo_km2": 1534.6,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "prev_headwater_rain",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.704,
+    "heat": 0.327,
+    "enso": 0.532,
+    "prev_headwater_rain": 0.443,
+    "trend": 0.865
+   },
+   "weight": 0.99
+  },
+  {
+   "year": 2021,
+   "observed_km2": 548.2,
+   "low_coverage": false,
+   "fitted_km2": 503.2,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -897.5,
+    "local_rain": 65.7,
+    "enso": 47.8,
+    "trend": -120.5
+   },
+   "headwater_rain": 595,
+   "local_rain": 759.0,
+   "enso": -1.0,
+   "loo_km2": 505.9,
+   "loo_p10_km2": 232.1,
+   "loo_p90_km2": 795.9,
+   "v1_loo_km2": 127.8,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 0.999,
+    "local_rain": 0.588,
+    "heat": 0.281,
+    "enso": 0.462,
+    "prev_headwater_rain": 0.305,
+    "trend": 0.766
+   },
+   "weight": 1.04
+  },
+  {
+   "year": 2022,
+   "observed_km2": 1017.4,
+   "low_coverage": false,
+   "fitted_km2": 1603.2,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 320.4,
+    "local_rain": 6.5,
+    "enso": 57.7,
+    "trend": -189.0
+   },
+   "headwater_rain": 1001,
+   "local_rain": 565.6,
+   "enso": -0.8,
+   "loo_km2": 1861.1,
+   "loo_p10_km2": 1418.8,
+   "loo_p90_km2": 2319.7,
+   "v1_loo_km2": 1631.7,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "heat",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.528,
+    "heat": 0.475,
+    "enso": 0.767,
+    "prev_headwater_rain": 0.328,
+    "trend": 0.68
+   },
+   "weight": 0.76
+  },
+  {
+   "year": 2023,
+   "observed_km2": 733.9,
+   "low_coverage": false,
+   "fitted_km2": 664.1,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -582.7,
+    "local_rain": -43.4,
+    "enso": 33.3,
+    "trend": -150.8
+   },
+   "headwater_rain": 726,
+   "local_rain": 415.0,
+   "enso": -0.6,
+   "loo_km2": 672.6,
+   "loo_p10_km2": 430.3,
+   "loo_p90_km2": 943.4,
+   "v1_loo_km2": 640.5,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.635,
+    "heat": 0.324,
+    "enso": 0.45,
+    "prev_headwater_rain": 0.308,
+    "trend": 0.789
+   },
+   "weight": 1.05
+  },
+  {
+   "year": 2024,
+   "observed_km2": 579.8,
+   "low_coverage": false,
+   "fitted_km2": 707.2,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -356.5,
+    "local_rain": -107.1,
+    "enso": -73.1,
+    "trend": -163.8
+   },
+   "headwater_rain": 804,
+   "local_rain": 214.1,
+   "enso": 1.8,
+   "loo_km2": 769.6,
+   "loo_p10_km2": 494.0,
+   "loo_p90_km2": 1081.6,
+   "v1_loo_km2": 936.4,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.565,
+    "heat": 0.253,
+    "enso": 0.41,
+    "prev_headwater_rain": 0.263,
+    "trend": 0.684
+   },
+   "weight": 1.02
+  },
+  {
+   "year": 2025,
+   "observed_km2": 1477.2,
+   "low_coverage": false,
+   "fitted_km2": 1221.4,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": -22.4,
+    "local_rain": 12.6,
+    "enso": 35.0,
+    "trend": -211.5
+   },
+   "headwater_rain": 916,
+   "local_rain": 582.5,
+   "enso": -0.5,
+   "loo_km2": 1177.5,
+   "loo_p10_km2": 852.7,
+   "loo_p90_km2": 1526.3,
+   "v1_loo_km2": 1209.7,
+   "loo_selected_causes": [
+    "headwater_rain",
+    "local_rain",
+    "enso",
+    "prev_headwater_rain",
+    "trend"
+   ],
+   "loo_cause_inclusion_probability": {
+    "headwater_rain": 1.0,
+    "local_rain": 0.675,
+    "heat": 0.303,
+    "enso": 0.465,
+    "prev_headwater_rain": 0.344,
+    "trend": 0.848
+   },
+   "weight": 1.0
+  },
+  {
+   "year": 2026,
+   "observed_km2": null,
+   "low_coverage": null,
+   "fitted_km2": 1871.5,
+   "normal_year_km2": 1407.6,
+   "contribution_km2": {
+    "headwater_rain": 583.1,
+    "local_rain": 113.0,
+    "enso": 34.8,
+    "trend": -267.1
+   },
+   "headwater_rain": 1057,
+   "local_rain": 781.3,
+   "enso": -0.4
+  }
+ ],
+ "caveats": [
+  "Landsat sees open water only; water under reeds and papyrus is not in these numbers.",
+  "Cause screening is repeated inside each validation fold; the full-record cause set is used only for the final fit and projection.",
+  "Rain over the Delta sits at the border (inclusion probability close to 2/3); the ensemble keeps it in half of its models for that reason.",
+  "The trend term is extrapolated to 2030 with its uncertainty; it describes this study area only.",
+  "Causes are associations in 27 well-observed years, not proof.",
+  "2027-2030 rain and El Nino are unknown; their bands use past years."
+ ]
+}
